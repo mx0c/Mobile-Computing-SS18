@@ -11,9 +11,8 @@ const config = require('./config/config.json');
 
 module.exports = router => {
 
-	router.get('/', (req, res) => res.end('Welcome to Learn2Crack !'));
+	router.get('/', (req, res) => res.end('Welcome to PosiTime!'));
 
-	//router.get('/test', (req, res) => res.send('Hello'));
 
 	router.post('/authenticate', (req, res) => {
 

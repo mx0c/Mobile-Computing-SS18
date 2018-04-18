@@ -1,5 +1,6 @@
 *.iml
 .gradle
+.idea
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
@@ -9,3 +10,4 @@
 .externalNativeBuild
 
 /nodejs/node-login/node_modules
+
