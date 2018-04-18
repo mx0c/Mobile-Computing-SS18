@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PosiTime.iml" filepath="$PROJECT_DIR$/PosiTime.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Mobile-Computing-SS18.iml" filepath="$PROJECT_DIR$/Mobile-Computing-SS18.iml" />
+      <module fileurl="file://D:\OneDrive\20 METI\6. Semester\00 Mobile Computing\10 Projekt\Mobile-Computing-SS18\PosiTime.iml" filepath="D:\OneDrive\20 METI\6. Semester\00 Mobile Computing\10 Projekt\Mobile-Computing-SS18\PosiTime.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -7,3 +7,5 @@
 /build
 /captures
 .externalNativeBuild
+
+/nodejs/node-login/node_modules
