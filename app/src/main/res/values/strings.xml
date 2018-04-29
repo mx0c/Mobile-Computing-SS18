@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PosiTime</string>
+    <string name="emailInput">Email</string>
+    <string name="passwordInput">Password</string>
+    <string name="loginButton">Login</string>
+    <string name="registerText">No account yet? Create one!</string>
 </resources>
