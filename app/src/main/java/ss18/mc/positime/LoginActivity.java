@@ -28,12 +28,11 @@ public class LoginActivity extends AppCompatActivity {
                 EditText email = findViewById(R.id.email);
                 EditText password = findViewById(R.id.password);
 
-                Toast.makeText(this, "login", Toast.LENGTH_LONG).show();
-                LoginApiCall post = new LoginApiCall();
+                BackendAPI api = new BackendAPI();
+                BackendAPI.LoginCall req = api.new LoginCall();
 
-                post.execute("http://192.168.0.129:8080/api/v1/authenticate",email.getText()+":"+password.getText());
-
-
+                //Login Call
+                req.execute(R.string.BackendAPIUrl+"/authenticate",email.getText()+":"+password.getText());
                 break;
         }
     }

@@ -4,4 +4,5 @@
     <string name="passwordInput">Password</string>
     <string name="loginButton">Login</string>
     <string name="registerText">No account yet? Create one!</string>
+    <string name="BackendAPIUrl">http://192.168.0.129:8080/api/v1</string>
 </resources>
