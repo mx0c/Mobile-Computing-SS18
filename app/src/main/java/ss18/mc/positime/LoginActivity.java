@@ -29,10 +29,10 @@ public class LoginActivity extends AppCompatActivity {
                 EditText password = findViewById(R.id.password);
 
                 BackendAPI api = new BackendAPI();
-                BackendAPI.LoginCall req = api.new LoginCall();
+                BackendAPI.LoginCall req = api.new LoginCall(getApplicationContext());
 
                 //Login Call
-                req.execute(R.string.BackendAPIUrl+"/authenticate",email.getText()+":"+password.getText());
+                req.execute(getResources().getString(R.string.BackendAPIUrl) + "authenticate",email.getText()+":"+password.getText());
                 break;
         }
     }

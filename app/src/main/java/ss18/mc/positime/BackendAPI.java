@@ -1,6 +1,7 @@
 package ss18.mc.positime;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -18,7 +19,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class BackendAPI extends Activity {
+
+
+
     public class LoginCall extends AsyncTask<String, Void, Boolean> {
+        protected Context mContext;
+
+        public LoginCall(Context context) {
+            this.mContext = context;
+        }
+
         @Override
         protected Boolean doInBackground(String... params) {
             String data = "Basic " + Base64.encodeToString(params[1].getBytes(), Base64.NO_WRAP);
@@ -37,6 +47,7 @@ public class BackendAPI extends Activity {
                 writer.close();
 
                 Log.e("Post", data);
+                Log.e("URL", url.toString());
                 connection.connect();
                 if (connection.getResponseCode() == 400) {
                     connection.disconnect();
@@ -70,9 +81,9 @@ public class BackendAPI extends Activity {
         protected void onPostExecute(Boolean result) {
             if(result){
                 //TODO: change Activity
-                Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.mContext, "Login successful", Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.mContext, "Login failed", Toast.LENGTH_SHORT).show();
             }
         }
 

@@ -1,8 +1,23 @@
 <resources>
+    <!--Activities-->
     <string name="app_name">PosiTime</string>
-    <string name="emailInput">Email</string>
+    <string name="register_activity">Registration</string>
+
+    <!-- Inputs  -->
+    <string name="emailInput">Email Address</string>
     <string name="passwordInput">Password</string>
-    <string name="loginButton">Login</string>
+    <string name="passwordConfirm">Password Confirmation</string>
+    <string name="fname">First Name</string>
+    <string name="lname">Last Name</string>
+
+
+    <!-- TextView's -->
     <string name="registerText">No account yet? Create one!</string>
-    <string name="BackendAPIUrl">http://192.168.0.129:8080/api/v1</string>
+
+    <!-- Buttons -->
+    <string name="loginBtn">Login</string>
+    <string name="registerBtn">Register</string>
+
+    <!-- System Configuation -->
+    <string name="BackendAPIUrl">http://192.168.0.129:8080/api/v1/</string>
 </resources>
