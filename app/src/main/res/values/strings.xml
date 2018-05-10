@@ -18,6 +18,10 @@
     <string name="loginBtn">Login</string>
     <string name="registerBtn">Register</string>
 
+
+    <!-- Toasts -->
+    <string name="notAllFields">Not all fields have been filled</string>
+
     <!-- System Configuation -->
     <string name="BackendAPIUrl">http://192.168.0.129:8080/api/v1/</string>
 </resources>

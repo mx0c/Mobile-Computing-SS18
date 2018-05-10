@@ -1,22 +1,62 @@
 package ss18.mc.positime;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.design.internal.SnackbarContentLayout;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+
+import retrofit2.adapter.rxjava.HttpException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
+import ss18.mc.positime.model.Response;
+import ss18.mc.positime.network.NetworkUtil;
+import ss18.mc.positime.utils.Constants;
+import ss18.mc.positime.utils.Validation;
+
 public class LoginActivity extends AppCompatActivity {
+    TextInputLayout email;
+    TextInputLayout password;
+    ProgressBar progressBar;
+
+    private CompositeSubscription mSubscriptions;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+
+        mSubscriptions = new CompositeSubscription();
+        initSharedPreferences(); //Init default SharedPreferences to safe token
+
+        initView();
     }
+
+
+    private void initView(){
+        email = (TextInputLayout) findViewById(R.id.emailLogin);
+        password = (TextInputLayout) findViewById(R.id.passwordLogin);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+    }
+
+
+    private void initSharedPreferences() {
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
 
     public void onClick (View view){
         switch(view.getId()){
@@ -25,15 +65,83 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
                 break;
             case R.id.loginButton:
-                EditText email = findViewById(R.id.email);
-                EditText password = findViewById(R.id.password);
+                //Validation if all fields are correct
+                if(!Validation.validateEmail(email)){
+                    email.setError("Please use a correct email!");
+                }
 
-                BackendAPI api = new BackendAPI();
-                BackendAPI.LoginCall req = api.new LoginCall(getApplicationContext());
+                else if(!Validation.checkForEmptyFields(new TextInputLayout[] {email,password})){
+                    Toast.makeText(this, R.string.notAllFields, Toast.LENGTH_SHORT);
+                }
 
-                //Login Call
-                req.execute(getResources().getString(R.string.BackendAPIUrl) + "authenticate",email.getText()+":"+password.getText());
+                else {
+                    loginProcess(email.getEditText().getText().toString(),password.getEditText().getText().toString()); //Login User
+                    progressBar.setVisibility(View.VISIBLE); //Make progress bar visible to indicate login process
+                }
                 break;
         }
+    }
+
+
+    private void loginProcess(String email, String password){
+        mSubscriptions.add(NetworkUtil.getRetrofit(email, password).login()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError));
+    }
+
+
+    private void handleResponse(Response response) {
+        progressBar.setVisibility(View.GONE);
+
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(Constants.TOKEN,response.getToken());
+        editor.putString(Constants.EMAIL,response.getMessage());
+        editor.apply();
+
+        email.getEditText().setText(null);
+        password.getEditText().setText(null);
+
+        Intent intent = new Intent(this, DashboardActivity.class);
+        startActivity(intent);
+    }
+
+
+    private void handleError(Throwable error) {
+
+        progressBar.setVisibility(View.GONE);
+
+        if (error instanceof HttpException) {
+
+            Gson gson = new GsonBuilder().create();
+
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                showSnackBarMessage(response.getMessage());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            error.printStackTrace();
+            showSnackBarMessage("Network Error !");
+        }
+    }
+
+
+    private void showSnackBarMessage(String message) {
+
+        if (this != null) {
+            Snackbar.make(findViewById(android.R.id.content),message,Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSubscriptions.unsubscribe();
     }
 }

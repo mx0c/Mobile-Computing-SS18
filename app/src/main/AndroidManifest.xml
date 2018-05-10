@@ -17,8 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DashboardActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".DashboardActivity">
         </activity>
 
         <activity
@@ -38,7 +37,8 @@
 
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/register_activity" />
+            android:label="@string/register_activity"
+            />
 
     </application>
 

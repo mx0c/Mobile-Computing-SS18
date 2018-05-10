@@ -28,7 +28,7 @@ module.exports = router => {
 
 			.then(result => {
 
-				const token = jwt.sign(result, config.secret, { expiresIn: 1440 });
+				const token = jwt.sign(result, config.secret, { expiresIn: "365d" });
 
 				res.status(result.status).json({ message: result.message, token: token });
 
@@ -38,19 +38,20 @@ module.exports = router => {
 		}
 	});
 
-	router.post('/users', (req, res) => {
-
-		const name = req.body.name;
+	router.post('/register', (req, res) => {
 		const email = req.body.email;
 		const password = req.body.password;
+		const firstname = req.body.firstName;
+		const lastname = req.body.lastName;
 
-		if (!name || !email || !password || !name.trim() || !email.trim() || !password.trim()) {
+
+		if (!lastname || !firstname || !email || !password || !email.trim() || !password.trim()) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
 
-			register.registerUser(name, email, password)
+			register.registerUser(email, password, firstname, lastname)
 
 			.then(result => {
 
@@ -62,6 +63,9 @@ module.exports = router => {
 		}
 	});
 
+
+
+    /* NOT USED YET
 	router.get('/users/:id', (req,res) => {
 
 		if (checkToken(req)) {
@@ -150,4 +154,6 @@ module.exports = router => {
 			return false;
 		}
 	}
+
+	*/
 }
