@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.IBinder;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.widget.Toast;
 
 public class LocationService extends Service implements LocationListener {
     private final Context context;
@@ -40,6 +41,10 @@ public class LocationService extends Service implements LocationListener {
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
+
+    public LocationService(){
+        context = null;
+    }
 
     public LocationService(Context context, int updatetime, int updatedistance) {
         this.context = context;
@@ -141,6 +146,7 @@ public class LocationService extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        Toast.makeText(context, "LocationChanged", Toast.LENGTH_SHORT).show();
     }
 
     @Override
