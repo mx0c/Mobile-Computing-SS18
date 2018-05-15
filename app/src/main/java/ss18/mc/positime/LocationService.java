@@ -14,7 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
-public class LocationService extends Service implements LocationListener {
+public class LocationService implements LocationListener {
     private final Context context;
 
     // flag for GPS status
@@ -30,10 +30,10 @@ public class LocationService extends Service implements LocationListener {
     double latitude; // latitude
     double longitude; // longitude
 
-    // The minimum distance to change Updates in meters
+    // The minimum distance to change Updates in METERS
     private static int MIN_DISTANCE_CHANGE_FOR_UPDATES;
 
-    // The minimum time between updates in milliseconds
+    // The minimum time between updates in MILLISECONDS
     private static int MIN_TIME_BW_UPDATES;
 
     //GPS permission code
@@ -55,7 +55,7 @@ public class LocationService extends Service implements LocationListener {
 
     public Location getLocation() {
         try {
-            locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
             // getting GPS status
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -70,7 +70,7 @@ public class LocationService extends Service implements LocationListener {
                 this.canGetLocation = true;
                 // First get location from Network Provider
                 if (isNetworkEnabled) {
-                    if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    if(ActivityCompat.checkSelfPermission(this.context, Manifest.permission.ACCESS_FINE_LOCATION)
                             != PackageManager.PERMISSION_GRANTED) {
                         locationManager.requestLocationUpdates(
                                 LocationManager.NETWORK_PROVIDER,
@@ -89,7 +89,7 @@ public class LocationService extends Service implements LocationListener {
                 // if GPS Enabled get lat/long using GPS Services
                 if (isGPSEnabled) {
                     if (location == null) {
-                        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        if(ActivityCompat.checkSelfPermission(this.context, Manifest.permission.ACCESS_FINE_LOCATION)
                                 != PackageManager.PERMISSION_GRANTED) {
                             locationManager.requestLocationUpdates(
                                     LocationManager.GPS_PROVIDER,
@@ -159,10 +159,5 @@ public class LocationService extends Service implements LocationListener {
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
     }
 }
