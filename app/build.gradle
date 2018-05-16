@@ -20,8 +20,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     packagingOptions {  //ansonsten zeigt es an das mehrer jxjava files hat und tut nicht starten
         exclude 'META-INF/rxjava.properties'
+    }
+
+
+    allprojects {
+        repositories {
+            jcenter()
+            maven { url 'https://maven.google.com' }
+        }
     }
 
 
@@ -41,10 +50,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    def room_version = "1.1.0" //für room database notwending
 
+    def room_version = "1.1.0" //für room database notwending
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+
 
     // optional - RxJava support for Room
     implementation "android.arch.persistence.room:rxjava2:$room_version"
