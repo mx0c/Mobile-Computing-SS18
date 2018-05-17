@@ -8,25 +8,21 @@ import android.arch.persistence.room.*;
 
 import java.util.List;
 
-import ss18.mc.positime.dbmodel.*;
 import io.reactivex.Flowable;
 import ss18.mc.positime.model.Benutzer;
 
 @Dao
-public abstract class BenutzerDAO {
+public interface BenutzerDAO {
     @Query("SELECT * FROM benutzer")
-    abstract List<Benutzer> getAll();
+    List<Benutzer> getAll();
 
-    @Query("SELECT * FROM benutzer WHERE eMail =:BenutzerEmail")
-    abstract Benutzer getAllBYeMail(String BenutzerEmail);
+    @Query("SELECT * FROM benutzer WHERE first_name LIKE :firstname")
+    Benutzer getAllBYFirstname(String firstname);
 
 
     @Insert
-    abstract void insertAll(List<Benutzer> benutzer);
-
-    @Update
-    abstract void update(Benutzer benutzer);
+    void insertAll(Benutzer... benutzer);
 
     @Delete
-    abstract void delete(Benutzer benutzer);
+    void delete(Benutzer benutzer);
 }

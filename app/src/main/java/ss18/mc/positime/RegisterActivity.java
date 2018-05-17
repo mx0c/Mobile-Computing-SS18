@@ -21,6 +21,7 @@ import rx.subscriptions.CompositeSubscription;
 import ss18.mc.positime.model.Response;
 import ss18.mc.positime.network.NetworkUtil;
 import ss18.mc.positime.utils.Validation;
+import ss18.mc.positime.model.User;
 
 public class RegisterActivity extends AppCompatActivity {
     TextInputLayout emailField;

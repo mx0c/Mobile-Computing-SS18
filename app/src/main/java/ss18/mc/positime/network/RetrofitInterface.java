@@ -4,6 +4,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
 import ss18.mc.positime.model.Response;
+import ss18.mc.positime.model.User;
 
 public interface RetrofitInterface {
 

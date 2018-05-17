@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import ss18.mc.positime.local.BenutzerDAO;
 import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.DatabaseInitializer;
 
 public class Profile extends AppCompatActivity {
         @Override
@@ -13,8 +14,10 @@ public class Profile extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_profile);
 
-            BenutzerDatabase benutzerDatabase = Room.inMemoryDatabaseBuilder(context, BenutzerDatabase.class).build();
-            BenutzerDAO benutzerDAO = benutzerDatabase.getBenutzerDAO();
+            DatabaseInitializer.populateAsync(BenutzerDatabase.getBenutzerDatabase(this));
+
+
+
 
         }
 }

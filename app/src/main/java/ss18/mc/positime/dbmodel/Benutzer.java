@@ -3,22 +3,34 @@ package ss18.mc.positime.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 @Entity(tableName = "benutzer")
 public class Benutzer {
-    @PrimaryKey
-    private String eMail;
+    @PrimaryKey (autoGenerate = true)
+    private int benutzerId;
+
+    @ColumnInfo(name = "tt")
+    private String test;
     @ColumnInfo(name = "first_name")
     private String firstName;
     @ColumnInfo(name = "last_name")
     private String lastName;
 
-    public String geteMail() {
-        return eMail;
+    public int getBenutzerId() {
+        return benutzerId;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setBenutzerId(int benutzerId) {
+        this.benutzerId = benutzerId;
+    }
+
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String Test) {
+        this.test = Test;
     }
 
     public String getFirstName() {
