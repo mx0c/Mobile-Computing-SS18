@@ -17,6 +17,8 @@ public class Benutzer {
     @ColumnInfo(name = "last_name")
     private String lastName;
 
+
+
     public int getBenutzerId() {
         return benutzerId;
     }

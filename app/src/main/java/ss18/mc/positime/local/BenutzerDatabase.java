@@ -17,7 +17,7 @@ public abstract class BenutzerDatabase extends RoomDatabase{
     public static BenutzerDatabase getBenutzerDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    BenutzerDatabase.class, "benutzer-database")
+                    BenutzerDatabase.class,"benutzer-database")
                     .allowMainThreadQueries()
                     .build();
         }

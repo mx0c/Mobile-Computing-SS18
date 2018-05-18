@@ -4,8 +4,11 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import junit.framework.Test;
+
 import java.util.List;
 
+import ss18.mc.positime.Profile;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.model.Benutzer;
 import ss18.mc.positime.local.BenutzerDAO;
@@ -31,9 +34,10 @@ public class DatabaseInitializer {
 
     private static void populateWithTestData(BenutzerDatabase db) {
         Benutzer benutzer = new Benutzer();
+        benutzer.setTest("richie@richie.de");
         benutzer.setFirstName("Richard");
         benutzer.setLastName("Spitz");
-        benutzer.setTest("richie@richie.de");
+
         addBenutzer(db, benutzer);
 
         List<Benutzer> benutzerList = db.benutzerDAO().getAll();
@@ -50,8 +54,14 @@ public class DatabaseInitializer {
         @Override
         protected Void doInBackground(final Void... params){
             populateWithTestData(mDb);
+
+
+
             return null;
         }
+
     }
+
+
 
 }

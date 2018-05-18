@@ -19,7 +19,6 @@ public interface BenutzerDAO {
     @Query("SELECT * FROM benutzer WHERE first_name LIKE :firstname")
     Benutzer getAllBYFirstname(String firstname);
 
-
     @Insert
     void insertAll(Benutzer... benutzer);
 
