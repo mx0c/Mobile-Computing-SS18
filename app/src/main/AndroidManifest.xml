@@ -17,18 +17,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DashboardActivity">
-        </activity>
-
-        <activity
-            android:name=".LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Login">
+            android:name=".DashboardActivity"
+            android:label="test"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Login"></activity>
 
         <service
             android:name=".LocationService"
@@ -37,9 +39,13 @@
 
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/register_activity"
-            />
+            android:label="@string/register_activity" />
+        <activity
+            android:name=".navigation_activity"
+            android:label="@string/title_activity_navigation_activity"
+            android:theme="@style/AppTheme.NoActionBar">
 
+        </activity>
     </application>
 
 </manifest>
