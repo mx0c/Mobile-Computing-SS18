@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:paddingBottom="50dp"
+    tools:context=".Workplace_Details_Custom">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="15dp"
+        android:text="Choose Period"
+
+        android:textSize="30dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/date1_button"
+            android:layout_width="47dp"
+            android:layout_height="62dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_calendar"
+            android:elevation="0dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="33dp" />
+
+
+        <EditText
+            android:id="@+id/dateStart"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="dd-mm-yyyy" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="73dp"
+            android:paddingTop="10dp"
+            android:text="-"
+            android:textSize="40dp" />
+
+        <Button
+            android:id="@+id/date2_button"
+            android:layout_width="46dp"
+            android:layout_height="62dp"
+            android:background="@color/white"
+            android:drawableLeft="@drawable/ic_calendar"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:stateListAnimator="@null"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="33dp" />
+
+        <EditText
+            android:id="@+id/dateEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="dd-mm-yyyy" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="118dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:text="Search"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

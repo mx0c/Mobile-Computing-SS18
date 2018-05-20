@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+            <LinearLayout
+                android:id="@+id/day_1_details"
+                android:layout_width="wrap_content"
+                android:layout_height="73dp"
+                android:background="@drawable/layout_border"
+                android:clickable="true"
+                android:elevation="10dp"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:state_pressed="false">
+
+
+                <LinearLayout
+                    android:id="@+id/first"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_pause" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00:30" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/second"
+                    android:layout_width="match_parent"
+                    android:layout_height="124dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_pause" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00:30" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/third"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="2dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_attach_money" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="100,50" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="73dp"
+                android:background="@drawable/layout_border"
+                android:elevation="10dp"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_pause" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00:30" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="124dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_pause" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00:30" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="2dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_attach_money" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="50,30" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="73dp"
+                android:background="@drawable/layout_border"
+                android:elevation="10dp"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_pause" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00:30" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="124dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_pause" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00:30" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="2dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_attach_money" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="99,99" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="73dp"
+                android:background="@drawable/layout_border"
+                android:elevation="10dp"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_pause" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00:30" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="124dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_pause" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00:30" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="2dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_attach_money" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00,00" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="73dp"
+                android:background="@drawable/layout_border"
+                android:elevation="10dp"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_pause" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00:30" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="124dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_pause" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="00:30" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"></LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="13.May 2018" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="2dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ic_attach_money" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="100,50" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="8dp">
+
+
+                <android.support.v4.widget.Space
+                    android:layout_width="27dp"
+                    android:layout_height="wrap_content" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/addButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:paddingLeft="50dp"
+                    android:src="@drawable/ic_add_white"
+                    android:visibility="invisible" />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content" />
+
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/editButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:padding="15dp"
+                    android:paddingLeft="50dp"
+                    android:src="@drawable/ic_edit_white"
+                    android:visibility="invisible" />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/deleteButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:elevation="0dp"
+                    android:paddingLeft="50dp"
+                    android:src="@drawable/ic_delete_white"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <android.support.v4.widget.Space
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/addText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:paddingLeft="5dp"
+                    android:text="Add"
+                    android:textSize="15dp"
+                    android:visibility="invisible" />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:id="@+id/editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:paddingLeft="25dp"
+                    android:text="Edit"
+                    android:visibility="invisible" />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/deleteText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:paddingLeft="25dp"
+                    android:text="Delete"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>
