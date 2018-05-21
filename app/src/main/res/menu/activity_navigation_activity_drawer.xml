@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/clipboard"
+            android:title="Dashboard" />
+        <item
+            android:id="@+id/nav_overview"
+            android:icon="@drawable/calendar"
+            android:title="Overview" />
+        <item
+            android:id="@+id/nav_workplaces"
+            android:icon="@drawable/home"
+            android:title="Workplaces" />
+        <item
+            android:id="@+id/nav_statistics"
+            android:icon="@drawable/chart"
+            android:title="Statistics" />
+    </group>
+
+    <item android:title="____________">
+        <menu>
+            <item
+                android:id="@+id/nav_export"
+                android:icon="@drawable/export"
+                android:title="Export" />
+            <item
+                android:id="@+id/nav_import"
+                android:icon="@drawable/import1"
+                android:title="Import" />
+        </menu>
+    </item>
+
+</menu>

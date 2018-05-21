@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:textSize="22dp" />
+    <item
+        android:id="@+id/logout_icon"
+        android:icon="@drawable/logout"
+        app:showAsAction="ifRoom|withText"
+        android:title="Logout"
+        ></item>
+
+
+
+</menu>
