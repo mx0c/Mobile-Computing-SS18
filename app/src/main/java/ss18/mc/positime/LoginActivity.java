@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -41,10 +42,10 @@ public class LoginActivity extends AppCompatActivity {
 
         mSubscriptions = new CompositeSubscription();
         initSharedPreferences(); //Init default SharedPreferences to safe token
+        checkTokenProcess();
 
         initView();
     }
-
 
     private void initView(){
         email = (TextInputLayout) findViewById(R.id.emailLogin);
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                 //Validation if all fields are correct
                 if(!Validation.validateEmail(email)){
                     email.setError("Please use a correct email!");
+                    //TODO Remove error when text is entered
                 }
 
                 else if(!Validation.checkForEmptyFields(new TextInputLayout[] {email,password})){
@@ -81,6 +83,39 @@ public class LoginActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
+    /*
+        Network Functions to handle check token process
+     */
+
+    private void checkTokenProcess(){
+        String token = this.mSharedPreferences.getString(Constants.TOKEN, null);
+        String email = this.mSharedPreferences.getString(Constants.EMAIL, null);
+
+        if (token != null && email != null ){
+            mSubscriptions.add(NetworkUtil.getRetrofit(token).checkToken(email)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleTokenResponse,this::handleError));
+        } else {
+
+            return; //Dont do request if there is no token anyways
+        }
+    }
+
+    private void handleTokenResponse(Response response) {
+        progressBar.setVisibility(View.GONE);
+
+        //start dashboard if token is valid
+        Intent intent = new Intent(this, DashboardActivity.class);
+        startActivity(intent);
+    }
+
+
+    /*
+        Network Functions to handle login Process
+     */
 
 
     private void loginProcess(String email, String password){

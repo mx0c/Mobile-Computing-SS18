@@ -16,6 +16,9 @@ public interface RetrofitInterface {
 
     @POST("authenticate")
     Observable<Response> login();
+
+    @POST("token/{email}")
+    Observable<Response> checkToken(@Path("email") String email);
 }
 
 

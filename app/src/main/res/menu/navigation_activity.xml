@@ -10,9 +10,9 @@
     <item
         android:id="@+id/logout_icon"
         android:icon="@drawable/logout"
-        app:showAsAction="ifRoom|withText"
         android:title="Logout"
-        ></item>
+        android:onClick="onLogoutClick"
+        app:showAsAction="ifRoom|withText"></item>
 
 
 

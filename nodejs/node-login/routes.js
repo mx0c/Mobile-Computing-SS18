@@ -32,6 +32,8 @@ module.exports = router => {
 
 				res.status(result.status).json({ message: result.message, token: token });
 
+				console.log(token);
+
 			})
 
 			.catch(err => res.status(err.status).json({ message: err.message }));
@@ -62,6 +64,43 @@ module.exports = router => {
 			.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
+
+
+	router.post('/token/:id', (req, res) =>{
+	    console.log( req.headers['x-access-token']);
+	    if(checkToken(req)) {
+	        //Valid Token
+	        res.status(200).json({ message: "Token is valid"});
+	    } else {
+	        //Token not valid
+	        res.status(401).json({ message: 'Invalid Token !' });
+	    }
+	});
+
+	function checkToken(req) {
+
+    		const token = req.headers['x-access-token'];
+
+    		if (token) {
+
+    			try {
+
+      				var decoded = jwt.verify(token, config.secret);
+      				console.log(decoded);
+      				console.log(req.params.id);
+
+      				return decoded.message === req.params.id;
+
+    			} catch(err) {
+
+    				return false;
+    			}
+
+    		} else {
+
+    			return false;
+    		}
+    	}
 
 
 
@@ -132,28 +171,7 @@ module.exports = router => {
 		}
 	});
 
-	function checkToken(req) {
 
-		const token = req.headers['x-access-token'];
-
-		if (token) {
-
-			try {
-
-  				var decoded = jwt.verify(token, config.secret);
-
-  				return decoded.message === req.params.id;
-
-			} catch(err) {
-
-				return false;
-			}
-
-		} else {
-
-			return false;
-		}
-	}
 
 	*/
 }

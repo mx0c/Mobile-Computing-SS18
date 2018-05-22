@@ -74,10 +74,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(!Validation.validateEmail(emailField)){
                     emailField.setError("Please use a correct email!");
+                    //TODO Remove error when text is entered
                 }
 
                 else if(!Validation.validateFields(passwordField.getEditText().getText().toString(), passwordFieldConf.getEditText().getText().toString())){
                     passwordFieldConf.setError("Passwords are not matching!");
+                    //TODO Remove error when text is entered
                 }
 
                 else if(!Validation.checkForEmptyFields(allFields)){

@@ -1,5 +1,8 @@
 package ss18.mc.positime;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
@@ -11,7 +14,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import ss18.mc.positime.utils.Constants;
 
 public class DashboardActivity extends AppCompatActivity implements OnNavigationItemSelectedListener{
 
@@ -23,8 +30,6 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         toolbar.setTitle("Dasboard");
         setSupportActionBar(toolbar);
 
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -33,6 +38,26 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+
+    //When logout is clicked, remove token and go back to login
+    public void onLogoutClick(MenuItem view) {
+        switch(view.getItemId()){
+            case R.id.logout_icon:
+
+                //Reset token
+                SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                editor.putString(Constants.TOKEN,null);
+                editor.putString(Constants.EMAIL,null);
+                editor.apply();
+
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
