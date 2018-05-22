@@ -9,6 +9,7 @@ import junit.framework.Test;
 import java.util.List;
 
 import ss18.mc.positime.Profile;
+import ss18.mc.positime.dbmodel.Person;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.model.Benutzer;
 import ss18.mc.positime.local.BenutzerDAO;
@@ -32,13 +33,24 @@ public class DatabaseInitializer {
         return benutzer;
     }
 
+    private static Person addPerson(final BenutzerDatabase db, Person person){
+        db.personDAO().insertAll(person);
+        return person;
+    }
+
     private static void populateWithTestData(BenutzerDatabase db) {
         Benutzer benutzer = new Benutzer();
-        benutzer.setTest("richie@richie.de");
-        benutzer.setFirstName("Richard");
-        benutzer.setLastName("Spitz");
+        benutzer.setMail("richie@richie.de");
+        benutzer.setUserName("Richie");
+        benutzer.setPassWord("admin");
 
         addBenutzer(db, benutzer);
+
+
+        Person person = new Person();
+        person.setFirstName("Richard");
+        person.setLastName("Spitz");
+        addPerson(db, person);
 
         List<Benutzer> benutzerList = db.benutzerDAO().getAll();
         Log.d(DatabaseInitializer.TAG, "Row Count: " + benutzerList.size());

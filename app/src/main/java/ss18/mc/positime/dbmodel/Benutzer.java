@@ -2,21 +2,29 @@ package ss18.mc.positime.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "benutzer")
+import ss18.mc.positime.dbmodel.Person;
+
+@Entity(tableName = "benutzer", foreignKeys =
+@ForeignKey(entity = Person.class, parentColumns = "person_id", childColumns = "benutzer_id"))
 public class Benutzer {
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "benutzer_id")
     private int benutzerId;
 
-    @ColumnInfo(name = "tt")
-    private String test;
-    @ColumnInfo(name = "first_name")
-    private String firstName;
-    @ColumnInfo(name = "last_name")
-    private String lastName;
+    @ColumnInfo(name = "user_name")
+    private String userName;
+    @ColumnInfo(name = "password")
+    private String passWord;
+    @ColumnInfo(name = "mail") //das ist die Email
+    private String Mail;
 
+    @ColumnInfo(name = "person_id")
+    private int personId;
 
 
     public int getBenutzerId() {
@@ -27,28 +35,37 @@ public class Benutzer {
         this.benutzerId = benutzerId;
     }
 
-    public String getTest() {
-        return test;
+    public String getMail() {
+        return Mail;
     }
 
-    public void setTest(String Test) {
-        this.test = Test;
+    public void setMail(String eMail) {
+        this.Mail = Mail;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPassWord() {
+        return passWord;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+
+
+
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 }
-

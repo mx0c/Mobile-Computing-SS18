@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ss18.mc.positime.dbmodel.Person;
 import ss18.mc.positime.local.BenutzerDAO;
 
 import ss18.mc.positime.local.BenutzerDatabase;
@@ -34,10 +35,12 @@ public class Profile extends AppCompatActivity {
             last = (TextView) findViewById(R.id.textLastnameDB);
             mail = (TextView) findViewById(R.id.textEmailDB);
 
+            String BenutzernameTest = "Richie";
 
-            Benutzer testb = BenutzerDatabase.getBenutzerDatabase(this).benutzerDAO().getAllBYFirstname("Richard");
-            first.setText(testb.getFirstName().toString());
-            last.setText(testb.getLastName().toString());
-            mail.setText(testb.getTest().toString());
-                    }
+            Benutzer testb = BenutzerDatabase.getBenutzerDatabase(this).benutzerDAO().getAllByUserName(BenutzernameTest);
+            Person testp = BenutzerDatabase.getBenutzerDatabase(this).personDAO().getAllByBenutzerUserName(BenutzernameTest);
+            first.setText(testp.getFirstName().toString());
+            last.setText(testp.getLastName().toString());
+            mail.setText(testb.getMail().toString());
+        }
 }
