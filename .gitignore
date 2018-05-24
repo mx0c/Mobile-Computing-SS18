@@ -1,6 +1,6 @@
 *.iml
 .gradle
-.idea
+.idea/
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
@@ -8,6 +8,5 @@
 /build
 /captures
 .externalNativeBuild
-
 /nodejs/node-login/node_modules
 
