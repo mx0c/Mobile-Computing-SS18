@@ -1,11 +1,16 @@
 package ss18.mc.positime;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.internal.SnackbarContentLayout;
 import android.support.design.widget.Snackbar;
@@ -15,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -29,6 +35,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import ss18.mc.positime.model.Response;
 import ss18.mc.positime.network.NetworkUtil;
+import ss18.mc.positime.services.LocationService;
 import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.Validation;
 
@@ -46,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_screen);
 
         check_runtime_permissions();
+        check_gps();
+        Intent i = new Intent(this,LocationService.class);
+        startService(i);
 
         mSubscriptions = new CompositeSubscription();
         initSharedPreferences(); //Init default SharedPreferences to safe token
@@ -177,6 +187,32 @@ public class LoginActivity extends AppCompatActivity {
 
         if (this != null) {
             Snackbar.make(findViewById(android.R.id.content),message,Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    private void check_gps(){
+        LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+            alertDialog.setTitle("GPS is disabled");
+            alertDialog.setMessage("Do you want to enable GPS?");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                        dialog.dismiss();
+                    }
+            });
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+            alertDialog.show();
         }
     }
 

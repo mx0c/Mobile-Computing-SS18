@@ -52,26 +52,6 @@ public class LocationService extends Service{
 
             @Override
             public void onProviderDisabled(String s) {
-                final AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
-                alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                alertDialog.setTitle("GPS is Disabled");
-                alertDialog.setMessage("Do you want to enable GPS?");
-                alertDialog.setButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.setButton2("CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        return;
-                    }
-                });
-                alertDialog.show();
             }
         };
 
