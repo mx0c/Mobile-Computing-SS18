@@ -20,4 +20,8 @@ public interface ArbeitszeitDAO {
 
     @Delete
     void delete(Arbeitszeit arbeitszeit);
+
+    @Query("SELECT * FROM arbeitszeit WHERE arbeitsort_name = :ArbeitsortName")
+    List<Arbeitszeit> getArbeitszeitenForArbeitsort(String ArbeitsortName);
+
 }
