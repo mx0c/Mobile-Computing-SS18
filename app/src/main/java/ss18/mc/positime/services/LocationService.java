@@ -19,6 +19,7 @@ public class LocationService extends Service{
     private LocationListener mListener;
     private LocationManager mLocationManager;
     private final static int MIN_TIME_BW_UPDATES = 10000; //10 seconds
+    private final static int MIN_DISTANCE_CHANGE_FOR_UPDATES = 5;
 
     @Nullable
     @Override
