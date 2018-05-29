@@ -2,17 +2,17 @@ package ss18.mc.positime.dbmodel;
 
 public class addressT {
     //Datentypen
-    private int plcA;
+    private int plzA;
     private String cityA;
     private String streetA;
     private int streetnrA;
 
-    public int getPlcA() {
-        return plcA;
+    public int getPlzA() {
+        return plzA;
     }
 
-    public void setPlcA(int plcA) {
-        this.plcA = plcA;
+    public void setPlzA(int plzA) {
+        this.plzA = plzA;
     }
 
     public String getCityA() {

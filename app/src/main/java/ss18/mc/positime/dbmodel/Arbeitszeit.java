@@ -2,53 +2,53 @@ package ss18.mc.positime.dbmodel;
 
 
 import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
-import java.util.List;
+import java.util.Date;
+
+import ss18.mc.positime.utils.TimestampConverter;
 
 
-
-
-@Entity(tableName = "arbeitszeit", foreignKeys = @ForeignKey(entity = Arbeitsort.class,parentColumns = "arbeitsort_id",
-        childColumns = "arbeitszeit_id"))
+@Entity(tableName = "arbeitszeit", foreignKeys = @ForeignKey(entity = Arbeitsort.class,parentColumns = "place_name",
+        childColumns = "arbeitsort_name"))
 public class Arbeitszeit {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "arbeitszeit_id")
-    private int arbeitszeitId;
+    private int arbeitszeitId = 0;
 
     @ColumnInfo(name = "amount_breaks")     //Anzahl Pausen
     private int amountBreaks;
 
-    @ColumnInfo(name = "arbeitsort_id")
-    public int arbeitsortId;
+    @ColumnInfo(name = "arbeitsort_name")
+    public String arbeitsort_name;
 
-    @Embedded
-    private dateT workday;
+    @ColumnInfo(name = "workday")
+    @TypeConverters(TimestampConverter.class)
+    private Date workday;
 
-    @Embedded(prefix = "start_")
-    private timeT starttime;
+    @ColumnInfo(name = "starttime")
+    @TypeConverters(TimestampConverter.class)
+    private Date starttime;
 
-    @Embedded(prefix = "end_")
-    private timeT endtime;
+    @ColumnInfo(name = "endtime")
+    @TypeConverters(TimestampConverter.class)
+    private Date endtime;
 
-    @Embedded(prefix = "break_")
-    private timeT breaktime;
+    @ColumnInfo(name = "breaktime")
+    private int breaktime;
 
-    public int getArbeitsortId() {
-        return arbeitsortId;
+
+    public Arbeitszeit () {
+        //Do nothing
     }
 
-    public void setArbeitsortId(int arbeitsortId) {
-        this.arbeitsortId = arbeitsortId;
-    }
-
-    public Arbeitszeit(int arbeitszeitId, int amountBreaks, int arbeitsortId, dateT workday, timeT starttime, timeT endtime, timeT breaktime) {
+    public Arbeitszeit(int arbeitszeitId, int amountBreaks, String arbeitsort_name, Date workday, Date starttime, Date endtime, int breaktime) {
         this.arbeitszeitId = arbeitszeitId;
         this.amountBreaks = amountBreaks;
-        this.arbeitsortId = arbeitsortId;
+        this.arbeitsort_name = arbeitsort_name;
         this.workday = workday;
         this.starttime = starttime;
         this.endtime = endtime;
@@ -71,35 +71,43 @@ public class Arbeitszeit {
         this.amountBreaks = amountBreaks;
     }
 
-    public dateT getWorkday() {
+    public String getArbeitsort_name() {
+        return arbeitsort_name;
+    }
+
+    public void setArbeitsort_name(String arbeitsort_name) {
+        this.arbeitsort_name = arbeitsort_name;
+    }
+
+    public Date getWorkday() {
         return workday;
     }
 
-    public void setWorkday(dateT workday) {
+    public void setWorkday(Date workday) {
         this.workday = workday;
     }
 
-    public timeT getStarttime() {
+    public Date getStarttime() {
         return starttime;
     }
 
-    public void setStarttime(timeT starttime) {
+    public void setStarttime(Date starttime) {
         this.starttime = starttime;
     }
 
-    public timeT getEndtime() {
+    public Date getEndtime() {
         return endtime;
     }
 
-    public void setEndtime(timeT endtime) {
+    public void setEndtime(Date endtime) {
         this.endtime = endtime;
     }
 
-    public timeT getBreaktime() {
+    public int getBreaktime() {
         return breaktime;
     }
 
-    public void setBreaktime(timeT breaktime) {
+    public void setBreaktime(int breaktime) {
         this.breaktime = breaktime;
     }
 }

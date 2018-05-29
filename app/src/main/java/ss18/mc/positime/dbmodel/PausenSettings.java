@@ -5,8 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity(tableName = "pausensettings", foreignKeys = @ForeignKey(entity = Arbeitsort.class,parentColumns = "arbeitsort_id",
-        childColumns = "pausensettings_id"))
+@Entity(tableName = "pausensettings", foreignKeys = @ForeignKey(entity = Arbeitsort.class,parentColumns = "place_name",
+        childColumns = "arbeitsort_name"))
 public class PausenSettings {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "pausensettings_id")
@@ -17,15 +17,16 @@ public class PausenSettings {
     @ColumnInfo(name = "length_min")
     private int lengthMin;
 
-    @ColumnInfo(name = "arbeitsort_id")
-    private int arbeitsortId;
+    @ColumnInfo(name = "arbeitsort_name")
+    private String arbeitsort_name;
 
-    public int getArbeitsortId() {
-        return arbeitsortId;
+
+    public String getArbeitsort_name() {
+        return arbeitsort_name;
     }
 
-    public void setArbeitsortId(int arbeitsortId) {
-        this.arbeitsortId = arbeitsortId;
+    public void setArbeitsort_name(String arbeitsort_name) {
+        this.arbeitsort_name = arbeitsort_name;
     }
 
     public int getPausensettingsId() {

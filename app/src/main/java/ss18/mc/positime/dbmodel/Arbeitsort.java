@@ -5,79 +5,56 @@ import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
-import ss18.mc.positime.dbmodel.addressT;
-import ss18.mc.positime.dbmodel.currencyT;
+import android.support.annotation.NonNull;
 
 import ss18.mc.positime.model.Benutzer;
 
 @Entity(tableName = "arbeitsort", foreignKeys = {
-        @ForeignKey(entity = Chef.class,parentColumns = "chef_id",childColumns = "arbeitsort_id"),
-        @ForeignKey(entity = Benutzer.class,parentColumns = "benutzer_id",childColumns = "arbeitsort_id")})
+        @ForeignKey(entity = Benutzer.class,parentColumns = "email",childColumns = "benutzer_mail")})
 public class Arbeitsort {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "arbeitsort_id")
-    private int arbeitsortId;
-
+    @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "place_name")
     private String placeName;
     @ColumnInfo(name = "lat")
-    private String latA;
+    private double latA;
     @ColumnInfo(name = "long")
-    private String longA;
+    private double longA;
     @ColumnInfo(name = "radius")
     private int radiusA;
     @ColumnInfo(name = "money_perhour") //Gehalt pro Stunde
     private double moneyPerhour;
     @ColumnInfo(name = "weekly_hours")  //Sollstundensatz pro Woche
     private double weeklyHours;
-
-    @ColumnInfo(name = "chef_id")
-    private int chefId;
-    @ColumnInfo(name = "benutzer_id")
-    private int benutzerId;
+    @ColumnInfo(name = "benutzer_mail")
+    private String benutzer_mail;
+    @ColumnInfo (name = "Chef_firstname")
+    private String chefFistName;
+    @ColumnInfo (name = "Chef_lastname")
+    private String chefLastName;
+    @ColumnInfo (name = "Currency")
+    private String currency;
 
     @Embedded
     private addressT addresst;
 
-    @Embedded
-    private currencyT currencyt;
 
-    public Arbeitsort(int arbeitsortId, String placeName, String latA, String longA, int radiusA, double moneyPerhour, double weeklyHours, int chefId, int benutzerId, addressT addresst, currencyT currencyt) {
-        this.arbeitsortId = arbeitsortId;
+    public Arbeitsort(){
+        //DO NOTHING
+    }
+
+    public Arbeitsort(String placeName, double latA, double longA, int radiusA, double moneyPerhour, double weeklyHours, String chefLastName, String chefFistName, String benutzer_mail, addressT addresst, String currency) {
         this.placeName = placeName;
         this.latA = latA;
         this.longA = longA;
         this.radiusA = radiusA;
         this.moneyPerhour = moneyPerhour;
         this.weeklyHours = weeklyHours;
-        this.chefId = chefId;
-        this.benutzerId = benutzerId;
+        this.benutzer_mail = benutzer_mail;
         this.addresst = addresst;
-        this.currencyt = currencyt;
-    }
-
-    public int getChefId() {
-        return chefId;
-    }
-
-    public void setChefId(int chefId) {
-        this.chefId = chefId;
-    }
-
-    public int getBenutzerId() {
-        return benutzerId;
-    }
-
-    public void setBenutzerId(int benutzerId) {
-        this.benutzerId = benutzerId;
-    }
-
-    public int getArbeitsortId() {
-        return arbeitsortId;
-    }
-
-    public void setArbeitsortId(int arbeitsortId) {
-        this.arbeitsortId = arbeitsortId;
+        this.currency = currency;
+        this.chefFistName = chefFistName;
+        this.chefLastName = chefLastName;
     }
 
     public String getPlaceName() {
@@ -88,19 +65,19 @@ public class Arbeitsort {
         this.placeName = placeName;
     }
 
-    public String getLatA() {
+    public double getLatA() {
         return latA;
     }
 
-    public void setLatA(String latA) {
+    public void setLatA(double latA) {
         this.latA = latA;
     }
 
-    public String getLongA() {
+    public double getLongA() {
         return longA;
     }
 
-    public void setLongA(String longA) {
+    public void setLongA(double longA) {
         this.longA = longA;
     }
 
@@ -136,11 +113,35 @@ public class Arbeitsort {
         this.addresst = addresst;
     }
 
-    public currencyT getCurrencyt() {
-        return currencyt;
+    public String getChefFistName() {
+        return chefFistName;
     }
 
-    public void setCurrencyt(currencyT currencyt) {
-        this.currencyt = currencyt;
+    public void setChefFistName(String chefFistName) {
+        this.chefFistName = chefFistName;
+    }
+
+    public String getChefLastName() {
+        return chefLastName;
+    }
+
+    public void setChefLastName(String chefLastName) {
+        this.chefLastName = chefLastName;
+    }
+
+    public String getBenutzer_mail() {
+        return benutzer_mail;
+    }
+
+    public void setBenutzer_mail(String benutzer_mail) {
+        this.benutzer_mail = benutzer_mail;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }
