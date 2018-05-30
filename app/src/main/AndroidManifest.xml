@@ -40,15 +40,17 @@
         <activity
             android:name=".Profile"
             android:label="@string/app_name">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+
         </activity>
 
         <activity
             android:name=".Workplace_Details"
-            android:label="Details" />
+            android:label="Details" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".FragmentTab" />
         <activity android:name=".Workplace_Details_Custom" />
