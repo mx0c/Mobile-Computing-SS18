@@ -62,8 +62,9 @@ public class LoginActivity extends AppCompatActivity {
         checkTokenProcess();
 
         initView();
+        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
     }
-
+    
     private void initView(){
         email = (TextInputLayout) findViewById(R.id.emailLogin);
         password = (TextInputLayout) findViewById(R.id.passwordLogin);
@@ -94,8 +95,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 else {
-                    loginProcess(email.getEditText().getText().toString(),password.getEditText().getText().toString()); //Login User
-                    progressBar.setVisibility(View.VISIBLE); //Make progress bar visible to indicate login process
+                    //Login User
+                    loginProcess(email.getEditText().getText().toString(),password.getEditText().getText().toString());
+                    //Make progress bar visible to indicate login process
+                    progressBar.setVisibility(View.VISIBLE);
                 }
                 break;
         }
