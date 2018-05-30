@@ -1,68 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Overview"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
+    <include
+        layout="@layout/app_bar_navigation_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:paddingTop="25dp"
+        app:headerLayout="@layout/nav_header_navigation_activity"
+        app:menu="@menu/activity_navigation_activity_drawer" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@color/colorPrimaryDark"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        tools:context=".Overview"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="Workplaces"
-            android:textColor="@color/white"
-            android:textSize="25dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:text="Workplaces"
+                android:textColor="@color/white"
+                android:textSize="25dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="449dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteY="62dp">
+
+            <Button
+                android:id="@+id/workPlace1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/ic_work_pink"
+                android:drawableRight="@drawable/ic_keyboard_arrow_pink"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Workplace 1"
+                />
+            <Button
+                android:id="@+id/workPlace2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Workplace 2"
+                android:drawableLeft="@drawable/ic_work"
+                android:drawableRight="@drawable/ic_keyboard_arrow_pink"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"/>
+            <Button
+                android:id="@+id/workPlace3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Workplace 3"
+                android:drawableLeft="@drawable/ic_work_pink"
+                android:drawableRight="@drawable/ic_keyboard_arrow_pink"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"/>
+        </LinearLayout>
 
     </LinearLayout>
+</android.support.v4.widget.DrawerLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="449dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteY="62dp">
-
-        <Button
-            android:id="@+id/workPlace1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:drawableLeft="@drawable/ic_work_pink"
-            android:drawableRight="@drawable/ic_keyboard_arrow_pink"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="Workplace 1"
-            />
-        <Button
-            android:id="@+id/workPlace2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Workplace 2"
-            android:drawableLeft="@drawable/ic_work"
-            android:drawableRight="@drawable/ic_keyboard_arrow_pink"
-            android:background="@color/white"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"/>
-        <Button
-            android:id="@+id/workPlace3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Workplace 3"
-            android:drawableLeft="@drawable/ic_work_pink"
-            android:drawableRight="@drawable/ic_keyboard_arrow_pink"
-            android:background="@color/white"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"/>
-    </LinearLayout>
-
-
-</LinearLayout>
