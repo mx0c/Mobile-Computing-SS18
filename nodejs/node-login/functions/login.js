@@ -5,37 +5,60 @@ const bcrypt = require('bcryptjs');
 
 exports.loginUser = (email, password) =>
 
-	new Promise((resolve,reject) => {
+       	new Promise((resolve,reject) => {
 
-		user.find({email: email})
+       		user.find({email: email})
 
-		.then(users => {
+       		.then(users => {
 
-			if (users.length == 0) {
+       			if (users.length == 0) {
 
-				reject({ status: 404, message: 'User Not Found !' });
+       				reject({ status: 404, message: 'User Not Found !' });
 
-			} else {
+       			} else {
 
-				return users[0];
+       				return users[0];
 
-			}
-		})
+       			}
+       		})
 
-		.then(user => {
+       		.then(user => {
 
-			const hashed_password = user.hashed_password;
+       			const hashed_password = user.hashed_password;
 
-			if (bcrypt.compareSync(password, hashed_password)) {
+       			if (bcrypt.compareSync(password, hashed_password)) {
 
-				resolve({ status: 200, message: email });
+       				resolve({ status: 200, message: email });
 
-			} else {
+       			} else {
 
-				reject({ status: 401, message: 'Invalid Credentials !' });
-			}
-		})
+       				reject({ status: 401, message: 'Invalid Credentials !' });
+       			}
+       		})
 
-		.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+       		.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
 
-	});
+       	});
+
+
+exports.getUser = (email) =>
+
+    new Promise((resolve,reject) => {
+        console.log("checking user");
+
+        user.find({email: email})
+
+        .then(users => {
+
+            if (users.length == 0) {
+
+                reject({ message: 'User Not Found !' });
+
+            } else {
+                resolve(users[0])
+            }
+        })
+
+        .catch(err => reject({message: 'Internal Server Error !' }));
+
+    });

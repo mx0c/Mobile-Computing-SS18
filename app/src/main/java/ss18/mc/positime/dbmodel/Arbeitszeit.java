@@ -4,6 +4,7 @@ package ss18.mc.positime.dbmodel;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
@@ -12,7 +13,9 @@ import java.util.Date;
 import ss18.mc.positime.utils.TimestampConverter;
 
 
-@Entity(tableName = "arbeitszeit", foreignKeys = @ForeignKey(entity = Arbeitsort.class,parentColumns = "place_name",
+@Entity(tableName = "arbeitszeit",
+        indices = {@Index("arbeitszeit_id")},
+        foreignKeys = @ForeignKey(entity = Arbeitsort.class,parentColumns = "place_name",
         childColumns = "arbeitsort_name"))
 public class Arbeitszeit {
     @PrimaryKey(autoGenerate = true)
@@ -39,21 +42,6 @@ public class Arbeitszeit {
 
     @ColumnInfo(name = "breaktime")
     private int breaktime;
-
-
-    public Arbeitszeit () {
-        //Do nothing
-    }
-
-    public Arbeitszeit(int arbeitszeitId, int amountBreaks, String arbeitsort_name, Date workday, Date starttime, Date endtime, int breaktime) {
-        this.arbeitszeitId = arbeitszeitId;
-        this.amountBreaks = amountBreaks;
-        this.arbeitsort_name = arbeitsort_name;
-        this.workday = workday;
-        this.starttime = starttime;
-        this.endtime = endtime;
-        this.breaktime = breaktime;
-    }
 
     public int getArbeitszeitId() {
         return arbeitszeitId;

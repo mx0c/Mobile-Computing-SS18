@@ -26,7 +26,7 @@ public class BackgroundService extends Service {
     @Override
     public void onCreate() {
         //start LocationService
-        Intent i =new Intent(getApplicationContext(),LocationService.class);
+        Intent i = new Intent(getApplicationContext(), LocationService.class);
         startService(i);
 
         this.db = BenutzerDatabase.getBenutzerDatabase(this);
@@ -35,41 +35,47 @@ public class BackgroundService extends Service {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                onLocationUpdate((double)intent.getExtras().get("latitude"), (double)intent.getExtras().get("longitude"));
+                onLocationUpdate((double) intent.getExtras().get("latitude"), (double) intent.getExtras().get("longitude"));
             }
         };
-        registerReceiver(broadcastReceiver,new IntentFilter("location_update"));
+        registerReceiver(broadcastReceiver, new IntentFilter("location_update"));
     }
 
-    private void onLocationUpdate(double lat, double lon){
+    private void onLocationUpdate(double lat, double lon) {
         Location myLocation = new Location("");
         myLocation.setLongitude(lon);
         myLocation.setLatitude(lat);
         //check if current location is in a saved Workplace
-        for(Arbeitsort a : db.arbeitsortDAO().getAll()){
+        for (Arbeitsort a : db.arbeitsortDAO().getAll()) {
             Location workplaceLocation = new Location("");
             workplaceLocation.setLatitude(a.getLatA());
             workplaceLocation.setLongitude(a.getLongA());
-            if(workplaceLocation.distanceTo(myLocation) < a.getRadiusA()){
+            if (workplaceLocation.distanceTo(myLocation) < a.getRadiusA()) {
                 //TODO: update database with time
 
                 //send Broadcast Dashboard Informations
                 //get todays arbeitszeit
-                Arbeitszeit currAZ = this.findTodaysArbeitszeit(db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName()),a);
-                if(currAZ == null){
+                Arbeitszeit currAZ = this.findTodaysArbeitszeit(db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName()), a);
+                if (currAZ == null) {
                     //create new Arbeitszeit
-                    currAZ = new Arbeitszeit(0,0,a.getPlaceName(),new Date(),new Date(),new Date(),0);
+                    currAZ.setAmountBreaks(0);
+                    currAZ.setWorkday(new Date());
+                    currAZ.setArbeitsort_name(a.getPlaceName());
+                    currAZ.setBreaktime(0);
+                    currAZ.setArbeitszeitId(0);
+                    currAZ.setStarttime(new Date());
+                    currAZ.setEndtime(new Date());
                     db.arbeitszeitDAO().insertAll(currAZ);
                 }
-                Date time = this.calculateTimePassed(currAZ.getStarttime(),currAZ.getEndtime());
+                Date time = this.calculateTimePassed(currAZ.getStarttime(), currAZ.getEndtime());
                 Calendar calendar = GregorianCalendar.getInstance();
                 calendar.setTime(time);
 
                 Intent i = new Intent("dashboard_informations");
-                i.putExtra("current_workplace_name",a.getPlaceName());
+                i.putExtra("current_workplace_name", a.getPlaceName());
                 i.putExtra("current_workplace_time_hours", calendar.get(Calendar.HOUR));
-                i.putExtra("current_workplace_time_minutes",calendar.get(Calendar.MINUTE));
-                i.putExtra("current_workplace_money_earned",this.calculateMoneyEarned(calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE), a.getMoneyPerhour()));
+                i.putExtra("current_workplace_time_minutes", calendar.get(Calendar.MINUTE));
+                i.putExtra("current_workplace_money_earned", this.calculateMoneyEarned(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), a.getMoneyPerhour()));
                 //etc etc
                 sendBroadcast(i);
                 return;
@@ -77,16 +83,16 @@ public class BackgroundService extends Service {
         }
         //only gets executed when not inside workplace
         Intent i = new Intent("dashboard_informations");
-        i.putExtra("current_workplace_name",0);
+        i.putExtra("current_workplace_name", 0);
         sendBroadcast(i);
     }
 
-    Arbeitszeit findTodaysArbeitszeit(List<Arbeitszeit> AL, Arbeitsort a){
+    Arbeitszeit findTodaysArbeitszeit(List<Arbeitszeit> AL, Arbeitsort a) {
         Calendar c = GregorianCalendar.getInstance();
         Calendar currentDate = Calendar.getInstance();
-        for(Arbeitszeit atime : db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName())){
+        for (Arbeitszeit atime : db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName())) {
             c.setTime(atime.getWorkday());
-            if(currentDate.get(Calendar.DATE) == c.get(Calendar.DATE)){
+            if (currentDate.get(Calendar.DATE) == c.get(Calendar.DATE)) {
                 //found Arbeitszeit for this date
                 return atime;
             }
@@ -94,21 +100,21 @@ public class BackgroundService extends Service {
         return null;
     }
 
-    Date calculateTimePassed(Date start, Date end){
+    Date calculateTimePassed(Date start, Date end) {
         long diffInMillies = start.getTime() - end.getTime();
         return new Date(diffInMillies);
     }
 
-    Double calculateMoneyEarned(int hours, int minutes , double earningsPerHour){
+    Double calculateMoneyEarned(int hours, int minutes, double earningsPerHour) {
         String t = String.valueOf(hours) + "." + String.valueOf(minutes);
-        return Double.parseDouble(t)*earningsPerHour;
+        return Double.parseDouble(t) * earningsPerHour;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         //stop LocationService
-        Intent i = new Intent(getApplicationContext(),LocationService.class);
+        Intent i = new Intent(getApplicationContext(), LocationService.class);
         stopService(i);
     }
 

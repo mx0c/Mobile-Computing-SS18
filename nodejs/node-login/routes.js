@@ -8,6 +8,7 @@ const login = require('./functions/login');
 const profile = require('./functions/profile');
 const password = require('./functions/password');
 const config = require('./config/config.json');
+const user = require('./models/user');
 
 module.exports = router => {
 
@@ -17,23 +18,33 @@ module.exports = router => {
 	router.post('/authenticate', (req, res) => {
 
 		const credentials = auth(req);
+        const loggedUser = null;
+
 
 		if (!credentials) {
 
 			res.status(400).json({ message: 'Invalid Request !' });
 
 		} else {
-
 			login.loginUser(credentials.name, credentials.pass)
 
 			.then(result => {
+                const loginResult = result;
+                login.getUser(credentials.name)
+                            .then(result => {
+                                console.log("Result: " + result);
+                                const token = jwt.sign(loginResult, config.secret, { expiresIn: "365d" });
 
-				const token = jwt.sign(result, config.secret, { expiresIn: "365d" });
 
-				res.status(result.status).json({ message: result.message, token: token });
+                                //Response
+                                console.log("Status Code: " + loginResult.status);
+                                console.log("User: " + result);
+                                console.log("Email for User: " + loginResult.message);
+                                console.log("Token: " + token);
 
-				console.log(token);
 
+                                res.status(loginResult.status).json({ user: JSON.stringify(result), message: loginResult.message, token: token });
+                            })
 			})
 
 			.catch(err => res.status(err.status).json({ message: err.message }));

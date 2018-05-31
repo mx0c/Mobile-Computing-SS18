@@ -21,6 +21,7 @@ import android.widget.Toast;
 import ss18.mc.positime.utils.Constants;
 
 public class DashboardActivity extends AppCompatActivity implements OnNavigationItemSelectedListener{
+    SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,12 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        //Only for testing purposes. Can be deleted. This demonstrates how to get the email of the currently logged in user
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        TextView textView = (TextView) findViewById(R.id.textView2);
+        textView.setText(mSharedPreferences.getString(Constants.EMAIL, ""));
     }
 
 
@@ -45,13 +52,15 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
     public void onLogoutClick(MenuItem view) {
         switch(view.getItemId()){
             case R.id.logout_icon:
-
-                //Reset token
+                //Reset all the saved data
                 SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
                 SharedPreferences.Editor editor = mSharedPreferences.edit();
                 editor.putString(Constants.TOKEN,null);
                 editor.putString(Constants.EMAIL,null);
+                editor.putString(Constants.FIRSTNAME,null);
+                editor.putString(Constants.LASTNAME, null);
+                editor.putString(Constants.PASSWORD, null);
                 editor.apply();
 
                 Intent intent = new Intent(this, LoginActivity.class);

@@ -4,13 +4,15 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import ss18.mc.positime.model.Benutzer;
 
-@Entity(tableName = "arbeitsort", foreignKeys = {
-        @ForeignKey(entity = Benutzer.class,parentColumns = "email",childColumns = "benutzer_mail")})
+@Entity(tableName = "arbeitsort",
+        indices = {@Index("place_name")},
+        foreignKeys = {@ForeignKey(entity = Benutzer.class, parentColumns = "email", childColumns = "benutzer_mail")})
 public class Arbeitsort {
     @PrimaryKey
     @NonNull
@@ -28,34 +30,15 @@ public class Arbeitsort {
     private double weeklyHours;
     @ColumnInfo(name = "benutzer_mail")
     private String benutzer_mail;
-    @ColumnInfo (name = "Chef_firstname")
+    @ColumnInfo(name = "Chef_firstname")
     private String chefFistName;
-    @ColumnInfo (name = "Chef_lastname")
+    @ColumnInfo(name = "Chef_lastname")
     private String chefLastName;
-    @ColumnInfo (name = "Currency")
+    @ColumnInfo(name = "Currency")
     private String currency;
 
     @Embedded
     private addressT addresst;
-
-
-    public Arbeitsort(){
-        //DO NOTHING
-    }
-
-    public Arbeitsort(String placeName, double latA, double longA, int radiusA, double moneyPerhour, double weeklyHours, String chefLastName, String chefFistName, String benutzer_mail, addressT addresst, String currency) {
-        this.placeName = placeName;
-        this.latA = latA;
-        this.longA = longA;
-        this.radiusA = radiusA;
-        this.moneyPerhour = moneyPerhour;
-        this.weeklyHours = weeklyHours;
-        this.benutzer_mail = benutzer_mail;
-        this.addresst = addresst;
-        this.currency = currency;
-        this.chefFistName = chefFistName;
-        this.chefLastName = chefLastName;
-    }
 
     public String getPlaceName() {
         return placeName;

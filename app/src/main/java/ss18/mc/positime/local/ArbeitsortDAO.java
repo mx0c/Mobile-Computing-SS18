@@ -14,6 +14,12 @@ public interface ArbeitsortDAO {
     @Query("SELECT * FROM arbeitsort")
     List<Arbeitsort> getAll();
 
+    @Query("SELECT * FROM arbeitsort WHERE benutzer_mail = :usrEmail")
+    List<Arbeitsort> getArbeitsorteForUser(String usrEmail);
+
+    @Query("SELECT * FROM arbeitsort WHERE benutzer_mail = :benutzer_mail AND place_name = :place_name ")
+    Arbeitsort getOneArbeitsortForBenutzer(String place_name, String benutzer_mail);
+
     @Insert
     void insertAll(Arbeitsort... arbeitsorts);
 

@@ -1,9 +1,9 @@
 package ss18.mc.positime;
 
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -19,9 +19,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import ss18.mc.positime.model.Response;
+import ss18.mc.positime.model.User;
 import ss18.mc.positime.network.NetworkUtil;
 import ss18.mc.positime.utils.Validation;
-import ss18.mc.positime.model.User;
 
 public class RegisterActivity extends AppCompatActivity {
     TextInputLayout emailField;
@@ -45,13 +45,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    void initViews(){
-       emailField = (TextInputLayout) findViewById(R.id.emailInpt);
-       passwordField = (TextInputLayout) findViewById(R.id.passInpt);
-       passwordFieldConf = (TextInputLayout) findViewById(R.id.passInptConf);
-       firstname = (TextInputLayout) findViewById(R.id.firstname);
-       lastname = (TextInputLayout) findViewById(R.id.lastname);
-       progressBar = (ProgressBar) findViewById(R.id.progressBarRegister);
+    void initViews() {
+        emailField = (TextInputLayout) findViewById(R.id.emailInpt);
+        passwordField = (TextInputLayout) findViewById(R.id.passInpt);
+        passwordFieldConf = (TextInputLayout) findViewById(R.id.passInptConf);
+        firstname = (TextInputLayout) findViewById(R.id.firstname);
+        lastname = (TextInputLayout) findViewById(R.id.lastname);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarRegister);
     }
 
     @Override
@@ -66,27 +66,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     void onClick(View view) {
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.registerButton:
                 //Check if all fields are filled correctly before sending a request
 
-                TextInputLayout[] allFields = {emailField,passwordField,passwordFieldConf,firstname,lastname};
+                TextInputLayout[] allFields = {emailField, passwordField, passwordFieldConf, firstname, lastname};
 
-                if(!Validation.validateEmail(emailField)){
-                    emailField.setError("Please use a correct email!");
-                    //TODO Remove error when text is entered
-                }
-
-                else if(!Validation.validateFields(passwordField.getEditText().getText().toString(), passwordFieldConf.getEditText().getText().toString())){
-                    passwordFieldConf.setError("Passwords are not matching!");
-                    //TODO Remove error when text is entered
-                }
-
-                else if(!Validation.checkForEmptyFields(allFields)){
-                    Toast.makeText(this,R.string.notAllFields, Toast.LENGTH_SHORT).show();
-                }
-
-                else {
+                if (!Validation.checkForEmptyFields(allFields)) {
+                    Toast.makeText(this, R.string.notAllFields, Toast.LENGTH_SHORT).show();
+                } else if (!Validation.validateEmail(emailField)) {
+                    Toast.makeText(this, R.string.wrongEmail, Toast.LENGTH_SHORT).show();
+                } else if (!Validation.validateFields(passwordField.getEditText().getText().toString(), passwordFieldConf.getEditText().getText().toString())) {
+                    Toast.makeText(this, R.string.noPasswordMatch, Toast.LENGTH_SHORT).show();
+                } else {
                     User user = new User();
                     user.setEmail(emailField.getEditText().getText().toString());
                     user.setPassword(passwordField.getEditText().getText().toString());
@@ -105,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
         mSubscriptions.add(NetworkUtil.getRetrofit().register(user)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
+                .subscribe(this::handleResponse, this::handleError));
     }
 
     private void handleResponse(Response response) {
@@ -125,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
             try {
 
                 String errorBody = ((HttpException) error).response().errorBody().string();
-                Response response = gson.fromJson(errorBody,Response.class);
+                Response response = gson.fromJson(errorBody, Response.class);
                 showSnackBarMessage(response.getMessage());
 
             } catch (IOException e) {
@@ -141,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (findViewById(android.R.id.content) != null) {
 
-            Snackbar.make(findViewById(android.R.id.content),message,Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
         }
     }
 
