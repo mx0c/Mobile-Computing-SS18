@@ -2,35 +2,32 @@ package ss18.mc.positime;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import ss18.mc.positime.utils.Constants;
 
-public class Workplace_Details_Custom extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    Intent i;
+public class Workplace extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_workplace__details__custom);
-
+        setContentView(R.layout.activity_workplace);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Workplace");
+        toolbar.setTitle("Workplaces");
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -39,21 +36,38 @@ public class Workplace_Details_Custom extends AppCompatActivity implements Navig
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+
+        //
+        ListView listView = (ListView) findViewById(R.id.workplace_list_view);
     }
+
+
     //When logout is clicked, remove token and go back to login
     public void onLogoutClick(MenuItem view) {
         switch(view.getItemId()){
             case R.id.logout_icon:
-
-                //Reset token
+                //Reset all the saved data
                 SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
                 SharedPreferences.Editor editor = mSharedPreferences.edit();
                 editor.putString(Constants.TOKEN,null);
                 editor.putString(Constants.EMAIL,null);
+                editor.putString(Constants.FIRSTNAME,null);
+                editor.putString(Constants.LASTNAME, null);
+                editor.putString(Constants.PASSWORD, null);
                 editor.apply();
 
                 Intent intent = new Intent(this, LoginActivity.class);
@@ -91,4 +105,5 @@ public class Workplace_Details_Custom extends AppCompatActivity implements Navig
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
