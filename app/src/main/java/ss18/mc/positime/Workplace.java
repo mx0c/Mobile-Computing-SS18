@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -12,15 +13,28 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import ss18.mc.positime.dbmodel.Arbeitsort;
+import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.Constants;
+import ss18.mc.positime.utils.DatabaseInitializer;
 
 public class Workplace extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    BenutzerDatabase db;
+    private static String TAG = "Workplace";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +64,34 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
         });
 
 
-        //
-        ListView listView = (ListView) findViewById(R.id.workplace_list_view);
+        initWorkplaceList();
+
+
+
+        //Temporary needs to be deleted before commit
+        BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
+        DatabaseInitializer.populateSync(db);
     }
 
+
+    private void initWorkplaceList() {
+        String userMail = "1234@gmail.com";
+        BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
+        List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
+        ArrayList<String> workplace_names = new ArrayList<String>();
+        String test[] = new String[]{"test1", "dsafjksdlkö"};
+
+        Log.d(TAG, "Workplaces found for user with email " + userMail  + ": " + workplaces.size());
+
+        //Iterate through workplaces and save names
+        for (int i = 0; i < workplaces.size(); i++){
+            workplace_names.add(workplaces.get(i).getPlaceName());
+        }
+
+        ListView listView = (ListView) findViewById(R.id.workplace_list_view);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,workplace_names);
+        listView.setAdapter(adapter);
+    }
 
     //When logout is clicked, remove token and go back to login
     public void onLogoutClick(MenuItem view) {

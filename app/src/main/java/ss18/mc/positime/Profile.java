@@ -25,7 +25,7 @@ public class Profile extends AppCompatActivity {
             BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
             DatabaseInitializer.populateSync(db);
 
-
+            /*
 
             List<Arbeitsort> allOrts = db.arbeitsortDAO().getAll();
             List<Benutzer> allUsers = db.benutzerDAO().getAll();
@@ -39,6 +39,8 @@ public class Profile extends AppCompatActivity {
             first.setText(allUsers.get(0).getFirstName().toString());
             last.setText(allUsers.get(0).getLastName().toString());
             mail.setText(allUsers.get(0).getEmail().toString());
+
+            */
 
 
 

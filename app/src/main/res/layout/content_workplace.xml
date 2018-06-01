@@ -11,6 +11,7 @@
     <ListView
         android:id="@+id/workplace_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        tools:layout_editor_absoluteY="66dp"></ListView>
 </android.support.constraint.ConstraintLayout>
