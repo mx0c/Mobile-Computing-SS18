@@ -63,10 +63,7 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
-
-        initWorkplaceList();
-
-
+        initWorkplaceList(); //Initialize the Workplaces to generate the ListView
 
         //Temporary needs to be deleted before commit
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
@@ -88,9 +85,20 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
             workplace_names.add(workplaces.get(i).getPlaceName());
         }
 
+
+        /*
         ListView listView = (ListView) findViewById(R.id.workplace_list_view);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,workplace_names);
         listView.setAdapter(adapter);
+        */
+
+        //instantiate custom adapter
+        MyCustomAdapter adapter = new MyCustomAdapter(workplace_names, this);
+
+        //handle listview and assign adapter
+        ListView lView = (ListView)findViewById(R.id.workplace_list_view);
+        lView.setAdapter(adapter);
+
     }
 
     //When logout is clicked, remove token and go back to login

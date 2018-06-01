@@ -77,15 +77,24 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        //Define all intents
+        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        Intent workplaceIntent = new Intent(this, Workplace.class);
+        Intent profileIntent = new Intent(this, Profile.class);
+        Intent overviewIntent = new Intent(this, Overview.class);
+        //TODO Statistics intent
+        //TODO Export intent
+        //TODO import intent
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_dashboard) {
             // Handle the camera action
         } else if (id == R.id.nav_overview) {
-
+            startActivity(overviewIntent);
         } else if (id == R.id.nav_workplaces) {
-
+            startActivity(workplaceIntent);
         } else if (id == R.id.nav_statistics) {
 
         } else if (id == R.id.nav_export) {
