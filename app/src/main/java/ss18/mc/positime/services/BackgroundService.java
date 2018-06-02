@@ -5,8 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,19 +18,20 @@ import java.util.List;
 import ss18.mc.positime.dbmodel.Arbeitsort;
 import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.Constants;
 
 
 public class BackgroundService extends Service {
     private BroadcastReceiver broadcastReceiver;
     private BenutzerDatabase db;
-
+    private SharedPreferences pref;
 
     @Override
     public void onCreate() {
         //start LocationService
         Intent i = new Intent(getApplicationContext(), LocationService.class);
         startService(i);
-
+        this.pref = PreferenceManager.getDefaultSharedPreferences(this);
         this.db = BenutzerDatabase.getBenutzerDatabase(this);
 
         //register new BroadcastReceiver
@@ -46,17 +49,20 @@ public class BackgroundService extends Service {
         myLocation.setLongitude(lon);
         myLocation.setLatitude(lat);
         //check if current location is in a saved Workplace
-        for (Arbeitsort a : db.arbeitsortDAO().getAll()) {
+        for (Arbeitsort a : db.arbeitsortDAO().getArbeitsorteForUser(pref.getString(Constants.EMAIL,null))) {
             Location workplaceLocation = new Location("");
             workplaceLocation.setLatitude(a.getLatA());
             workplaceLocation.setLongitude(a.getLongA());
             if (workplaceLocation.distanceTo(myLocation) < a.getRadiusA()) {
-                //TODO: update database with time
-
-                //send Broadcast Dashboard Informations
+                //Location is in Workplace
                 //get todays arbeitszeit
                 Arbeitszeit currAZ = this.findTodaysArbeitszeit(db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName()), a);
-                if (currAZ == null) {
+                if(currAZ != null){
+                    if(currAZ.getStarttime() == null){
+                        currAZ.setStarttime(new Date());
+                    }
+                    currAZ.setEndtime(new Date());
+                } else{
                     //create new Arbeitszeit
                     currAZ.setAmountBreaks(0);
                     currAZ.setWorkday(new Date());
