@@ -69,8 +69,7 @@ public class BackgroundService extends Service {
                     currAZ.setArbeitsort_name(a.getPlaceName());
                     currAZ.setBreaktime(0);
                     currAZ.setArbeitszeitId(0);
-                    currAZ.setStarttime(new Date());
-                    currAZ.setEndtime(new Date());
+                    //insert into db
                     db.arbeitszeitDAO().insertAll(currAZ);
                 }
                 Date time = this.calculateTimePassed(currAZ.getStarttime(), currAZ.getEndtime());
@@ -82,7 +81,9 @@ public class BackgroundService extends Service {
                 i.putExtra("current_workplace_time_hours", calendar.get(Calendar.HOUR));
                 i.putExtra("current_workplace_time_minutes", calendar.get(Calendar.MINUTE));
                 i.putExtra("current_workplace_money_earned", this.calculateMoneyEarned(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), a.getMoneyPerhour()));
-                //etc etc
+                i.putExtra("current_workplace_pause_minutes",currAZ.getBreaktime());
+                i.putExtra("current_workplace_pause_count",currAZ.getAmountBreaks());
+
                 sendBroadcast(i);
                 return;
             }
