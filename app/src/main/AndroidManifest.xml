@@ -38,7 +38,7 @@
         </service>
 
         <service
-            android:name=".BackgroundService">
+            android:name=".services.BackgroundService">
         </service>
 
         <activity
