@@ -39,6 +39,7 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
     TextView nav_mail;
     Toolbar toolbar;
     FloatingActionButton fab;
+    Intent wp_add_edit;
 
 
     @Override
@@ -56,8 +57,8 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                wp_add_edit = new Intent(getBaseContext(), Workplace_add_edit.class);
+                startActivity(wp_add_edit);
             }
         });
     }

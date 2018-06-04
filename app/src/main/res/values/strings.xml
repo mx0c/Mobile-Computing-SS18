@@ -2,9 +2,12 @@
     <!--Activities-->
     <string name="app_name">PosiTime</string>
     <string name="register_activity">Registration</string>
-    <string name ="profile_activity">Profile</string>
+    <string name="profile_activity">Profile</string>
     <string name="workplace_activity">Workplaces</string>
+    <string name="workplace_edit_activity">Edit Workplace</string>
+    <string name="workplace_add_activity">Create Workplace</string>
     <string name="dashboard_activity">Dashboard</string>
+
 
     <!-- Inputs  -->
     <string name="emailInput">Email Address</string>
@@ -38,5 +41,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_workplace">Workplace</string>
+    <string name="title_activity_workplace_add_edit">Workplace_add_edit</string>
+    <string name="title_activity_workplace_add_delete">workplace_add_delete</string>
 
 </resources>
