@@ -12,11 +12,13 @@ import java.util.Date;
 
 import ss18.mc.positime.utils.TimestampConverter;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 
 @Entity(tableName = "arbeitszeit",
         indices = {@Index("arbeitszeit_id")},
         foreignKeys = @ForeignKey(entity = Arbeitsort.class,parentColumns = "place_name",
-        childColumns = "arbeitsort_name"))
+        childColumns = "arbeitsort_name", onDelete = CASCADE))
 public class Arbeitszeit {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "arbeitszeit_id")

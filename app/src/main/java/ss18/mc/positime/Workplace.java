@@ -131,6 +131,9 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
 
     private void initWorkplaceList() {
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
+        //Temporary
+        DatabaseInitializer.populateSync(db);
+
         String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
 
         List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);

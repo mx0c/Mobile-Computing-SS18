@@ -39,7 +39,7 @@ public class DatabaseInitializer {
         user.setFirstName("Max");
         user.setLastName("Mustermann");
         user.setPassWord("1234"); //Password is usually hashed
-        user.setEmail("1234@gmail.com");
+        user.setEmail("ge2thez@gmail.com");
 
         db.benutzerDAO().insertAll(user);
 
@@ -53,7 +53,7 @@ public class DatabaseInitializer {
         Arbeitsort arbeitsort = new Arbeitsort();
         arbeitsort.setAddresst(address);
         arbeitsort.setPlaceName("Daheim");
-        arbeitsort.setBenutzer_mail("1234@gmail.com"); //Beziehung zu User
+        arbeitsort.setBenutzer_mail("ge2thez@gmail.com"); //Beziehung zu User
         arbeitsort.setChefFistName("Helene");
         arbeitsort.setChefLastName("Helene!");
         arbeitsort.setLatA(48.531415);
@@ -66,7 +66,7 @@ public class DatabaseInitializer {
         Arbeitsort arbeitsort2 = new Arbeitsort();
         arbeitsort2.setAddresst(address);
         arbeitsort2.setPlaceName("Hochschule Reutlingen");
-        arbeitsort2.setBenutzer_mail("1234@gmail.com");
+        arbeitsort2.setBenutzer_mail("ge2thez@gmail.com");
         arbeitsort2.setChefFistName("Nati");
         arbeitsort2.setChefLastName("Martinez");
         arbeitsort2.setLatA(48.531415);

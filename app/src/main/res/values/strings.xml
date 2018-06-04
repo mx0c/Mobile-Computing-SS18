@@ -27,6 +27,11 @@
     <string name="noPasswordMatch">Passwords do not match</string>
     <string name="notAllFields">Not all fields have been filled</string>
 
+    <!-- AlertDialog Workplace -->
+    <string name="workplace_delete_title">Delete Workplace</string>
+    <string name="workplace_delete_message">Do you really want to delete the workplace? If you select yes all data to the workplace will be deleted</string>
+    <string name="workplace_delete_toast">Workplace was deleted</string>
+
     <!-- System Configuation -->
     <string name="title_activity_navigation_activity">navigation_activity</string>
 
