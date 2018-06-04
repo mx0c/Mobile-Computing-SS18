@@ -1,115 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile">
+    android:fitsSystemWindows="true"
+    tools:context=".ProfileActivity"
+    tools:openDrawer="start">
 
-    <TextView
-        android:id="@+id/textLastname"
+    <include
+        layout="@layout/app_bar_navigation_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
-        android:text="Lastname"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFirstnameDB" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_navigation_activity"
+        app:menu="@menu/activity_navigation_activity_drawer">
 
-    <TextView
-        android:id="@+id/textLastnameDB"
-        android:layout_width="171dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="7dp"
-        android:text="@string/lname"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLastname" />
-
-    <LinearLayout
-        android:id="@+id/profilelinearLayout"
-        android:layout_width="0dp"
-        android:layout_height="108dp"
-        android:addStatesFromChildren="false"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/colorPrimary"
-        tools:visibility="visible">
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageProfile"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/avatar" />
-
-    <TextView
-        android:id="@+id/textProfile"
-        android:layout_width="64dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="40dp"
-        android:text="Profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@android:color/background_light"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:textColor="@android:color/background_light" />
-
-    <TextView
-        android:id="@+id/textFirstname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="29dp"
-        android:text="Firstname"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profilelinearLayout" />
-
-    <TextView
-        android:id="@+id/textFirstnameDB"
-        android:layout_width="171dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/fname"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFirstname" />
-
-    <TextView
-        android:id="@+id/textEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:text="E-Mail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLastnameDB" />
-
-    <TextView
-        android:id="@+id/textEmailDB"
-        android:layout_width="171dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/emailInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>

@@ -2,35 +2,27 @@ package ss18.mc.positime;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ss18.mc.positime.dbmodel.Arbeitsort;
-import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.Constants;
-import ss18.mc.positime.utils.DatabaseInitializer;
-import ss18.mc.positime.utils.MyCustomAdapter;
 
-public class Workplace extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static String TAG = "Workplace";
-    BenutzerDatabase db;
+public class ProfileActivity extends AppCompatActivity implements OnNavigationItemSelectedListener{
+    private static String TAG = "Profile";
     SharedPreferences mSharedPreferences;
     DrawerLayout drawer;
     NavigationView navigationView;
@@ -38,28 +30,16 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
     TextView nav_name;
     TextView nav_mail;
     Toolbar toolbar;
-    FloatingActionButton fab;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_workplace);
+        setContentView(R.layout.activity_profile);
 
         //Initialization
         initView();
         initSharedPreferences();
         initNavigation();
-        initWorkplaceList(); //Initialize the Workplaces to generate the ListView
-
-        //FloatingActionButton Listener
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     /*
@@ -67,8 +47,6 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
      */
     //Put view initializations in here
     private void initView() {
-        //Floating Button
-        fab = (FloatingActionButton) findViewById(R.id.fab);
         //TODO init your views here
     }
 
@@ -77,8 +55,6 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
         //Navigation Initialization
         String nameBuffer;
         String mail;
-        Intent profileActivity = new Intent(this, ProfileActivity.class);
-
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -89,20 +65,17 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
 
         nav_name = (TextView) headerView.findViewById(R.id.nav_firstLastName);
         nav_mail = (TextView) headerView.findViewById(R.id.nav_email);
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.bringToFront();
 
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.workplace_activity);
+        toolbar.setTitle(R.string.profile_activity);
         setSupportActionBar(toolbar);
 
         nameBuffer = mSharedPreferences.getString(Constants.FIRSTNAME, "Firstname") + " " + mSharedPreferences.getString(Constants.LASTNAME, "Lastname");
         mail = mSharedPreferences.getString(Constants.EMAIL, "Your Email");
-
-
 
         try {
             navigation_name.setText(nameBuffer); //Set text on view
@@ -110,14 +83,6 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
         } catch (NullPointerException e) {
             Log.e(TAG, "Couldn't fill navigation TextVievs with user data", e);
         }
-
-        headerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(profileActivity);
-                drawer.closeDrawer(GravityCompat.START);
-            }
-        });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -129,34 +94,18 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
-    private void initWorkplaceList() {
-        BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
-        String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
-
-        List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
-        ArrayList<String> workplace_names = new ArrayList<String>();
-
-        Log.d(TAG, "Workplaces found for user with email " + userMail + ": " + workplaces.size());
-
-        //instantiate custom adapter
-        MyCustomAdapter adapter = new MyCustomAdapter(workplaces, this);
-
-        //handle listview and assign adapter
-        ListView lView = (ListView) findViewById(R.id.workplace_list_view);
-        lView.setAdapter(adapter);
-    }
 
     //When logout is clicked, remove token and go back to login
     public void onLogoutClick(MenuItem view) {
-        switch (view.getItemId()) {
+        switch(view.getItemId()){
             case R.id.logout_icon:
                 //Reset all the saved data
                 SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
                 SharedPreferences.Editor editor = mSharedPreferences.edit();
-                editor.putString(Constants.TOKEN, null);
-                editor.putString(Constants.EMAIL, null);
-                editor.putString(Constants.FIRSTNAME, null);
+                editor.putString(Constants.TOKEN,null);
+                editor.putString(Constants.EMAIL,null);
+                editor.putString(Constants.FIRSTNAME,null);
                 editor.putString(Constants.LASTNAME, null);
                 editor.putString(Constants.PASSWORD, null);
                 editor.apply();
@@ -176,12 +125,14 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        //Define all intents
         Intent dashboardIntent = new Intent(this, DashboardActivity.class);
         Intent workplaceIntent = new Intent(this, Workplace.class);
         Intent overviewIntent = new Intent(this, Overview.class);
         //TODO Statistics intent
         //TODO Export intent
         //TODO import intent
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -202,5 +153,4 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

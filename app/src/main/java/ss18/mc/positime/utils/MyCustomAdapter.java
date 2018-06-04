@@ -1,4 +1,4 @@
-package ss18.mc.positime;
+package ss18.mc.positime.utils;
 
 import android.content.Context;
 import android.media.Image;
@@ -13,15 +13,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ss18.mc.positime.R;
+import ss18.mc.positime.dbmodel.Arbeitsort;
 
 public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<String> list = new ArrayList<String>();
+    private List<Arbeitsort> list;
     private Context context;
 
 
-    public MyCustomAdapter(ArrayList<String> list, Context context) {
+    public MyCustomAdapter(List<Arbeitsort> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -33,7 +35,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public Object getItem(int pos) {
-        return list.get(pos);
+        return list.get(pos).getPlaceName();
     }
 
     @Override
@@ -53,7 +55,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
 
         //Handle TextView and display string from your list
         TextView listItemText = (TextView) view.findViewById(R.id.list_item_string);
-        listItemText.setText(list.get(position));
+        listItemText.setText(list.get(position).getPlaceName());
 
         //Handle buttons and add onClickListeners
         ImageView deleteBtn = (ImageView) view.findViewById(R.id.delete_Btn);
