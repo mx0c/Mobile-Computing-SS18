@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -28,6 +30,7 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -45,10 +48,13 @@ import ss18.mc.positime.utils.Validation;
 
 public class LoginActivity extends AppCompatActivity {
     private static String TAG = "LoginActivity";
+
+    //View Initialization
     TextInputLayout email;
     TextInputLayout password;
     ProgressBar progressBar;
-    BenutzerDatabase database;
+
+    BenutzerDatabase database; //Datebase declaration
 
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
@@ -57,29 +63,38 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+
+        //Initialization
+        initView();
+        initSharedPreferences(); //Init default SharedPreferences to safe token
+
+        mSubscriptions = new CompositeSubscription();
         database = BenutzerDatabase.getBenutzerDatabase(this);
 
         get_runtime_permissions();
-
-        mSubscriptions = new CompositeSubscription();
-        initSharedPreferences(); //Init default SharedPreferences to safe token
         checkTokenProcess();
-
-        initView();
     }
 
+    /*
+        ####################################################################
+                                Initialization
+        ####################################################################
+     */
     private void initView() {
         email = (TextInputLayout) findViewById(R.id.emailLogin);
         password = (TextInputLayout) findViewById(R.id.passwordLogin);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
 
-
     private void initSharedPreferences() {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
-
+    /*
+     ####################################################################
+                          Click Handler
+     ####################################################################
+    */
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.registerText:
@@ -105,9 +120,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
     /*
-        Network Functions to handle check token process
-     */
+     ####################################################################
+                         Network Connectivity
+     ####################################################################
+    */
 
+    //Token Process
     private void checkTokenProcess() {
         String token = this.mSharedPreferences.getString(Constants.TOKEN, null);
         String email = this.mSharedPreferences.getString(Constants.EMAIL, null);
@@ -134,11 +152,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    /*
-        Network Functions to handle login Process
-     */
 
-
+    //Login Process
     private void loginProcess(String email, String password) {
         mSubscriptions.add(NetworkUtil.getRetrofit(email, password).login()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -173,8 +188,6 @@ public class LoginActivity extends AppCompatActivity {
             Log.e(TAG, "Exception", e);
         } finally {
             editor.apply();
-            Intent intent = new Intent(this, DashboardActivity.class);
-            startActivity(intent);
             email.getEditText().setText(null);
             password.getEditText().setText(null);
         }
@@ -191,6 +204,9 @@ public class LoginActivity extends AppCompatActivity {
         } catch (SQLiteConstraintException e) { //Constraint Exception is thrown if you try to insert an element whose primarykey is already present in the database -> duplicate object
             Log.d(TAG, "User already exists in the database. User wont be persisted locally.", e);
         }
+
+        Intent intent = new Intent(this, DashboardActivity.class);
+        startActivity(intent);
 
     }
 
@@ -225,6 +241,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
+    /*
+     ####################################################################
+                            Permissions
+     ####################################################################
+    */
     private void check_gps() {
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -255,7 +277,7 @@ public class LoginActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT < 23) {
             //no need for runtimePermissions
             check_gps();
-            Intent i = new Intent(this,LocationService.class);
+            Intent i = new Intent(this, LocationService.class);
             startService(i);
         }else {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -272,10 +294,9 @@ public class LoginActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     check_gps();
-                    Intent i = new Intent(this,LocationService.class);
+                    Intent i = new Intent(this, LocationService.class);
                     startService(i);
-                }
-                else{
+                } else {
                     // permission denied
                     // maybe ask again?
                     //get_runtime_permissions();
@@ -285,6 +306,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
+    /*
+     ####################################################################
+                                    Other
+     ####################################################################
+    */
     @Override
     public void onDestroy() {
         super.onDestroy();

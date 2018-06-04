@@ -30,7 +30,7 @@ public class Workplace_Details_Custom extends AppCompatActivity implements Navig
         setContentView(R.layout.activity_workplace__details__custom);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Dasboard");
+        toolbar.setTitle("Workplace");
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -3,7 +3,6 @@ package ss18.mc.positime.utils;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ss18.mc.positime.dbmodel.Arbeitsort;
@@ -23,16 +22,16 @@ public class DatabaseInitializer {
         task.execute();
     }
 
-    public static void populateSync(@NonNull final BenutzerDatabase db){
+    public static void populateSync(@NonNull final BenutzerDatabase db) {
         populateWithTestData(db);
     }
 
-    private static Benutzer addBenutzer(final BenutzerDatabase db, Benutzer benutzer){
+    private static Benutzer addBenutzer(final BenutzerDatabase db, Benutzer benutzer) {
         db.benutzerDAO().insertAll(benutzer);
         return benutzer;
     }
 
-    private static void populateWithTestData(BenutzerDatabase db)  {
+    private static void populateWithTestData(BenutzerDatabase db) {
         db.clearAllTables(); //clear all tables
 
         //Create a user NOTE: The user is acutally the user returned by the backend server
@@ -64,7 +63,21 @@ public class DatabaseInitializer {
         arbeitsort.setRadiusA(50);
         arbeitsort.setWeeklyHours(40);
 
-        db.arbeitsortDAO().insertAll(arbeitsort);
+        Arbeitsort arbeitsort2 = new Arbeitsort();
+        arbeitsort2.setAddresst(address);
+        arbeitsort2.setPlaceName("Hochschule Reutlingen");
+        arbeitsort2.setBenutzer_mail("1234@gmail.com");
+        arbeitsort2.setChefFistName("Nati");
+        arbeitsort2.setChefLastName("Martinez");
+        arbeitsort2.setLatA(48.531415);
+        arbeitsort2.setLongA(9.340418);
+        arbeitsort2.setMoneyPerhour(17);
+        arbeitsort2.setCurrency("Euro");
+        arbeitsort2.setRadiusA(50);
+        arbeitsort2.setWeeklyHours(40);
+
+
+        db.arbeitsortDAO().insertAll(arbeitsort, arbeitsort2);
 
         //Create Arbeitszeit to an Arbeitsort
         Arbeitszeit arbeitszeit = new Arbeitszeit();
@@ -91,27 +104,26 @@ public class DatabaseInitializer {
         ps2.setTiggerMin(540);
         ps2.setPausensettingsId(0);
 
-        db.pausenSettingsDAO().insertAll(ps1,ps2);
+        db.pausenSettingsDAO().insertAll(ps1, ps2);
     }
 
-    private static class PopulateDbAsync extends AsyncTask<Void,Void,Void> {
+    private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final BenutzerDatabase mDb;
+
         PopulateDbAsync(BenutzerDatabase db) {
             mDb = db;
         }
 
         @Override
-        protected Void doInBackground(final Void... params){
+        protected Void doInBackground(final Void... params) {
             populateWithTestData(mDb);
-
 
 
             return null;
         }
 
     }
-
 
 
 }

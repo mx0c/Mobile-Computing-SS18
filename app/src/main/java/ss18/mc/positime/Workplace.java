@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,12 +16,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import ss18.mc.positime.utils.Constants;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DashboardActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
-    private static String TAG = "DashboardActivity";
+import ss18.mc.positime.dbmodel.Arbeitsort;
+import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.Constants;
+import ss18.mc.positime.utils.DatabaseInitializer;
+import ss18.mc.positime.utils.MyCustomAdapter;
+
+public class Workplace extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static String TAG = "Workplace";
+    BenutzerDatabase db;
     SharedPreferences mSharedPreferences;
     DrawerLayout drawer;
     NavigationView navigationView;
@@ -28,37 +38,40 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
     TextView nav_name;
     TextView nav_mail;
     Toolbar toolbar;
+    FloatingActionButton fab;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_workplace);
 
         //Initialization
         initView();
         initSharedPreferences();
         initNavigation();
+        initWorkplaceList(); //Initialize the Workplaces to generate the ListView
 
-        //Only for testing purposes. Can be deleted. This demonstrates how to get the email of the currently logged in user
-        TextView textView = (TextView) findViewById(R.id.textView2);
-        textView.setText(mSharedPreferences.getString(Constants.EMAIL, ""));
+        //FloatingActionButton Listener
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
-
     /*
-        ####################################################################
-                                Initialization
-        ####################################################################
+        initialization of views
      */
     //Put view initializations in here
     private void initView() {
+        //Floating Button
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         //TODO init your views here
     }
 
-    private void initSharedPreferences() {
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-    }
 
     private void initNavigation() {
         //Navigation Initialization
@@ -83,11 +96,12 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
 
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.dashboard_activity);
+        toolbar.setTitle(R.string.workplace_activity);
         setSupportActionBar(toolbar);
 
         nameBuffer = mSharedPreferences.getString(Constants.FIRSTNAME, "Firstname") + " " + mSharedPreferences.getString(Constants.LASTNAME, "Lastname");
         mail = mSharedPreferences.getString(Constants.EMAIL, "Your Email");
+
 
 
         try {
@@ -111,11 +125,27 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         toggle.syncState();
     }
 
-    /*
-     ####################################################################
-                          Navigation & Toolbar
-     ####################################################################
-    */
+    private void initSharedPreferences() {
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    private void initWorkplaceList() {
+        BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
+        String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
+
+        List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
+        ArrayList<String> workplace_names = new ArrayList<String>();
+
+        Log.d(TAG, "Workplaces found for user with email " + userMail + ": " + workplaces.size());
+
+        //instantiate custom adapter
+        MyCustomAdapter adapter = new MyCustomAdapter(workplaces, this);
+
+        //handle listview and assign adapter
+        ListView lView = (ListView) findViewById(R.id.workplace_list_view);
+        lView.setAdapter(adapter);
+    }
+
     //When logout is clicked, remove token and go back to login
     public void onLogoutClick(MenuItem view) {
         switch (view.getItemId()) {
@@ -131,6 +161,7 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
                 editor.putString(Constants.PASSWORD, null);
                 editor.apply();
 
+                finish(); //prevent from going back to activity
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;
@@ -145,14 +176,12 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        //Define all intents
         Intent dashboardIntent = new Intent(this, DashboardActivity.class);
         Intent workplaceIntent = new Intent(this, Workplace.class);
         Intent overviewIntent = new Intent(this, Overview.class);
         //TODO Statistics intent
         //TODO Export intent
         //TODO import intent
-
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -173,4 +202,5 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
