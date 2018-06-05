@@ -22,26 +22,53 @@ import ss18.mc.positime.utils.Constants;
 
 
 public class BackgroundService extends Service {
-    private BroadcastReceiver broadcastReceiver;
-    private BenutzerDatabase db;
-    private SharedPreferences pref;
+    private BroadcastReceiver mBroadcastReceiver;
+    private BenutzerDatabase mDb;
+    private SharedPreferences mPref;
+    private boolean mInPause;
+    private Arbeitszeit mCurrentArbeitszeit;
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        String command = intent.getExtras().get("command").toString();
+
+        switch (command){
+            case "RESUME":
+                this.mInPause = true;
+                break;
+            case "PAUSE":
+                //increase pauseAmount in DB
+                if(this.mCurrentArbeitszeit != null){
+                    this.mCurrentArbeitszeit.setAmountBreaks(this.mCurrentArbeitszeit.getAmountBreaks()+1);
+                }
+                //update db
+                mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
+                this.mInPause = false;
+                break;
+        }
+
+        return super.onStartCommand(intent, flags, startId);
+    }
 
     @Override
     public void onCreate() {
         //start LocationService
         Intent i = new Intent(getApplicationContext(), LocationService.class);
         startService(i);
-        this.pref = PreferenceManager.getDefaultSharedPreferences(this);
-        this.db = BenutzerDatabase.getBenutzerDatabase(this);
+        this.mPref = PreferenceManager.getDefaultSharedPreferences(this);
+        this.mDb = BenutzerDatabase.getBenutzerDatabase(this);
+
+        //init
+        this.mCurrentArbeitszeit = null;
 
         //register new BroadcastReceiver
-        broadcastReceiver = new BroadcastReceiver() {
+        mBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 onLocationUpdate((double) intent.getExtras().get("latitude"), (double) intent.getExtras().get("longitude"));
             }
         };
-        registerReceiver(broadcastReceiver, new IntentFilter("location_update"));
+        registerReceiver(mBroadcastReceiver, new IntentFilter("location_update"));
     }
 
     private void onLocationUpdate(double lat, double lon) {
@@ -49,30 +76,42 @@ public class BackgroundService extends Service {
         myLocation.setLongitude(lon);
         myLocation.setLatitude(lat);
         //check if current location is in a saved Workplace
-        for (Arbeitsort a : db.arbeitsortDAO().getArbeitsorteForUser(pref.getString(Constants.EMAIL,null))) {
+        for (Arbeitsort a : mDb.arbeitsortDAO().getArbeitsorteForUser(mPref.getString(Constants.EMAIL,null))) {
             Location workplaceLocation = new Location("");
             workplaceLocation.setLatitude(a.getLatA());
             workplaceLocation.setLongitude(a.getLongA());
             if (workplaceLocation.distanceTo(myLocation) < a.getRadiusA()) {
                 //Location is in Workplace
                 //get todays arbeitszeit
-                Arbeitszeit currAZ = this.findTodaysArbeitszeit(db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName()), a);
-                if(currAZ != null){
-                    if(currAZ.getStarttime() == null){
-                        currAZ.setStarttime(new Date());
+                this.mCurrentArbeitszeit = this.findTodaysArbeitszeit(mDb.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName()), a);
+                //when Pausebutton in Dashboard is pressed
+                if(this.mInPause){
+                    this.mCurrentArbeitszeit.setBreaktime(this.mCurrentArbeitszeit.getBreaktime()+10);
+                    //update db
+                    mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
+                    return;
+                }
+                if(this.mCurrentArbeitszeit != null){
+                    if(this.mCurrentArbeitszeit.getStarttime() == null){
+                        this.mCurrentArbeitszeit.setStarttime(new Date());
                     }
-                    currAZ.setEndtime(new Date());
+                    this.mCurrentArbeitszeit.setEndtime(new Date());
+                    //insert updated or new currAZ into db
+                    mDb.arbeitszeitDAO().insertAll(this.mCurrentArbeitszeit);
                 } else{
                     //create new Arbeitszeit
-                    currAZ.setAmountBreaks(0);
-                    currAZ.setWorkday(new Date());
-                    currAZ.setArbeitsort_name(a.getPlaceName());
-                    currAZ.setBreaktime(0);
-                    currAZ.setArbeitszeitId(0);
-                    //insert into db
-                    db.arbeitszeitDAO().insertAll(currAZ);
+                    this.mCurrentArbeitszeit.setAmountBreaks(0);
+                    this.mCurrentArbeitszeit.setWorkday(new Date());
+                    this.mCurrentArbeitszeit.setArbeitsort_name(a.getPlaceName());
+                    this.mCurrentArbeitszeit.setBreaktime(0);
+                    this.mCurrentArbeitszeit.setArbeitszeitId(0);
+
+                    //update db
+                    mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
                 }
-                Date time = this.calculateTimePassed(currAZ.getStarttime(), currAZ.getEndtime());
+
+
+                Date time = this.calculateTimePassed(this.mCurrentArbeitszeit.getStarttime(), this.mCurrentArbeitszeit.getEndtime());
                 Calendar calendar = GregorianCalendar.getInstance();
                 calendar.setTime(time);
 
@@ -81,8 +120,8 @@ public class BackgroundService extends Service {
                 i.putExtra("current_workplace_time_hours", calendar.get(Calendar.HOUR));
                 i.putExtra("current_workplace_time_minutes", calendar.get(Calendar.MINUTE));
                 i.putExtra("current_workplace_money_earned", this.calculateMoneyEarned(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), a.getMoneyPerhour()));
-                i.putExtra("current_workplace_pause_minutes",currAZ.getBreaktime());
-                i.putExtra("current_workplace_pause_count",currAZ.getAmountBreaks());
+                i.putExtra("current_workplace_pause_seconds",this.mCurrentArbeitszeit.getBreaktime());
+                i.putExtra("current_workplace_pause_count",this.mCurrentArbeitszeit.getAmountBreaks());
 
                 sendBroadcast(i);
                 return;
@@ -97,7 +136,7 @@ public class BackgroundService extends Service {
     Arbeitszeit findTodaysArbeitszeit(List<Arbeitszeit> AL, Arbeitsort a) {
         Calendar c = GregorianCalendar.getInstance();
         Calendar currentDate = Calendar.getInstance();
-        for (Arbeitszeit atime : db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName())) {
+        for (Arbeitszeit atime : mDb.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName())) {
             c.setTime(atime.getWorkday());
             if (currentDate.get(Calendar.DATE) == c.get(Calendar.DATE)) {
                 //found Arbeitszeit for this date
