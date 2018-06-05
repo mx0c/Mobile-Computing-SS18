@@ -1,21 +1,5 @@
 ﻿# Mobile-Computing-SS18
 
-## Receive LocationData from LocationService:
-```Java
-//Request Runtime Permissions first
-//Start LocationService
-//Create BroadcastReceiver to receive LocationData
-broadcastReceiver = new BroadcastReceiver() {
-  @Override
-    public void onReceive(Context context, Intent intent) {
-      Toast.makeText(this, intent.getExtras().get("latitude")+ " : " + intent.getExtras().get("longitude"), Toast.LENGTH_SHORT).show();
-    }
-  };
-}
-registerReceiver(broadcastReceiver,new IntentFilter("location_update"));
-```
-
-
 ## NodeJs Backend
 Back - End used for the authentication / login process
 

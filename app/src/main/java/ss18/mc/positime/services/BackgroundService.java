@@ -22,33 +22,12 @@ import ss18.mc.positime.utils.Constants;
 
 
 public class BackgroundService extends Service {
-    private BroadcastReceiver mBroadcastReceiver;
+    private BroadcastReceiver mLocationBroadcastReceiver;
+    private BroadcastReceiver mCommandBroadcastReceiver;
     private BenutzerDatabase mDb;
     private SharedPreferences mPref;
     private boolean mInPause;
     private Arbeitszeit mCurrentArbeitszeit;
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        String command = intent.getExtras().get("command").toString();
-
-        switch (command){
-            case "RESUME":
-                this.mInPause = true;
-                break;
-            case "PAUSE":
-                //increase pauseAmount in DB
-                if(this.mCurrentArbeitszeit != null){
-                    this.mCurrentArbeitszeit.setAmountBreaks(this.mCurrentArbeitszeit.getAmountBreaks()+1);
-                }
-                //update db
-                mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
-                this.mInPause = false;
-                break;
-        }
-
-        return super.onStartCommand(intent, flags, startId);
-    }
 
     @Override
     public void onCreate() {
@@ -61,14 +40,37 @@ public class BackgroundService extends Service {
         //init
         this.mCurrentArbeitszeit = null;
 
-        //register new BroadcastReceiver
-        mBroadcastReceiver = new BroadcastReceiver() {
+        //register BroadcastReceivers
+        mCommandBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getExtras().get("command").toString();
+
+                switch (command) {
+                    case "RESUME":
+                        mInPause = true;
+                        break;
+                    case "PAUSE":
+                        //increase pauseAmount in DB
+                        if (mCurrentArbeitszeit != null) {
+                            mCurrentArbeitszeit.setAmountBreaks(mCurrentArbeitszeit.getAmountBreaks() + 1);
+                        }
+                        //update db
+                        mDb.arbeitszeitDAO().updateArbeitszeit(mCurrentArbeitszeit);
+                        mInPause = false;
+                        break;
+                }
+            }
+        };
+        registerReceiver(mCommandBroadcastReceiver, new IntentFilter("background_commands"));
+
+        mLocationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 onLocationUpdate((double) intent.getExtras().get("latitude"), (double) intent.getExtras().get("longitude"));
             }
         };
-        registerReceiver(mBroadcastReceiver, new IntentFilter("location_update"));
+        registerReceiver(mLocationBroadcastReceiver, new IntentFilter("location_update"));
     }
 
     private void onLocationUpdate(double lat, double lon) {
