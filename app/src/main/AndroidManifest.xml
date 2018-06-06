@@ -37,7 +37,9 @@
         <activity
             android:name=".RegisterActivity"
             android:label="@string/register_activity" />
-        <activity android:name=".Overview" />
+        <activity
+            android:name=".Overview"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Workplace_Details"
             android:label="Details" />

@@ -58,6 +58,7 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onClick(View view) {
                 wp_add_edit = new Intent(getBaseContext(), Workplace_add_edit.class);
+                wp_add_edit.putExtra("source", "add");
                 startActivity(wp_add_edit);
             }
         });

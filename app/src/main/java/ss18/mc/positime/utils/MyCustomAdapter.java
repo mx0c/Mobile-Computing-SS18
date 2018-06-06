@@ -22,6 +22,7 @@ import java.util.List;
 import ss18.mc.positime.LoginActivity;
 import ss18.mc.positime.R;
 import ss18.mc.positime.Workplace;
+import ss18.mc.positime.Workplace_add_edit;
 import ss18.mc.positime.dbmodel.Arbeitsort;
 import ss18.mc.positime.local.BenutzerDatabase;
 
@@ -112,7 +113,9 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Edit", Toast.LENGTH_SHORT).show();
-                //do something
+                Intent edit_workplace = new Intent(context, Workplace_add_edit.class);
+                edit_workplace.putExtra("source", "edit");
+                context.startActivity(edit_workplace);
                 notifyDataSetChanged();
             }
         });
