@@ -10,30 +10,48 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 
 import ss18.mc.positime.utils.Constants;
 
-public class Overview extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+public class Overview extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     Button button;
+
+    NavigationView navigationView;
+    DrawerLayout drawer;
+    View headerView;
+    TextView nav_name;
+    TextView nav_mail;
+    Toolbar toolbar;
+    SharedPreferences mSharedPreferences;
+    private static String TAG = "abc";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Workplaces");
+        initSharedPreferences();
+        initNavigation();
+
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Workplaces xx");
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        toggle.syncState();*/
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -97,5 +115,62 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void initNavigation() {
+        //Navigation Initialization
+        String nameBuffer;
+        String mail;
+        Intent profileActivity = new Intent(this, ProfileActivity.class);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        headerView = navigationView.getHeaderView(0);
+
+        TextView navigation_name = (TextView) headerView.findViewById(R.id.nav_firstLastName);
+        TextView navigation_mail = (TextView) headerView.findViewById(R.id.nav_email);
+
+        nav_name = (TextView) headerView.findViewById(R.id.nav_firstLastName);
+        nav_mail = (TextView) headerView.findViewById(R.id.nav_email);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.bringToFront();
+
+        //Toolbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.dashboard_activity);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Overview Workplaces");
+
+        nameBuffer = mSharedPreferences.getString(Constants.FIRSTNAME, "Firstname") + " " + mSharedPreferences.getString(Constants.LASTNAME, "Lastname");
+        mail = mSharedPreferences.getString(Constants.EMAIL, "Your Email");
+
+
+        try {
+            navigation_name.setText(nameBuffer); //Set text on view
+            navigation_mail.setText(mail);
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Couldn't fill navigation TextVievs with user data", e);
+        }
+
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(profileActivity);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+
+    private void initSharedPreferences() {
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 }

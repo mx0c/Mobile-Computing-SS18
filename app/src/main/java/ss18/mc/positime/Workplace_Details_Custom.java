@@ -24,6 +24,7 @@ public class Workplace_Details_Custom extends AppCompatActivity implements Navig
 
     Intent i;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,8 @@ public class Workplace_Details_Custom extends AppCompatActivity implements Navig
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
     }
     //When logout is clicked, remove token and go back to login

@@ -16,19 +16,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".DashboardActivity"
             android:label="test"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,48 +36,36 @@
 
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/register_activity" >
-        </activity>
-
+            android:label="@string/register_activity" />
         <activity
-            android:name=".Overview">
-        </activity>
-
+            android:name=".Overview"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Workplace_Details"
-            android:label="Details" >
-        </activity>
-
-        <activity
-            android:name=".FragmentTab">
-        </activity>
-
-        <activity
-            android:name=".Workplace_Details_Custom">
-        </activity>
-
-        <activity
-            android:name=".Select_date_calendar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".FragmentTab" />
+        <activity android:name=".Workplace_Details_Custom" />
+        <activity android:name=".Select_date_calendar" />
         <activity
             android:name=".navigation_activity"
             android:label="@string/title_activity_navigation_activity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Workplace"
             android:label="@string/title_activity_workplace"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProfileActivity"
             android:label="Profile"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".utils.Overview_day" />
+        <activity android:name=".utils.Overview_month" />
+        <activity android:name=".utils.Overview_week" />
+        <activity android:name=".utils.Overview_custom" />
+        <activity android:name=".Overview_Custom" />
+        <activity android:name=".Overview_Day" />
+        <activity android:name=".Overview_Week" />
+        <activity android:name=".Overview_Month"></activity>
     </application>
 
 </manifest>
