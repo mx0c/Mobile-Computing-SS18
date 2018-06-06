@@ -70,6 +70,7 @@
             android:background="@color/colorPrimary"
             android:scaleType="fitXY"
             android:adjustViewBounds="true" />
+
         <ImageView
             android:id = "@+id/play_work"
         android:layout_width="75dp"
