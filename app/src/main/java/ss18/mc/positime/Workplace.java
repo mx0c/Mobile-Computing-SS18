@@ -40,6 +40,7 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
     Toolbar toolbar;
     FloatingActionButton fab;
     Intent wp_add_edit;
+    MyCustomAdapter adapter;
 
 
     @Override
@@ -65,7 +66,9 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
     }
 
     /*
-        initialization of views
+        ####################################################################
+                                Initialization
+        ####################################################################
      */
     //Put view initializations in here
     private void initView() {
@@ -134,7 +137,7 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
     private void initWorkplaceList() {
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
         //Temporary
-        DatabaseInitializer.populateSync(db);
+        //DatabaseInitializer.populateSync(db);
 
         String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
 
@@ -144,7 +147,7 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
         Log.d(TAG, "Workplaces found for user with email " + userMail + ": " + workplaces.size());
 
         //instantiate custom adapter
-        MyCustomAdapter adapter = new MyCustomAdapter(workplaces, this);
+        adapter = new MyCustomAdapter(workplaces, this);
 
         //handle listview and assign adapter
         ListView lView = (ListView) findViewById(R.id.workplace_list_view);
@@ -206,6 +209,13 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 
 }

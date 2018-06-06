@@ -59,7 +59,7 @@ public class DatabaseInitializer {
         arbeitsort.setLatA(48.531415);
         arbeitsort.setLongA(9.340418);
         arbeitsort.setMoneyPerhour(17);
-        arbeitsort.setCurrency("Euro");
+        arbeitsort.setCurrency("€");
         arbeitsort.setRadiusA(50);
         arbeitsort.setWeeklyHours(40);
 
@@ -72,7 +72,7 @@ public class DatabaseInitializer {
         arbeitsort2.setLatA(48.531415);
         arbeitsort2.setLongA(9.340418);
         arbeitsort2.setMoneyPerhour(17);
-        arbeitsort2.setCurrency("Euro");
+        arbeitsort2.setCurrency("$");
         arbeitsort2.setRadiusA(50);
         arbeitsort2.setWeeklyHours(40);
 
