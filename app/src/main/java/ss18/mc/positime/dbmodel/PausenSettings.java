@@ -5,8 +5,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 @Entity(tableName = "pausensettings", foreignKeys = @ForeignKey(entity = Arbeitsort.class,parentColumns = "place_name",
-        childColumns = "arbeitsort_name"))
+        childColumns = "arbeitsort_name", onDelete = CASCADE))
 public class PausenSettings {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "pausensettings_id")

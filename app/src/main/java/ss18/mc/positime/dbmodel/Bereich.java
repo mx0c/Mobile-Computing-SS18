@@ -7,8 +7,11 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import ss18.mc.positime.dbmodel.*;
+
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 @Entity(tableName = "bereich", foreignKeys =
-@ForeignKey(entity = Arbeitsort.class,parentColumns = "place_name", childColumns = "bereich_id"))
+@ForeignKey(entity = Arbeitsort.class,parentColumns = "place_name", childColumns = "bereich_id", onDelete = CASCADE))
 public class Bereich {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "bereich_id")

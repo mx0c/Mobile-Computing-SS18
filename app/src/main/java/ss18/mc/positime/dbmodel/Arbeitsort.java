@@ -10,9 +10,12 @@ import android.support.annotation.NonNull;
 
 import ss18.mc.positime.model.Benutzer;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+import static android.arch.persistence.room.ForeignKey.NO_ACTION;
+
 @Entity(tableName = "arbeitsort",
         indices = {@Index("place_name")},
-        foreignKeys = {@ForeignKey(entity = Benutzer.class, parentColumns = "email", childColumns = "benutzer_mail")})
+        foreignKeys = {@ForeignKey(entity = Benutzer.class, parentColumns = "email", childColumns = "benutzer_mail", onDelete = NO_ACTION)})
 public class Arbeitsort {
     @PrimaryKey
     @NonNull
