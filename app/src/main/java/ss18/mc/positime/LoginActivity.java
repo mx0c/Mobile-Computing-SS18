@@ -200,7 +200,7 @@ public class LoginActivity extends AppCompatActivity {
             user.setFirstName(mSharedPreferences.getString(Constants.LASTNAME, ""));
             user.setEmail(mSharedPreferences.getString(Constants.EMAIL, ""));
             database.benutzerDAO().insertAll(user);
-            Log.d(TAG, "Stored new user in database");
+            Log.d(TAG, "Stored new user in database:" + user.getEmail());
         } catch (SQLiteConstraintException e) { //Constraint Exception is thrown if you try to insert an element whose primarykey is already present in the database -> duplicate object
             Log.d(TAG, "User already exists in the database. User wont be persisted locally.", e);
         }
