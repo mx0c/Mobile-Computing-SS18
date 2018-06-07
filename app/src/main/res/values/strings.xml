@@ -1,4 +1,8 @@
 <resources>
+    <!-- Google Maps API Key -->
+    <string name="map_api_key">AIzaSyCeULOnxNwDi2sKBH-Fv7WKV4TERDF-qnw</string>
+
+
     <!--Activities-->
     <string name="app_name">PosiTime</string>
     <string name="register_activity">Registration</string>
@@ -25,6 +29,7 @@
     <string name="workplace_currency_radio2">$</string>
     <string name="workplace_title_positionSelection">Select Position</string>
     <string name="workplace_btn_save">Save</string>
+    <string name="workplace_radius">Radius (in Meters)</string>
 
 
 

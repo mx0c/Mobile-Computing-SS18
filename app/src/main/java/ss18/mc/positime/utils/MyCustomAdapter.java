@@ -112,7 +112,6 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Edit", Toast.LENGTH_SHORT).show();
                 Intent edit_workplace = new Intent(context, Workplace_add_edit.class);
                 edit_workplace.putExtra("source", "edit"); //TODO Add to constants
                 edit_workplace.putExtra("workplace", list.get(position).getPlaceName()); //TODO Add to constants

@@ -31,7 +31,7 @@
                 android:text="Select Position" />
 
             <Button
-                android:id="@+id/workPlace1"
+                android:id="@+id/workplace_select_posi"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +42,37 @@
                 android:drawableRight="@drawable/ic_keyboard_arrow_pink"
                 android:paddingLeft="8dp"
                 android:paddingRight="10dp"
-                android:text="Workplace 1" />
+                android:text="Select position"
+                android:onClick="onClick"/>
+
+            <TextView
+                android:id="@+id/seek_radius_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/workplace_radius" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <SeekBar
+                    android:id="@+id/workplace_radius_seekbar"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="200" />
+
+                <TextView
+                    android:id="@+id/workplace_radius_seek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0" />
+
+            </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/workplace_name"
