@@ -298,6 +298,8 @@ public class LoginActivity extends AppCompatActivity {
                     check_gps();
                     Intent i = new Intent(this, LocationService.class);
                     startService(i);
+                    i = new Intent(this, BackgroundService.class);
+                    startService(i);
                 } else {
                     // permission denied
                     // maybe ask again?
