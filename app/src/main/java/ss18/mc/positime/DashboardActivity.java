@@ -64,7 +64,7 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
             public void onReceive(Context context, Intent intent){
                 TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
                 Bundle test = intent.getExtras();
-                String abc = (String) test.get("current_workplace_name");
+                String abc = test.get("current_workplace_name").toString();
 
                 workplace_dash.setText(abc);
 

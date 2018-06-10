@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -35,8 +35,8 @@
 
         </activity>
 
-        <service android:name=".services.LocationService" />
-        <service android:name=".services.BackgroundService" />
+        <service android:name=".services.LocationService"/>
+        <service android:name=".services.BackgroundService"/>
 
         <activity
             android:name=".RegisterActivity"

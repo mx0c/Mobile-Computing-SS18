@@ -42,6 +42,7 @@ import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.model.Benutzer;
 import ss18.mc.positime.model.Response;
 import ss18.mc.positime.network.NetworkUtil;
+import ss18.mc.positime.services.BackgroundService;
 import ss18.mc.positime.services.LocationService;
 import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.Validation;
@@ -72,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
         database = BenutzerDatabase.getBenutzerDatabase(this);
 
         get_runtime_permissions();
+        check_gps();
+        startServices();
         checkTokenProcess();
     }
 
@@ -277,10 +280,6 @@ public class LoginActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT < 23) {
             //no need for runtimePermissions
             check_gps();
-            Intent i = new Intent(this, LocationService.class);
-            startService(i);
-            i = new Intent(this, BackgroundService.class);
-            startService(i);
         }else {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
@@ -296,10 +295,6 @@ public class LoginActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     check_gps();
-                    Intent i = new Intent(this, LocationService.class);
-                    startService(i);
-                    i = new Intent(this, BackgroundService.class);
-                    startService(i);
                 } else {
                     // permission denied
                     // maybe ask again?
@@ -316,6 +311,13 @@ public class LoginActivity extends AppCompatActivity {
                                     Other
      ####################################################################
     */
+    private void startServices(){
+        Intent i = new Intent(this,LocationService.class);
+        startService(i);
+        i = new Intent(this,BackgroundService.class);
+        startService(i);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
