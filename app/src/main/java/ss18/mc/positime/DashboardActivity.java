@@ -1,5 +1,6 @@
 package ss18.mc.positime;
-
+import android.util.Log;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,11 +25,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
-
+import android.content.IntentFilter;
 import org.w3c.dom.Text;
 
 import ss18.mc.positime.utils.Constants;
-
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 public class DashboardActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
     private static String TAG = "DashboardActivity";
     SharedPreferences mSharedPreferences;
@@ -40,19 +44,36 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
     Toolbar toolbar;
     FrameLayout simpleFrameLayout;
     TabLayout tabLayout;
-
+    Fragment fragment;
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
+        fragment = new FirstFragment();
         //Initialization
         initView();
         initSharedPreferences();
         initNavigation();
+        initBackgroundServiceInfo();
     }
+    public void initBackgroundServiceInfo(){
 
+        broadcastReceiver = new BroadcastReceiver(){
+            public void onReceive(Context context, Intent intent){
+                TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
+                Bundle test = intent.getExtras();
+                String abc = (String) test.get("current_workplace_name");
+
+                workplace_dash.setText(abc);
+
+
+            }
+        };
+        registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));
+
+    }
 
     /*
         ####################################################################
@@ -79,7 +100,7 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         tabLayout.addTab(fourthTab); // add  the tab at in the TabLayout
 
         TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
-        workplace_dash.setText("Hochschule Reutlingen");
+        //workplace_dash.setText("Hochschule Reutlingen");
         TextView working_time_dash = (TextView) findViewById(R.id.worktime_dashboard);
         working_time_dash.setText("8 h 2 min 3 s");
         TextView pause_dash = (TextView) findViewById(R.id.pause_dashboard);
@@ -92,7 +113,7 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // get the current selected tab's position and replace the fragment accordingly
-                Fragment fragment = new FirstFragment();
+                //Fragment fragment = new FirstFragment();
                 switch (tab.getPosition()) {
                     case 0:
                         fragment = new FirstFragment();

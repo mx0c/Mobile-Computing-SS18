@@ -43,5 +43,6 @@
     <string name="title_activity_workplace">Workplace</string>
     <string name="title_activity_workplace_add_edit">Workplace_add_edit</string>
     <string name="title_activity_workplace_add_delete">workplace_add_delete</string>
+    <string name="id_test" />
 
 </resources>

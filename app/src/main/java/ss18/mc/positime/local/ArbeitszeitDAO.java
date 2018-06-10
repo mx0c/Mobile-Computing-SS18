@@ -10,7 +10,7 @@ import java.util.List;
 
 import ss18.mc.positime.dbmodel.Arbeitsort;
 import ss18.mc.positime.dbmodel.Arbeitszeit;
-
+import java.util.Date;
 @Dao
 public interface ArbeitszeitDAO {
     @Query("SELECT * FROM arbeitszeit")
@@ -29,4 +29,5 @@ public interface ArbeitszeitDAO {
     @Query("SELECT * FROM arbeitszeit WHERE arbeitsort_name = :ArbeitsortName")
     List<Arbeitszeit> getArbeitszeitenForArbeitsort(String ArbeitsortName);
 
+    //@Query(Select amount_breaks,starttime,endtime,breaks from arbeitszeit where )
 }

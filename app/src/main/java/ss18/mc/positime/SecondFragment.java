@@ -71,7 +71,7 @@ public class SecondFragment extends Fragment {
         //dynamisch erzeugen aus DB
         listDataHeader.add(allOrts.get(0).getPlaceName().toString());
         List<String> test = new ArrayList<String>();
-        test.add(allOrts.get(0).getCurrency());
+        test.add(allOrts.get(0).getCurrency()+"       "+"hi");
         listDataChild.put(listDataHeader.get(0), test);
     }
 }

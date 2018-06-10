@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_custom_layout"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:padding="2dp"
+    android:background="@color/white"
+    >
+
+
+
+
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:padding="25sp"
+        android:text="@string/id_test" />
+    <Button
+    android:id="@+id/button_test"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="onClick"
+    android:text="Ok"
+    android:layout_gravity = "right"/>
+</RelativeLayout>

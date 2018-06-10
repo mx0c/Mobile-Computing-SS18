@@ -20,16 +20,18 @@
         <activity
             android:name=".DashboardActivity"
             android:label="test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
 
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Login">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
 
         </activity>
 
@@ -52,7 +54,9 @@
 
         <activity android:name=".Workplace_Details_Custom" />
 
-        <activity android:name=".Select_date_calendar" />
+        <activity android:name=".Select_date_calendar" >
+
+        </activity>
 
         <activity
             android:name=".navigation_activity"
