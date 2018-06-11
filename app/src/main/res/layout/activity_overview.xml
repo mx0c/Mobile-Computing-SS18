@@ -23,63 +23,23 @@
         app:headerLayout="@layout/nav_header_navigation_activity"
         app:menu="@menu/activity_navigation_activity_drawer" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Overview"
         android:orientation="vertical">
 
+
+        <ListView
+            android:id="@+id/workplace_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            tools:layout_editor_absoluteY="66dp"></ListView>
+
     </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".Overview"
-        android:orientation="vertical"
-        android:paddingTop="75dp">
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="449dp"
-        android:orientation="vertical"
-        >
-
-        <Button
-            android:id="@+id/workPlace1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:drawableLeft="@drawable/ic_work_pink"
-            android:drawableRight="@drawable/ic_keyboard_arrow_pink"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="Workplace 1"
-            />
-        <Button
-            android:id="@+id/workPlace2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Workplace 2"
-            android:drawableLeft="@drawable/ic_work"
-            android:drawableRight="@drawable/ic_keyboard_arrow_pink"
-            android:background="@color/white"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"/>
-        <Button
-            android:id="@+id/workPlace3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Workplace 3"
-            android:drawableLeft="@drawable/ic_work_pink"
-            android:drawableRight="@drawable/ic_keyboard_arrow_pink"
-            android:background="@color/white"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"/>
-        </LinearLayout>
-    </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>
 

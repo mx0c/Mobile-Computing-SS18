@@ -16,16 +16,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ss18.mc.positime.dbmodel.Arbeitsort;
+import ss18.mc.positime.dbmodel.addressT;
+import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.Constants;
+import ss18.mc.positime.utils.DatabaseInitializer;
+import ss18.mc.positime.utils.MyCustomAdapter;
+import ss18.mc.positime.utils.Overview_Workplaces_Adapter;
 
 
 public class Overview extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     Button button;
+    BenutzerDatabase db;
+
 
     NavigationView navigationView;
     DrawerLayout drawer;
@@ -42,28 +54,11 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
 
         initSharedPreferences();
         initNavigation();
+        initWorkplaceList();
 
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Workplaces xx");
-        setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();*/
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        button= findViewById(R.id.workPlace1);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i= new Intent(Overview.this, Workplace_Details.class);
-                startActivity(i);
-            }
-        });
     }
 
 
@@ -172,5 +167,26 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
 
     private void initSharedPreferences() {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    private void initWorkplaceList() {
+        BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
+        //Temporary
+        DatabaseInitializer.populateSync(db);
+
+
+        //String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
+        String userMail = "ge2thez@gmail.com";
+        List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
+        ArrayList<String> workplace_names = new ArrayList<String>();
+
+        Log.d(TAG, "Workplaces found for user with email " + userMail + ": " + workplaces.size());
+
+        //instantiate custom adapter
+        Overview_Workplaces_Adapter adapter = new Overview_Workplaces_Adapter(workplaces, this);
+
+        //handle listview and assign adapter
+        ListView lView = (ListView) findViewById(R.id.workplace_list_view);
+        lView.setAdapter(adapter);
     }
 }

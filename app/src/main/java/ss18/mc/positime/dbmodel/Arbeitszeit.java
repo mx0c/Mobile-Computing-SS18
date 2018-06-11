@@ -12,11 +12,13 @@ import java.util.Date;
 
 import ss18.mc.positime.utils.TimestampConverter;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 
 @Entity(tableName = "arbeitszeit",
         indices = {@Index("arbeitszeit_id")},
         foreignKeys = @ForeignKey(entity = Arbeitsort.class,parentColumns = "place_name",
-        childColumns = "arbeitsort_name"))
+        childColumns = "arbeitsort_name", onDelete = CASCADE))
 public class Arbeitszeit {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "arbeitszeit_id")
@@ -29,7 +31,7 @@ public class Arbeitszeit {
     public String arbeitsort_name;
 
     @ColumnInfo(name = "workday")
-    @TypeConverters(TimestampConverter.class)
+    @TypeConverters({TimestampConverter.class})
     private Date workday;
 
     @ColumnInfo(name = "starttime")
@@ -42,6 +44,8 @@ public class Arbeitszeit {
 
     @ColumnInfo(name = "breaktime")
     private int breaktime;
+
+
 
     public int getArbeitszeitId() {
         return arbeitszeitId;

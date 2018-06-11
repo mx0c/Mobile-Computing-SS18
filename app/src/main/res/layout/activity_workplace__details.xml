@@ -44,13 +44,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabBackground="@color/colorPrimaryDark"
-            app:tabIndicatorColor="@color/white"
-            app:tabTextColor = "@android:color/white"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabTextColor = "@color/tabInactive"
             android:layout_marginTop="50dp"
-            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabSelectedTextColor="@color/white"
            />
-
-
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="fill_parent"

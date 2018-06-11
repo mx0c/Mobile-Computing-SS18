@@ -70,6 +70,7 @@ public class Workplace_Details extends AppCompatActivity implements OnNavigation
         custom.setText("Custom");
         tabLayout.addTab(custom);
 
+        String actual_workplace = getIntent().getStringExtra("workplace");
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -77,15 +78,23 @@ public class Workplace_Details extends AppCompatActivity implements OnNavigation
                 Fragment fragment = null;
                 switch (tab.getPosition()) {
                     case 0:
-                        fragment = new Overview_Day();
+
+                        Overview_Day ov_day =new Overview_Day();
+                        ov_day.workplace = actual_workplace;
+                        fragment = ov_day;
                         break;
 
                     case 1:
-                        fragment = new Overview_Week();
+                        Overview_Week ov_week= new Overview_Week();
+                        ov_week.workplace = actual_workplace;
+                        fragment = ov_week;
                         break;
 
                     case 2:
-                        fragment = new Overview_Month();
+
+                        Overview_Month ov_month= new Overview_Month();
+                        ov_month.workplace = actual_workplace;
+                        fragment = ov_month;
                         break;
 
                     case 3:
@@ -137,7 +146,9 @@ public class Workplace_Details extends AppCompatActivity implements OnNavigation
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.dashboard_activity);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Overview");
+
+        String actual_workplace = getIntent().getStringExtra("workplace");
+        getSupportActionBar().setTitle("Overview " + actual_workplace);
 
         nameBuffer = mSharedPreferences.getString(Constants.FIRSTNAME, "Firstname") + " " + mSharedPreferences.getString(Constants.LASTNAME, "Lastname");
         mail = mSharedPreferences.getString(Constants.EMAIL, "Your Email");
@@ -217,15 +228,4 @@ public class Workplace_Details extends AppCompatActivity implements OnNavigation
 
 
 
-
-    /*@Override
-    protected void onResume(){
-        super.onResume();
-        TabHost tabhost =(FragmentTabHost) findViewById(android.R.id.tabhost);
-        for(int i=0;i<tabhost.getTabWidget().getChildCount();i++)
-        {
-            TextView tv = (TextView) tabhost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-            tv.setTextColor(Color.parseColor("#FFFFFF"));
-        }
-    }*/
 }

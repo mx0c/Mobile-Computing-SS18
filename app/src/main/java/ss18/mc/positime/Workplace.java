@@ -39,6 +39,7 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
     TextView nav_mail;
     Toolbar toolbar;
     FloatingActionButton fab;
+    Intent wp_add_edit;
 
 
     @Override
@@ -56,8 +57,9 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                wp_add_edit = new Intent(getBaseContext(), Workplace_add_edit.class);
+                wp_add_edit.putExtra("source", "add");
+                startActivity(wp_add_edit);
             }
         });
     }
@@ -131,6 +133,9 @@ public class Workplace extends AppCompatActivity implements NavigationView.OnNav
 
     private void initWorkplaceList() {
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
+        //Temporary
+        DatabaseInitializer.populateSync(db);
+
         String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
 
         List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);

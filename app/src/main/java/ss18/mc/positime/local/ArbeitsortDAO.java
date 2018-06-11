@@ -20,6 +20,13 @@ public interface ArbeitsortDAO {
     @Query("SELECT * FROM arbeitsort WHERE benutzer_mail = :benutzer_mail AND place_name = :place_name ")
     Arbeitsort getOneArbeitsortForBenutzer(String place_name, String benutzer_mail);
 
+
+
+    // ToDo: eMail needed?
+    @Query("SELECT arbeitsort.money_perhour FROM arbeitsort WHERE place_name = :place_name ")
+    Double getMoneyPerHour( String place_name);
+
+
     @Insert
     void insertAll(Arbeitsort... arbeitsorts);
 

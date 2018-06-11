@@ -74,6 +74,12 @@ public class BackgroundService extends Service {
     }
 
     private void onLocationUpdate(double lat, double lon) {
+        if(this.mInPause && this.mCurrentArbeitszeit != null){
+            this.mCurrentArbeitszeit.setBreaktime(this.mCurrentArbeitszeit.getBreaktime()+10);
+            //update db
+            mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
+            return;
+        }
         Location myLocation = new Location("");
         myLocation.setLongitude(lon);
         myLocation.setLatitude(lat);
@@ -86,13 +92,6 @@ public class BackgroundService extends Service {
                 //Location is in Workplace
                 //get todays arbeitszeit
                 this.mCurrentArbeitszeit = this.findTodaysArbeitszeit(mDb.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName()), a);
-                //when Pausebutton in Dashboard is pressed
-                if(this.mInPause){
-                    this.mCurrentArbeitszeit.setBreaktime(this.mCurrentArbeitszeit.getBreaktime()+10);
-                    //update db
-                    mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
-                    return;
-                }
                 if(this.mCurrentArbeitszeit != null){
                     if(this.mCurrentArbeitszeit.getStarttime() == null){
                         this.mCurrentArbeitszeit.setStarttime(new Date());
@@ -112,7 +111,6 @@ public class BackgroundService extends Service {
                     mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
                 }
 
-
                 Date time = this.calculateTimePassed(this.mCurrentArbeitszeit.getStarttime(), this.mCurrentArbeitszeit.getEndtime());
                 Calendar calendar = GregorianCalendar.getInstance();
                 calendar.setTime(time);
@@ -129,7 +127,8 @@ public class BackgroundService extends Service {
                 return;
             }
         }
-        //only gets executed when not inside workplace
+        //only gets executed when not inside workplace or pause is active
+        this.mCurrentArbeitszeit = null;
         Intent i = new Intent("dashboard_informations");
         i.putExtra("current_workplace_name", 0);
         sendBroadcast(i);

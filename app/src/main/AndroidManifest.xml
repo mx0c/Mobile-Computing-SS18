@@ -19,27 +19,27 @@
         <activity
             android:name=".DashboardActivity"
             android:label="test"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.Login"></activity>
 
         <service android:name=".services.LocationService" />
         <service android:name=".services.BackgroundService" />
 
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/register_activity" />
+            android:label="@string/register_activity"></activity>
         <activity
             android:name=".Overview"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Workplace_Details"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -53,19 +53,21 @@
         <activity
             android:name=".Workplace"
             android:label="@string/title_activity_workplace"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ProfileActivity"
             android:label="Profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".utils.Overview_day" />
-        <activity android:name=".utils.Overview_month" />
-        <activity android:name=".utils.Overview_week" />
-        <activity android:name=".utils.Overview_custom" />
-        <activity android:name=".Overview_Custom" />
-        <activity android:name=".Overview_Day" />
-        <activity android:name=".Overview_Week" />
-        <activity android:name=".Overview_Month"></activity>
+        <activity
+            android:name=".Workplace_add_edit"
+            android:label="@string/title_activity_workplace_add_edit"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Edit_details_day"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Edit Day"
+            >
+
+        </activity>
     </application>
 
 </manifest>

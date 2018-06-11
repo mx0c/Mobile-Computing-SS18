@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/icon_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:paddingLeft="15dp"
+        android:src="@drawable/ic_calendar"
+        android:tint="@color/colorPrimaryDark"
+        android:paddingTop="10dp"/>
+
+    <TextView
+        android:id="@+id/DATE"
+        android:layout_width="194dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/icon_calendar"
+        android:layout_toEndOf="@+id/icon_calendar"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
+        android:textStyle="bold" />
+
+
+
+
+</RelativeLayout>

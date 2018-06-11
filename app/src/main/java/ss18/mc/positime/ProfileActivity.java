@@ -37,8 +37,8 @@ public class ProfileActivity extends AppCompatActivity implements OnNavigationIt
         setContentView(R.layout.activity_profile);
 
         //Initialization
-        initView();
         initSharedPreferences();
+        initView();
         initNavigation();
     }
 
@@ -47,9 +47,14 @@ public class ProfileActivity extends AppCompatActivity implements OnNavigationIt
      */
     //Put view initializations in here
     private void initView() {
-        //TODO init your views here
-    }
+        TextView lastname = findViewById(R.id.lastname_label);
+        TextView firstname = findViewById(R.id.firstname_label);
+        TextView email = findViewById(R.id.email_label);
 
+        lastname.setText(mSharedPreferences.getString(Constants.LASTNAME,"Error"));
+        firstname.setText(mSharedPreferences.getString(Constants.FIRSTNAME,"Error"));
+        email.setText(mSharedPreferences.getString(Constants.EMAIL,"Error"));
+    }
 
     private void initNavigation() {
         //Navigation Initialization
