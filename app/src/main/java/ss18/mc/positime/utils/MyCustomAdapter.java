@@ -79,7 +79,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
                 //list.remove(position); //or some other task
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle(R.string.workplace_delete_title);
-                alertDialog.setMessage("Do you really want to delete the workplace? If you select yes all data to the workplace will be deleted");
+                alertDialog.setMessage("Do you really want to delete the workplace? If you select yes all data to the workplace will be deleted"); //TODO Make it work with strings.xml
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -92,7 +92,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
 
                                 list.remove(position); //Remove from list
                                 notifyDataSetChanged();
-                                Toast.makeText(v.getContext(), R.string.workplace_delete_toast, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(v.getContext(), R.string.workplace_deleted, Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
 
                             }
@@ -112,9 +112,9 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Edit", Toast.LENGTH_SHORT).show();
                 Intent edit_workplace = new Intent(context, Workplace_add_edit.class);
-                edit_workplace.putExtra("source", "edit");
+                edit_workplace.putExtra("source", "edit"); //TODO Add to constants
+                edit_workplace.putExtra("workplace", list.get(position).getPlaceName()); //TODO Add to constants
                 context.startActivity(edit_workplace);
                 notifyDataSetChanged();
             }

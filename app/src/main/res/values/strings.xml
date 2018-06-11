@@ -1,4 +1,8 @@
 <resources>
+    <!-- Google Maps API Key -->
+    <string name="map_api_key">AIzaSyCeULOnxNwDi2sKBH-Fv7WKV4TERDF-qnw</string>
+
+
     <!--Activities-->
     <string name="app_name">PosiTime</string>
     <string name="register_activity">Registration</string>
@@ -15,6 +19,18 @@
     <string name="passwordConfirm">Password Confirmation</string>
     <string name="fname">First Name</string>
     <string name="lname">Last Name</string>
+    <string name="workplace_name">Workplace Title</string>
+    <string name="workplace_chef_ffname">Chef Firstname</string>
+    <string name="workplace_chef_llname">Chef Lastname</string>
+    <string name="workplace_weeklyHours">Weekly Hours</string>
+    <string name="workplace_curreny">Currency</string>
+    <string name="workplace_moneyPerHour">Money per Hour</string>
+    <string name="workplace_currency_radio1">€</string>
+    <string name="workplace_currency_radio2">$</string>
+    <string name="workplace_title_positionSelection">Select Position</string>
+    <string name="workplace_btn_save">Save</string>
+    <string name="workplace_radius">Radius (in Meters)</string>
+
 
 
     <!-- TextView's -->
@@ -29,11 +45,13 @@
     <string name="wrongEmail">Please use a correct email</string>
     <string name="noPasswordMatch">Passwords do not match</string>
     <string name="notAllFields">Not all fields have been filled</string>
+    <string name="workplace_created">Workplace created</string>
+    <string name="workplace_updated">Workplace updated</string>
+    <string name="workplace_deleted">Workplace deleted</string>
 
     <!-- AlertDialog Workplace -->
     <string name="workplace_delete_title">Delete Workplace</string>
     <string name="workplace_delete_message">Do you really want to delete the workplace? If you select yes all data to the workplace will be deleted</string>
-    <string name="workplace_delete_toast">Workplace was deleted</string>
 
     <!-- System Configuation -->
     <string name="title_activity_navigation_activity">navigation_activity</string>
