@@ -99,7 +99,7 @@ public class DatabaseInitializer {
 
         Arbeitsort arbeitsort3 = new Arbeitsort();
         arbeitsort3.setAddresst(address_convexis);
-        arbeitsort3.setPlaceName("convexis");
+        arbeitsort3.setPlaceName("Convexis");
         arbeitsort3.setBenutzer_mail("ge2thez@gmail.com");
         arbeitsort3.setChefFistName("Max");
         arbeitsort3.setChefLastName("Mustermann");
@@ -109,6 +109,20 @@ public class DatabaseInitializer {
         arbeitsort3.setCurrency("Euro");
         arbeitsort3.setRadiusA(20);
         arbeitsort3.setWeeklyHours(35);
+
+
+        /*Arbeitsort arbeitsort4 = new Arbeitsort();
+        arbeitsort4.setAddresst(address);
+        arbeitsort4.setPlaceName("Daheim");
+        arbeitsort4.setBenutzer_mail("test@posi.de"); //Beziehung zu User
+        arbeitsort4.setChefFistName("Vorname");
+        arbeitsort4.setChefLastName("Nachname");
+        arbeitsort4.setLatA(48.531415);
+        arbeitsort4.setLongA(9.340418);
+        arbeitsort4.setMoneyPerhour(17);
+        arbeitsort4.setCurrency("Euro");
+        arbeitsort4.setRadiusA(50);
+        arbeitsort4.setWeeklyHours(40);*/
 
 
         db.arbeitsortDAO().insertAll(arbeitsort, arbeitsort2, arbeitsort3);
@@ -169,7 +183,19 @@ public class DatabaseInitializer {
         arbeitszeit4.setWorkday(date4_start);
 
 
-        db.arbeitszeitDAO().insertAll(arbeitszeit4,arbeitszeit3, arbeitszeit2, arbeitszeit);
+        Date date5_start= time.fromTimestamp("2018-06-05 06:30:00");
+        Date date5_end= time.fromTimestamp("2018-06-05 17:20:00");
+
+        Arbeitszeit arbeitszeit5 = new Arbeitszeit();
+        arbeitszeit5.setArbeitszeitId(4);
+        arbeitszeit5.setAmountBreaks(1);
+        arbeitszeit5.setStarttime(date5_start);
+        arbeitszeit5.setEndtime(date5_end);
+        arbeitszeit5.setBreaktime(15); //Minutes
+        arbeitszeit5.setArbeitsort_name("Convexis");
+        arbeitszeit5.setWorkday(date5_start);
+
+        db.arbeitszeitDAO().insertAll(arbeitszeit4,arbeitszeit3, arbeitszeit2, arbeitszeit, arbeitszeit5);
 
         //Create PausenSetting
         PausenSettings ps1 = new PausenSettings();
