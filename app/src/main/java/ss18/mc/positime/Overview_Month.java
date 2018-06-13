@@ -92,14 +92,14 @@ public class Overview_Month extends Fragment {
         String endDate= String.valueOf(year) +"-12-31 23:59:59";
 
 
-        List<Arbeitszeit> workingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(workplace, startDate, endDate);
+        List<Arbeitszeit> workingTimesYear = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(workplace, startDate, endDate);
 
         //List<Arbeitszeit> workingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(workplace);
 
         Log.d(TAG, "Workplaces found for user with email " + userMail + ": " + workplaces.size());
         Log.d(TAG, "Working Times found for workplace" + workplace + ": " + workplaces.size());
 
-        adapter = new Overview_Details_Month_Adapter(workingTimes, getContext(), workplace);
+        adapter = new Overview_Details_Month_Adapter(workingTimesYear, getContext(), workplace);
 
 
         updateUI();
@@ -117,7 +117,7 @@ public class Overview_Month extends Fragment {
         }
         else{
             TextView yearView= view.findViewById(R.id.actual_year);
-            yearView.setText(String.valueOf(year));
+            yearView.setText("Year " + String.valueOf(year));
             ListView lView = (ListView) view.findViewById(R.id.workplace_list_view);
             lView.setAdapter(adapter);
         }

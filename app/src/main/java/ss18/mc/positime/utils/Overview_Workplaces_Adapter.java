@@ -27,8 +27,6 @@ public class Overview_Workplaces_Adapter extends BaseAdapter implements ListAdap
     private Context context;
     private BenutzerDatabase db;
 
-
-
     public Overview_Workplaces_Adapter(List<Arbeitsort> list, Context context) {
         this.list = list;
         this.context = context;
@@ -63,10 +61,7 @@ public class Overview_Workplaces_Adapter extends BaseAdapter implements ListAdap
         TextView listItemText = (TextView) view.findViewById(R.id.list_item_string);
         listItemText.setText(list.get(position).getPlaceName());
 
-        //Handle buttons and add onClickListeners
         ImageView showDetails = (ImageView) view.findViewById(R.id.show_details);
-
-
 
         //Click on 'show Details'
         showDetails.setOnClickListener(new View.OnClickListener() {
@@ -74,9 +69,7 @@ public class Overview_Workplaces_Adapter extends BaseAdapter implements ListAdap
             public void onClick(View v) {
 
                 String placeName = list.get(position).getPlaceName();
-
                 Intent i = new Intent(context, Workplace_Details.class);
-
                 i.putExtra("workplace", placeName);
 
                 context.startActivity(i);

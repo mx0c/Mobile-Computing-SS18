@@ -72,6 +72,16 @@ public class Workplace_Details extends AppCompatActivity implements OnNavigation
 
         String actual_workplace = getIntent().getStringExtra("workplace");
 
+        Overview_Day start_view = new Overview_Day();
+        start_view.workplace = actual_workplace;
+        Fragment f_start= start_view;
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.frameLayout, f_start);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -208,24 +218,6 @@ public class Workplace_Details extends AppCompatActivity implements OnNavigation
     private void initSharedPreferences() {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
-
-        /*tabHost= (FragmentTabHost) findViewById(android.R.id.tabhost);
-
-        tabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
-
-        tabHost.addTab(
-                tabHost.newTabSpec("day").setIndicator("Day", null),
-                FragmentTab.class, null);
-        tabHost.addTab(
-                tabHost.newTabSpec("week").setIndicator("Week", null),
-                FragmentTab.class, null);
-        tabHost.addTab(
-                tabHost.newTabSpec("month").setIndicator("Month", null),
-                FragmentTab.class, null);
-        tabHost.addTab(
-                tabHost.newTabSpec("custom").setIndicator("Custom", null),
-                FragmentTab.class, null);*/
-
 
 
 }

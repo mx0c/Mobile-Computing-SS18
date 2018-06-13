@@ -26,29 +26,25 @@ public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAd
     private List<Arbeitszeit> workingTimes_week;
     private Context context;
     private BenutzerDatabase db;
-    private String worklplace;
+    private String workplace;
 
     int UsedWeekNumber;
     int pauseTime_sum;
     double workingTime_sum;
-    List<Integer> savedWeedWeekNumbers = new ArrayList<>();
+    List<Integer> savedWeekNumbers = new ArrayList<>();
 
     DateFormat df;
 
-
-    TextView monthName;
     TextView actualKw;
     TextView pause_sum;
     TextView worktime_sum;
     TextView salary_sum;
 
-    public Overview_Details_Week_Adapter(List<Arbeitszeit> list, Context context, String worklplace){
+    public Overview_Details_Week_Adapter(List<Arbeitszeit> list, Context context, String workplace){
         this.workingTimes_week = list;
         this.context = context;
-        this.worklplace = worklplace;
-
+        this.workplace = workplace;
     }
-
 
     @Override
 
@@ -58,7 +54,7 @@ public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAd
 
     @Override
     public Object getItem(int pos) {
-        return workingTimes_week.get(pos).getBreaktime();
+        return workingTimes_week.get(pos).getStarttime();
     }
 
     @Override
@@ -84,22 +80,18 @@ public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAd
             }
         });
 
-        Date date_break= workingTimes_week.get(position).getWorkday();
-        String dateS= df.format(date_break);
+        Date selected_date= workingTimes_week.get(position).getWorkday();
 
         actualKw = view.findViewById(R.id.actual_cw);
-        Integer WN = getWeekNumber(date_break);
-        UsedWeekNumber = WN.intValue();
-        if(savedWeedWeekNumbers.contains(Integer.valueOf(UsedWeekNumber))){
+        UsedWeekNumber = getWeekNumber(selected_date);
+
+        if(savedWeekNumbers.contains(Integer.valueOf(UsedWeekNumber))){
                 return null;
         }
         else {
 
-            savedWeedWeekNumbers.add(UsedWeekNumber);
-
-            actualKw.setText("Week number " + String.valueOf(WN));
-
-            // remove used worktime from list
+            savedWeekNumbers.add(UsedWeekNumber);
+            actualKw.setText("Week number " + String.valueOf(UsedWeekNumber));
 
             pause_sum = view.findViewById(R.id.pause_sum);
             worktime_sum = view.findViewById(R.id.time_sum);
@@ -107,11 +99,12 @@ public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAd
 
             for (Arbeitszeit time : workingTimes_week) {
                 Integer weekNr = getWeekNumber(time.getStarttime());
+
                 if (weekNr.intValue() == UsedWeekNumber) {
                     pauseTime_sum += time.getBreaktime();
                     pause_sum.setText(String.valueOf(pauseTime_sum) +" minutes");
 
-                    workingTime_sum += getWorkingTimeInHours(time.getStarttime(), time.getEndtime(), time.getBreaktime());
+                    workingTime_sum += getWorkingTimeInHours(time.getStarttime(), time.getEndtime(), time.getBreaktime()*time.getAmountBreaks());
                     worktime_sum.setText( String.format(" %.2f hours",workingTime_sum ));
 
                     Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(time.getArbeitsort_name());

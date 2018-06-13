@@ -104,7 +104,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
 
         TextView breakTime= (TextView) view.findViewById(R.id.pause_time);
         Integer time = list_breaktimes.get(position).getBreaktime();
-        breakTime.setText(String.valueOf( list_breaktimes.get(position).getBreaktime())  + " minutes");
+        breakTime.setText(String.valueOf( list_breaktimes.get(position).getBreaktime()* list_breaktimes.get(position).getAmountBreaks())  + " minutes");
 
         TextView start_time= (TextView) view.findViewById(R.id.start_time);
         Date start_Time = list_breaktimes.get(position).getStarttime();
@@ -132,7 +132,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         Integer endH = Integer.parseInt(endTime_splitted_calculation[0]) ;
         Integer endMin = Integer.parseInt(endTime_splitted_calculation[1]);
 
-        Integer breakTime_calculation = list_breaktimes.get(position).getBreaktime();
+        Integer breakTime_calculation = list_breaktimes.get(position).getBreaktime() * list_breaktimes.get(position).getAmountBreaks() ;
 
         Double diff_calculation_hours = (endH - startH) * 60.0;
         Double diff_calulation_minutes = endMin -startMin - 0.0;
@@ -237,7 +237,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
                 Intent i = new Intent(context, Edit_details_day.class);
 
                 selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(list_breaktimes.get(position).getArbeitszeitId());
-                Integer breaktime= selected_day.getBreaktime();
+                Integer breaktime= selected_day.getBreaktime() * selected_day.getAmountBreaks();
                 Date start_time= selected_day.getStarttime();
 
                 String [] starttime_splitted= df.format(start_Time).split(" ");

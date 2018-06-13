@@ -174,9 +174,12 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
         //Temporary
         DatabaseInitializer.populateSync(db);
 
-
+        //ToDo: Use this in real use :
         //String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
+
+        // for own testing hard coded eMail:
         String userMail = "ge2thez@gmail.com";
+
         List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
         ArrayList<String> workplace_names = new ArrayList<String>();
 

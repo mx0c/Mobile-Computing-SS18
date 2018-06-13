@@ -135,7 +135,7 @@ public class DatabaseInitializer {
         //Create Arbeitszeit to an Arbeitsort
         Arbeitszeit arbeitszeit = new Arbeitszeit();
         arbeitszeit.setArbeitszeitId(0);
-        arbeitszeit.setAmountBreaks(1);
+        arbeitszeit.setAmountBreaks(3);
         arbeitszeit.setStarttime(date1_start);
         arbeitszeit.setEndtime(date1_end);
         arbeitszeit.setBreaktime(45); //Minutes
@@ -212,7 +212,7 @@ public class DatabaseInitializer {
 
         Arbeitszeit arbeitszeit7 = new Arbeitszeit();
         arbeitszeit7.setArbeitszeitId(6);
-        arbeitszeit7.setAmountBreaks(1);
+        arbeitszeit7.setAmountBreaks(4);
         arbeitszeit7.setStarttime(date7_start);
         arbeitszeit7.setEndtime(date7_end);
         arbeitszeit7.setBreaktime(11); //Minutes
@@ -231,7 +231,57 @@ public class DatabaseInitializer {
         arbeitszeit8.setArbeitsort_name("Daheim");
         arbeitszeit8.setWorkday(date8_start);
 
-        db.arbeitszeitDAO().insertAll(arbeitszeit5,arbeitszeit, arbeitszeit2, arbeitszeit3, arbeitszeit4, arbeitszeit6, arbeitszeit7, arbeitszeit8);
+        Date start_january= time.fromTimestamp("2018-01-01 08:00:00");
+        Date end_january= time.fromTimestamp("2018-01-01 17:05:00");
+
+        Arbeitszeit january1 = new Arbeitszeit();
+        january1.setArbeitszeitId(0);
+        january1.setAmountBreaks(1);
+        january1.setStarttime(start_january);
+        january1.setEndtime(end_january);
+        january1.setBreaktime(1); //Minutes
+        january1.setArbeitsort_name("Daheim");
+        january1.setWorkday(start_january);
+
+        Date start_january2= time.fromTimestamp("2018-01-01 16:00:00");
+        Date end_january2= time.fromTimestamp("2018-01-01 17:05:00");
+
+        Arbeitszeit january2 = new Arbeitszeit();
+        january2.setArbeitszeitId(0);
+        january2.setAmountBreaks(1);
+        january2.setStarttime(start_january2);
+        january2.setEndtime(end_january2);
+        january2.setBreaktime(20); //Minutes
+        january2.setArbeitsort_name("Daheim");
+        january2.setWorkday(start_january2);
+
+
+        Date start_february= time.fromTimestamp("2018-02-10 8:00:00");
+        Date end_february= time.fromTimestamp("2018-02-10 17:05:00");
+
+        Arbeitszeit february = new Arbeitszeit();
+        february.setArbeitszeitId(0);
+        february.setAmountBreaks(1);
+        february.setStarttime(start_february);
+        february.setEndtime(end_february);
+        february.setBreaktime(55); //Minutes
+        february.setArbeitsort_name("Daheim");
+        february.setWorkday(start_february);
+
+        Date start_february2= time.fromTimestamp("2018-02-10 8:00:00");
+        Date end_february2= time.fromTimestamp("2018-02-10 16:25:00");
+
+        Arbeitszeit february2 = new Arbeitszeit();
+        february2.setArbeitszeitId(0);
+        february2.setAmountBreaks(1);
+        february2.setStarttime(start_february2);
+        february2.setEndtime(end_february2);
+        february2.setBreaktime(20); //Minutes
+        february2.setArbeitsort_name("Daheim");
+        february2.setWorkday(start_february2);
+
+
+        db.arbeitszeitDAO().insertAll(arbeitszeit5,arbeitszeit, arbeitszeit2, arbeitszeit3, arbeitszeit4, arbeitszeit6, arbeitszeit7, arbeitszeit8, january1, january2, february, february2);
 
         //Create PausenSetting
         PausenSettings ps1 = new PausenSettings();
