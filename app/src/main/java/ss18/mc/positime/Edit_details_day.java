@@ -47,7 +47,6 @@ public class Edit_details_day extends AppCompatActivity implements NavigationVie
         initSharedPreferences();
         initNavigation();
 
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -73,9 +72,10 @@ public class Edit_details_day extends AppCompatActivity implements NavigationVie
             public void onClick(View v){
                 Arbeitszeit arbeitszeit = db.arbeitszeitDAO().getArbeitszeitFromID(edit_arbeitszeit_id);
                 String newTime = pause_text.getText().toString();
-                Integer newTimeInt = Integer.valueOf(newTime);
+                int newTimeInt = Integer.parseInt(newTime);
                 arbeitszeit.setBreaktime(newTimeInt );
                 db.beginTransaction();
+                finish();
             }
         });
 

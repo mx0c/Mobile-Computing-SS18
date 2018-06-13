@@ -219,15 +219,15 @@ public class DatabaseInitializer {
         arbeitszeit7.setArbeitsort_name("Daheim");
         arbeitszeit7.setWorkday(date7_start);
 
-        Date date8_start= time.fromTimestamp("2018-06-11 04:00:00");
-        Date date8_end= time.fromTimestamp("2018-06-11 18:05:00");
+        Date date8_start= time.fromTimestamp("2018-06-11 08:00:00");
+        Date date8_end= time.fromTimestamp("2018-06-11 17:05:00");
 
         Arbeitszeit arbeitszeit8 = new Arbeitszeit();
         arbeitszeit8.setArbeitszeitId(7);
         arbeitszeit8.setAmountBreaks(1);
         arbeitszeit8.setStarttime(date8_start);
         arbeitszeit8.setEndtime(date8_end);
-        arbeitszeit8.setBreaktime(11); //Minutes
+        arbeitszeit8.setBreaktime(30); //Minutes
         arbeitszeit8.setArbeitsort_name("Daheim");
         arbeitszeit8.setWorkday(date8_start);
 

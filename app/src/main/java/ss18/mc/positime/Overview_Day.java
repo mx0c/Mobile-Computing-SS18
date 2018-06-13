@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -36,6 +37,8 @@ public class Overview_Day extends Fragment{
     public String workplace;
 
     List<Arbeitszeit> workingTimes;
+    TextView actual_week;
+    Integer weekNr;
 
     public Overview_Day(  ){
     }
@@ -77,7 +80,8 @@ public class Overview_Day extends Fragment{
 
         DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar now = Calendar.getInstance();
-        Integer weekNr = now.get(Calendar.WEEK_OF_YEAR);
+        weekNr = new Integer(0);
+        weekNr = now.get(Calendar.WEEK_OF_YEAR);
 
         now.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
         now.set(Calendar.HOUR_OF_DAY, 0);
@@ -115,6 +119,10 @@ public class Overview_Day extends Fragment{
             return;
         }
         else{
+            actual_week = view.findViewById(R.id.actual_week_textview);
+            String number= String.valueOf(weekNr.intValue());
+            actual_week.setText("Week number: " + number);
+
             ListView lView = (ListView) view.findViewById(R.id.workplace_list_view);
             lView.setAdapter(adapter);
         }

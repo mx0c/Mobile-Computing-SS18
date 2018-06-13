@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.icu.text.DecimalFormat;
 import android.media.Image;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,9 +84,9 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
             view = inflater.inflate(R.layout.custom_list_layout_details_day, null);
         }
 
-        delete_day = (ImageView) view.findViewById(R.id.delete_day);
+        /*delete_day = (ImageView) view.findViewById(R.id.delete_day);
         edit_day = (ImageView) view.findViewById(R.id.edit_day);
-        add_day = (ImageView) view.findViewById(R.id.add_day);
+        add_day = (ImageView) view.findViewById(R.id.add_day);*/
 
         Calendar now = Calendar.getInstance();
         Integer actual_weekNr = now.get(Calendar.WEEK_OF_YEAR);
@@ -151,7 +152,12 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         timeSum.setText( String.format(" %.2f hours",result_time_calc_hours ));
 
 
+        FloatingActionButton floating_delete= view.findViewById(R.id.floating_delete);
+        FloatingActionButton floating_edit = view.findViewById(R.id.floating_edit);
+
+
         RelativeLayout day_list = view.findViewById(R.id.day_list);
+
 
         day_list.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,14 +168,22 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
                 Drawable background= res.getDrawable(R.drawable.border_layout);
                 day_list.setBackgroundDrawable(background);*/
 
-                delete_day.setVisibility(View.VISIBLE);
+
+                floating_delete.setVisibility(View.VISIBLE);
+                floating_delete.setClickable(true);
+
+                floating_edit.setVisibility(View.VISIBLE);
+                floating_edit.setClickable(true);
+
+
+                /*delete_day.setVisibility(View.VISIBLE);
                 delete_day.setClickable(true);
 
                 edit_day.setVisibility(View.VISIBLE);
                 edit_day.setClickable(true);
 
                 add_day.setVisibility( View.VISIBLE);
-                add_day.setClickable(true);
+                add_day.setClickable(true);*/
 
 
                 //Arbeitszeit selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(list_breaktimes.get(position).getArbeitszeitId());
@@ -177,67 +191,72 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
             }
         });
 
-       delete_day.setOnClickListener(new View.OnClickListener(){
-           @Override
-           public void onClick(View v){
+        floating_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle(R.string.workplace_delete_title);
+                alertDialog.setMessage("Do you really want to delete the data of this day? If you select yes the data will be deleted");
 
-               AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-               alertDialog.setTitle(R.string.workplace_delete_title);
-               alertDialog.setMessage("Do you really want to delete the data of this day? If you select yes the data will be deleted");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
 
-               alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
-                       new DialogInterface.OnClickListener() {
-                           public void onClick(DialogInterface dialog, int which) {
+                                selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(list_breaktimes.get(position).getArbeitszeitId());
 
-                               selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(list_breaktimes.get(position).getArbeitszeitId());
+                                //Delete Arbeitszeit
+                                db.arbeitszeitDAO().delete(selected_day); //Remove from database
 
-                               //Delete Arbeitszeit
-                               db.arbeitszeitDAO().delete(selected_day); //Remove from database
+                               list_breaktimes.remove(position); //Remove from list
+                                notifyDataSetChanged();
+                                Toast.makeText(v.getContext(), "Day deleted", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                notifyDataSetChanged();
 
-                               list_breaktimes.remove(selected_day);
-                               //list_breaktimes.remove(position); //Remove from list
-                               notifyDataSetChanged();
-                               Toast.makeText(v.getContext(), "delete - toest - message", Toast.LENGTH_SHORT).show();
-                               dialog.dismiss();
-                           }
-                       });
-               alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO",
-                       new DialogInterface.OnClickListener() {
-                           public void onClick(DialogInterface dialog, int which) {
-                               dialog.dismiss();
-                           }
-                       });
-               alertDialog.show();
-               notifyDataSetChanged();
-           }
+                floating_delete.setVisibility(View.INVISIBLE);
+                floating_edit.setVisibility(View.INVISIBLE);
 
+            }
         });
 
-       edit_day.setOnClickListener(new View.OnClickListener(){
-           @Override
-           public void onClick(View v){
-               //Toast.makeText(context,"edit?", Toast.LENGTH_LONG).show();
-               Intent i = new Intent(context, Edit_details_day.class);
-               // putExtra: Datum, StartZeit, Endzeit, Pause
-               selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(list_breaktimes.get(position).getArbeitszeitId());
-               Integer breaktime= selected_day.getBreaktime();
-               Date start_time= selected_day.getStarttime();
+        floating_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                floating_delete.setVisibility(View.INVISIBLE);
+                floating_edit.setVisibility(View.INVISIBLE);
 
-               String [] starttime_splitted= df.format(start_Time).split(" ");
-               String startTime= starttime_splitted[1];
-               i.putExtra("startTime", startTime);
+                Intent i = new Intent(context, Edit_details_day.class);
 
-               Date end_time = selected_day.getEndtime();
-               String [] endtime_splitted= df.format(end_time).split(" ");
-               i.putExtra("endTime", endtime_splitted[1]);
+                selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(list_breaktimes.get(position).getArbeitszeitId());
+                Integer breaktime= selected_day.getBreaktime();
+                Date start_time= selected_day.getStarttime();
 
-               i.putExtra("date", starttime_splitted[0]);
-               i.putExtra("pause", Integer.toString(breaktime));
+                String [] starttime_splitted= df.format(start_Time).split(" ");
+                String startTime= starttime_splitted[1];
+                i.putExtra("startTime", startTime);
 
-               i.putExtra("id", selected_day.getArbeitszeitId());
-               context.startActivity(i);
-           }
-       });
+                Date end_time = selected_day.getEndtime();
+                String [] endtime_splitted= df.format(end_time).split(" ");
+                i.putExtra("endTime", endtime_splitted[1]);
+
+                i.putExtra("date", starttime_splitted[0]);
+                i.putExtra("pause", Integer.toString(breaktime));
+
+                i.putExtra("id", selected_day.getArbeitszeitId());
+                context.startActivity(i);
+            }
+
+
+        });
 
 
 
