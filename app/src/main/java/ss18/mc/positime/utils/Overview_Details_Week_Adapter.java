@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -20,27 +23,42 @@ import ss18.mc.positime.local.BenutzerDatabase;
 
 public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAdapter {
 
-    private List<Arbeitszeit> list_breaktimes;
+    private List<Arbeitszeit> workingTimes_week;
     private Context context;
     private BenutzerDatabase db;
     private String worklplace;
 
+    int UsedWeekNumber;
+    int pauseTime_sum;
+    double workingTime_sum;
+    List<Integer> savedWeedWeekNumbers = new ArrayList<>();
+
+    DateFormat df;
+
+
+    TextView monthName;
+    TextView actualKw;
+    TextView pause_sum;
+    TextView worktime_sum;
+    TextView salary_sum;
+
     public Overview_Details_Week_Adapter(List<Arbeitszeit> list, Context context, String worklplace){
-        this.list_breaktimes = list;
+        this.workingTimes_week = list;
         this.context = context;
         this.worklplace = worklplace;
+
     }
 
 
     @Override
 
     public int getCount() {
-        return list_breaktimes.size();
+        return workingTimes_week.size();
     }
 
     @Override
     public Object getItem(int pos) {
-        return list_breaktimes.get(pos).getBreaktime();
+        return workingTimes_week.get(pos).getBreaktime();
     }
 
     @Override
@@ -56,18 +74,87 @@ public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAd
             view = inflater.inflate(R.layout.custom_list_layout_details_week, null);
         }
 
-
         db = BenutzerDatabase.getBenutzerDatabase(context);
-        DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        TextView date = (TextView) view.findViewById(R.id.DATE);
-        Date date_break= list_breaktimes.get(position).getWorkday();
+        Collections.sort(workingTimes_week, new Comparator<Arbeitszeit>() {
+            @Override
+            public int compare(Arbeitszeit o1, Arbeitszeit o2) {
+                return o1.getStarttime().compareTo(o2.getStarttime());
+            }
+        });
+
+        Date date_break= workingTimes_week.get(position).getWorkday();
         String dateS= df.format(date_break);
-        String [] splitted_date = dateS.split(" ");
-        date.setText(splitted_date[0]);
 
+        actualKw = view.findViewById(R.id.actual_cw);
+        Integer WN = getWeekNumber(date_break);
+        UsedWeekNumber = WN.intValue();
+        if(savedWeedWeekNumbers.contains(Integer.valueOf(UsedWeekNumber))){
+                return null;
+        }
+        else {
 
+            savedWeedWeekNumbers.add(UsedWeekNumber);
 
-        return view;
+            actualKw.setText("Week number " + String.valueOf(WN));
+
+            // remove used worktime from list
+
+            pause_sum = view.findViewById(R.id.pause_sum);
+            worktime_sum = view.findViewById(R.id.time_sum);
+            salary_sum = view.findViewById(R.id.money_sum);
+
+            for (Arbeitszeit time : workingTimes_week) {
+                Integer weekNr = getWeekNumber(time.getStarttime());
+                if (weekNr.intValue() == UsedWeekNumber) {
+                    pauseTime_sum += time.getBreaktime();
+                    pause_sum.setText(String.valueOf(pauseTime_sum) +" minutes");
+
+                    workingTime_sum += getWorkingTimeInHours(time.getStarttime(), time.getEndtime(), time.getBreaktime());
+                    worktime_sum.setText( String.format(" %.2f hours",workingTime_sum ));
+
+                    Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(time.getArbeitsort_name());
+                    salary_sum.setText(String.format(" %.2f €", moneyPerHour*workingTime_sum));
+                }
+            }
+
+            pauseTime_sum = 0;
+            workingTime_sum= 0.0;
+            return view;
+            }
+    }
+
+    public Integer getWeekNumber(Date date){
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        Integer WN= cal.get(Calendar.WEEK_OF_YEAR);
+
+        return WN;
+    }
+
+    public Double getWorkingTimeInHours(Date start, Date end, int breakTime){
+        String startTime = df.format(start);
+        String [] splitted_startTime= startTime.split(" ");
+        String [] startTime_splitted_calculation = splitted_startTime[1].split(":");
+        Integer startH = Integer.parseInt(startTime_splitted_calculation[0]);
+        Integer startMin = Integer.parseInt(startTime_splitted_calculation[1]);
+
+        String stopTime = df.format(end);
+        String [] splitted_stopTime= stopTime.split(" ");
+        String [] endTime_splitted_calculation = splitted_stopTime[1].split(":");
+        Integer endH = Integer.parseInt(endTime_splitted_calculation[0]) ;
+        Integer endMin = Integer.parseInt(endTime_splitted_calculation[1]);
+
+        Double diff_calculation_hours = (endH - startH) * 60.0;
+        Double diff_calulation_minutes = endMin -startMin - 0.0;
+
+        diff_calulation_minutes -= breakTime;
+
+        Double result_time_calculation_minutes = diff_calculation_hours + diff_calulation_minutes + 0.0; //in minutes
+        Double result_time_calc_hours = result_time_calculation_minutes / 60;
+
+        return result_time_calc_hours;
     }
 }

@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import ss18.mc.positime.dbmodel.Arbeitsort;
 import ss18.mc.positime.dbmodel.Arbeitszeit;
@@ -32,6 +34,9 @@ public class Overview_Month extends Fragment {
     Overview_Details_Month_Adapter adapter;
     SharedPreferences mSharedPreferences;
     public String workplace;
+
+    DateFormat df;
+    int year;
 
     public Overview_Month(){
     }
@@ -55,7 +60,6 @@ public class Overview_Month extends Fragment {
 
     private void initDaysList() {
 
-
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getContext());
         //Temporary
         DatabaseInitializer.populateSync(db);
@@ -76,11 +80,21 @@ public class Overview_Month extends Fragment {
         Date friday= now.getTime();
         String fridayS = df.format(friday);
 
+        //arbeitszeiten für jeden Monat
+            //arbeitszeiten für jeden Woche des Monats
 
 
-        //List<Arbeitszeit> workingTimesOfWeek = db.arbeitszeitDAO().getArbeitszeitenForArbeitsOrt(workplace, monday, friday);
+        df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        Calendar calendar= Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
 
-        List<Arbeitszeit> workingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(workplace);
+        String startDate= String.valueOf(year)+ "-01-01 00:00:01";
+        String endDate= String.valueOf(year) +"-12-31 23:59:59";
+
+
+        List<Arbeitszeit> workingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(workplace, startDate, endDate);
+
+        //List<Arbeitszeit> workingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(workplace);
 
         Log.d(TAG, "Workplaces found for user with email " + userMail + ": " + workplaces.size());
         Log.d(TAG, "Working Times found for workplace" + workplace + ": " + workplaces.size());
@@ -102,6 +116,8 @@ public class Overview_Month extends Fragment {
             return;
         }
         else{
+            TextView yearView= view.findViewById(R.id.actual_year);
+            yearView.setText(String.valueOf(year));
             ListView lView = (ListView) view.findViewById(R.id.workplace_list_view);
             lView.setAdapter(adapter);
         }

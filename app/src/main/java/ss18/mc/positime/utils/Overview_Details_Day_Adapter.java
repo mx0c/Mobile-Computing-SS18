@@ -197,7 +197,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
                                list_breaktimes.remove(selected_day);
                                //list_breaktimes.remove(position); //Remove from list
                                notifyDataSetChanged();
-                               Toast.makeText(v.getContext(), R.string.workplace_delete_toast, Toast.LENGTH_SHORT).show();
+                               Toast.makeText(v.getContext(), "delete - toest - message", Toast.LENGTH_SHORT).show();
                                dialog.dismiss();
                            }
                        });

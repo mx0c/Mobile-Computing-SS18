@@ -24,6 +24,7 @@ import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.DatabaseInitializer;
 import ss18.mc.positime.utils.Overview_Details_Day_Adapter;
+import ss18.mc.positime.utils.TimestampConverter;
 
 public class Overview_Day extends Fragment{
 
@@ -63,9 +64,6 @@ public class Overview_Day extends Fragment{
 
     }
 
-
-
-
     private void initDaysList() {
 
 
@@ -82,25 +80,26 @@ public class Overview_Day extends Fragment{
         Integer weekNr = now.get(Calendar.WEEK_OF_YEAR);
 
         now.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+        now.set(Calendar.HOUR_OF_DAY, 0);
         Date monday= now.getTime();
         String mondayS= df.format(monday);
 
         now.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+        now.set(Calendar.HOUR_OF_DAY, 23);
         Date friday= now.getTime();
         String fridayS = df.format(friday);
 
 
 
         //List<Arbeitszeit> workingTimesOfWeek = db.arbeitszeitDAO().getArbeitszeitenForArbeitsOrt(workplace, monday, friday);
+       // workingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(workplace);
 
-        workingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(workplace);
+        workingTimes= db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(workplace, mondayS, fridayS);
 
         Log.d(TAG, "Workplaces found for user with email " + userMail + ": " + workplaces.size());
         Log.d(TAG, "Working Times found for workplace" + workplace + ": " + workplaces.size());
 
         adapter = new Overview_Details_Day_Adapter(workingTimes, getContext(), workplace);
-
-
 
         updateUI();
 

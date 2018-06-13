@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -20,25 +23,27 @@ import ss18.mc.positime.local.BenutzerDatabase;
 
 public class Overview_Details_Month_Adapter extends BaseAdapter implements ListAdapter {
 
-    private List<Arbeitszeit> list_breaktimes;
+    private List<Arbeitszeit> workingtimes_months;
+    DateFormat df;
     private Context context;
     private BenutzerDatabase db;
     private String workplace;
 
+
     public Overview_Details_Month_Adapter(List<Arbeitszeit> list, Context context, String worklplace){
-        this.list_breaktimes = list;
+        this.workingtimes_months = list;
         this.context = context;
         this.workplace = worklplace;
     }
     @Override
 
     public int getCount() {
-        return list_breaktimes.size();
+        return workingtimes_months.size();
     }
 
     @Override
     public Object getItem(int pos) {
-        return list_breaktimes.get(pos).getBreaktime();
+        return workingtimes_months.get(pos).getBreaktime();
     }
 
     @Override
@@ -55,6 +60,19 @@ public class Overview_Details_Month_Adapter extends BaseAdapter implements ListA
             view = inflater.inflate(R.layout.custom_list_layout_details_month, null);
         }
 
+        df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Collections.sort(workingtimes_months, new Comparator<Arbeitszeit>() {
+            @Override
+            public int compare(Arbeitszeit o1, Arbeitszeit o2) {
+                return o1.getStarttime().compareTo(o2.getStarttime());
+            }
+        });
+
+        Date actualYearD= new Date();
+        actualYearD= workingtimes_months.get(0).getStarttime();
+        String[] year_splitted = df.format(actualYearD).split(" ");
+        String dateS=year_splitted[0];
+        String yearS= dateS.split("-")[0];
 
 
         Calendar now = Calendar.getInstance();
@@ -63,13 +81,13 @@ public class Overview_Details_Month_Adapter extends BaseAdapter implements ListA
         //getallDataOfCalendarWeek
 
         db = BenutzerDatabase.getBenutzerDatabase(context);
-        DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        TextView date = (TextView) view.findViewById(R.id.DATE);
-        Date date_break= list_breaktimes.get(position).getWorkday();
+
+        /*TextView date = (TextView) view.findViewById(R.id.DATE);
+        Date date_break= workingtimes_months.get(position).getWorkday();
         String dateS= df.format(date_break);
         String [] splitted_date = dateS.split(" ");
-        date.setText(splitted_date[0]);
+        date.setText(splitted_date[0]);*/
 
 
         return view;
