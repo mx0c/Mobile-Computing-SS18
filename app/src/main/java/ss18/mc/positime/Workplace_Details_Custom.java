@@ -21,10 +21,6 @@ import android.widget.TextView;
 import ss18.mc.positime.utils.Constants;
 
 public class Workplace_Details_Custom extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    Intent i;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +38,8 @@ public class Workplace_Details_Custom extends AppCompatActivity implements Navig
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
     }
+
     //When logout is clicked, remove token and go back to login
     public void onLogoutClick(MenuItem view) {
         switch(view.getItemId()){

@@ -2,30 +2,40 @@ package ss18.mc.positime;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import ss18.mc.positime.R;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import ss18.mc.positime.dbmodel.Arbeitszeit;
+import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.Overview_Details_Day_Adapter;
 
 public class Overview_Custom extends Fragment implements View.OnClickListener {
 
     View v;
-
     Button date1_button;
     Button date2_button;
     EditText dateStart;
     EditText dateEnd;
     Button searchButton;
 
-    public Overview_Custom(){
+    private Date mStartDate;
+    private Date mEndDate;
+    private String mSelectedWorkplace;
+    private ListView mListView;
+    private List<Arbeitszeit> mWorkingTimes;
 
-    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,43 +46,54 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_workplace__details__custom, container, false);
 
+        mSelectedWorkplace = getActivity().getIntent().getExtras().getString("workplace");
+        mListView = v.findViewById(R.id.customList);
 
-        date1_button= v.findViewById(R.id.date1_button);
+        dateStart = v.findViewById(R.id.dateStart);
+        dateEnd = v.findViewById(R.id.dateEnd);
+
+        date1_button = v.findViewById(R.id.date1_button);
         if(date1_button != null){
             date1_button.setOnClickListener(this);
         }
 
-        date2_button=v.findViewById(R.id.date2_button);
+        date2_button = v.findViewById(R.id.date2_button);
         if(date2_button != null) {
-
             date2_button.setOnClickListener(this);
         }
-        searchButton= v.findViewById(R.id.searchButton);
+        searchButton = v.findViewById(R.id.searchButton);
+        //searchButton.setEnabled(false);
         if(searchButton != null) {
             searchButton.setOnClickListener(this);
         }
 
         return v;
-
     }
 
     @Override
     public void onClick(View v) {
-
+        Intent i;
         switch(v.getId()){
-
             case R.id.date1_button:
-                Intent i= new Intent(getActivity(), Select_date_calendar.class);
+                i = new Intent(getActivity(), Select_date_calendar.class);
                 startActivityForResult(i, 100);
                 break;
             case R.id.date2_button:
-                Intent intent= new Intent(getActivity(), Select_date_calendar.class);
-                startActivityForResult(intent, 200);
+                i = new Intent(getActivity(), Select_date_calendar.class);
+                startActivityForResult(i, 200);
                 break;
             case R.id.searchButton:
-                Toast.makeText(getActivity(), "SEARCH", Toast.LENGTH_LONG).show();
+                try {
+                    mStartDate = new SimpleDateFormat("dd-mm-yyyy").parse(dateStart.getText().toString());
+                    mEndDate = new SimpleDateFormat("dd-mm-yyyy").parse(dateEnd.getText().toString());
+                } catch (ParseException e){
+                    e.printStackTrace();
+                }
+                BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                mWorkingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(mSelectedWorkplace, df.format(mStartDate), df.format(mEndDate));
+                mListView.setAdapter(new Overview_Details_Day_Adapter(mWorkingTimes,getActivity(), mSelectedWorkplace));
                 break;
-
         }
     }
 
@@ -82,12 +103,11 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
         String date= intent.getStringExtra("DATE");
         if(reqCode == 100 && resultCode == 100 ){
             //Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
-            changeStartDateText(date);
+            dateStart.setText(date);
         }
         if(reqCode == 200 && resultCode == 100){
             //Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
-
-            changeEndDateText(date);
+            dateEnd.setText(date);
         }
         if (dateStart != null && dateEnd != null) {
 
@@ -131,15 +151,4 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
             }
         }
     }
-    public void changeStartDateText(String date){
-        dateStart= getView().findViewById(R.id.dateStart);
-        dateStart.setText(date);
-    }
-    public void changeEndDateText(String date){
-        dateEnd= getView().findViewById(R.id.dateEnd);
-        dateEnd.setText(date);
-    }
-
-
-
 }

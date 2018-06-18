@@ -67,11 +67,9 @@ public class Overview_Workplaces_Adapter extends BaseAdapter implements ListAdap
         showDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String placeName = list.get(position).getPlaceName();
                 Intent i = new Intent(context, Workplace_Details.class);
                 i.putExtra("workplace", placeName);
-
                 context.startActivity(i);
             }
         });

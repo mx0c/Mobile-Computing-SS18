@@ -38,7 +38,6 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
     Button button;
     BenutzerDatabase db;
 
-
     NavigationView navigationView;
     DrawerLayout drawer;
     View headerView;
@@ -47,6 +46,7 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
     Toolbar toolbar;
     SharedPreferences mSharedPreferences;
     private static String TAG = "abc";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +55,6 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
         initSharedPreferences();
         initNavigation();
         initWorkplaceList();
-
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -86,7 +85,6 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
         getMenuInflater().inflate(R.menu.navigation_activity, menu);
         return true;
     }
-
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -141,7 +139,6 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
 
         nameBuffer = mSharedPreferences.getString(Constants.FIRSTNAME, "Firstname") + " " + mSharedPreferences.getString(Constants.LASTNAME, "Lastname");
         mail = mSharedPreferences.getString(Constants.EMAIL, "Your Email");
-
 
         try {
             navigation_name.setText(nameBuffer); //Set text on view

@@ -12,7 +12,6 @@
     <string name="workplace_add_activity">Create Workplace</string>
     <string name="dashboard_activity">Dashboard</string>
 
-
     <!-- Inputs  -->
     <string name="emailInput">Email Address</string>
     <string name="passwordInput">Password</string>
@@ -30,7 +29,6 @@
     <string name="workplace_title_positionSelection">Select Position</string>
     <string name="workplace_btn_save">Save</string>
     <string name="workplace_radius">Radius (in Meters)</string>
-
 
 
     <!-- TextView's -->

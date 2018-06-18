@@ -89,8 +89,6 @@ public class DatabaseInitializer {
         arbeitsort2.setRadiusA(50);
         arbeitsort2.setWeeklyHours(40);
 
-
-
         addressT address_convexis = new addressT();
         address.setCityA("Reutlingen");
         address.setPlzA(72770);
@@ -148,7 +146,7 @@ public class DatabaseInitializer {
         Date date2_end= time.fromTimestamp("2018-06-05 16:30:00");
 
         Arbeitszeit arbeitszeit2 = new Arbeitszeit();
-        arbeitszeit2.setArbeitszeitId(1);
+        arbeitszeit2.setArbeitszeitId(0);
         arbeitszeit2.setAmountBreaks(1);
         arbeitszeit2.setStarttime(date2_start);
         arbeitszeit2.setEndtime(date2_end);
@@ -161,7 +159,7 @@ public class DatabaseInitializer {
         Date date3_end= time.fromTimestamp("2018-06-06 16:48:00");
 
         Arbeitszeit arbeitszeit3 = new Arbeitszeit();
-        arbeitszeit3.setArbeitszeitId(2);
+        arbeitszeit3.setArbeitszeitId(0);
         arbeitszeit3.setAmountBreaks(1);
         arbeitszeit3.setStarttime(date3_start);
         arbeitszeit3.setEndtime(date3_end);
@@ -174,7 +172,7 @@ public class DatabaseInitializer {
         Date date4_end= time.fromTimestamp("2018-06-18 18:20:00");
 
         Arbeitszeit arbeitszeit4 = new Arbeitszeit();
-        arbeitszeit4.setArbeitszeitId(3);
+        arbeitszeit4.setArbeitszeitId(0);
         arbeitszeit4.setAmountBreaks(1);
         arbeitszeit4.setStarttime(date4_start);
         arbeitszeit4.setEndtime(date4_end);
@@ -188,7 +186,7 @@ public class DatabaseInitializer {
 
         Arbeitszeit arbeitszeit5 = new Arbeitszeit();
         arbeitszeit5.setArbeitszeitId(4);
-        arbeitszeit5.setAmountBreaks(1);
+        arbeitszeit5.setAmountBreaks(0);
         arbeitszeit5.setStarttime(date5_start);
         arbeitszeit5.setEndtime(date5_end);
         arbeitszeit5.setBreaktime(15); //Minutes
@@ -199,7 +197,7 @@ public class DatabaseInitializer {
         Date date6_end= time.fromTimestamp("2018-06-25 18:05:00");
 
         Arbeitszeit arbeitszeit6 = new Arbeitszeit();
-        arbeitszeit6.setArbeitszeitId(5);
+        arbeitszeit6.setArbeitszeitId(0);
         arbeitszeit6.setAmountBreaks(1);
         arbeitszeit6.setStarttime(date6_start);
         arbeitszeit6.setEndtime(date6_end);
@@ -211,7 +209,7 @@ public class DatabaseInitializer {
         Date date7_end= time.fromTimestamp("2018-06-12 18:05:00");
 
         Arbeitszeit arbeitszeit7 = new Arbeitszeit();
-        arbeitszeit7.setArbeitszeitId(6);
+        arbeitszeit7.setArbeitszeitId(0);
         arbeitszeit7.setAmountBreaks(4);
         arbeitszeit7.setStarttime(date7_start);
         arbeitszeit7.setEndtime(date7_end);
@@ -223,7 +221,7 @@ public class DatabaseInitializer {
         Date date8_end= time.fromTimestamp("2018-06-11 17:05:00");
 
         Arbeitszeit arbeitszeit8 = new Arbeitszeit();
-        arbeitszeit8.setArbeitszeitId(7);
+        arbeitszeit8.setArbeitszeitId(0);
         arbeitszeit8.setAmountBreaks(1);
         arbeitszeit8.setStarttime(date8_start);
         arbeitszeit8.setEndtime(date8_end);
