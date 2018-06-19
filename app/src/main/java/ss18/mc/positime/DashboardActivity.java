@@ -59,16 +59,21 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         initBackgroundServiceInfo();
     }
     public void initBackgroundServiceInfo(){
+        TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
+        TextView working_time_dash = (TextView) findViewById(R.id.worktime_dashboard);
+        TextView pause_dash = (TextView) findViewById(R.id.pause_dashboard);
 
         broadcastReceiver = new BroadcastReceiver(){
             public void onReceive(Context context, Intent intent){
-                TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
+
                 Bundle test = intent.getExtras();
-                String abc = test.get("current_workplace_name").toString();
-
+                String abc = (String) test.get("current_workplace_name");
+                String current_time_hours = test.get("current_workplace_time_hours").toString();
+                String current_time_mins = test.get("current_workplace_time_").toString();
+                String current_time_pause = test.get("current_workplace_pause_minutes").toString();
                 workplace_dash.setText(abc);
-
-
+                working_time_dash.setText(current_time_hours+"h"+current_time_mins+"min");
+                pause_dash.setText("Pause: "+current_time_pause+" min");
             }
         };
         registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));

@@ -67,6 +67,7 @@ public class SecondFragment extends Fragment {
 
         //Getting Data from the Database
         List<Arbeitsort> allOrts = db.arbeitsortDAO().getAll();
+
         // Adding child data
         //dynamisch erzeugen aus DB
         listDataHeader.add(allOrts.get(0).getPlaceName().toString());

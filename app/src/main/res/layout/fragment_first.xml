@@ -15,9 +15,9 @@
             android:layout_alignParentTop="true">
 
             <TextView
+                android:id="@+id/current_workplace_fragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hochschule Reutlingen"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_column="1"

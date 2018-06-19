@@ -47,6 +47,7 @@ import ss18.mc.positime.services.LocationService;
 import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.Validation;
 
+
 public class LoginActivity extends AppCompatActivity {
     private static String TAG = "LoginActivity";
 
