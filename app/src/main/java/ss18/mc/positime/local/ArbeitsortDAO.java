@@ -25,12 +25,12 @@ public interface ArbeitsortDAO {
     @Query("SELECT arbeitsort.money_perhour FROM arbeitsort WHERE place_name = :place_name ")
     Double getMoneyPerHour( String place_name);
 
+    @Update
+    void updateArbeitsort(Arbeitsort arbeitsort);
 
     @Insert
     void insertAll(Arbeitsort... arbeitsorts);
 
-    @Update
-    void updateArbeitsort(Arbeitsort arbeitsort);
     @Delete
     void delete(Arbeitsort arbeitsort);
 }

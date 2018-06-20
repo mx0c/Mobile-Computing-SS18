@@ -16,37 +16,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC8wIgesjm6Y7AcDv2_bDoKt6Km_L-neYk " />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".DashboardActivity"
             android:label="test"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Login"></activity>
+            android:theme="@style/AppTheme.Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-        <service android:name=".services.LocationService" />
-        <service android:name=".services.BackgroundService" />
+        </activity>
+
+        <service android:name=".services.LocationService"/>
+        <service android:name=".services.BackgroundService"/>
 
         <activity
             android:name=".RegisterActivity"
             android:label="@string/register_activity" />
         <activity
             android:name=".Overview"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/AppTheme.NoActionBar" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".Workplace_Details"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -69,10 +64,11 @@
             android:name=".Workplace_add_edit"
             android:label="@string/title_activity_workplace_add_edit"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Edit_details_day"
             android:label="Edit Day"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

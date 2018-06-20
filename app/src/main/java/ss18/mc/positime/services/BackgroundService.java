@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -130,7 +131,7 @@ public class BackgroundService extends Service {
         //only gets executed when not inside workplace or pause is active
         this.mCurrentArbeitszeit = null;
         Intent i = new Intent("dashboard_informations");
-        i.putExtra("current_workplace_name", 0);
+        i.putExtra("current_workplace_name", "0");
         sendBroadcast(i);
     }
 
