@@ -39,7 +39,6 @@ import ss18.mc.positime.local.BenutzerDatabase;
 
 public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAdapter {
 
-
     private List<Arbeitszeit> list_breaktimes;
     private Context context;
     private BenutzerDatabase db;
@@ -53,7 +52,6 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
 
     int clickedListPosition;
 
-
     public Overview_Details_Day_Adapter(List<Arbeitszeit> list, Context context, String workplace) {
         this.list_breaktimes = list;
         this.context = context;
@@ -61,7 +59,6 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
     }
 
     @Override
-
     public int getCount() {
         return list_breaktimes.size();
     }
@@ -134,7 +131,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         Integer endH = Integer.parseInt(endTime_splitted_calculation[0]) ;
         Integer endMin = Integer.parseInt(endTime_splitted_calculation[1]);
 
-        Integer breakTime_calculation = list_breaktimes.get(position).getBreaktime() * list_breaktimes.get(position).getAmountBreaks() ;
+        Integer breakTime_calculation = list_breaktimes.get(position).getBreaktime() * list_breaktimes.get(position).getAmountBreaks();
 
         Double diff_calculation_hours = (endH - startH) * 60.0;
         Double diff_calulation_minutes = endMin -startMin - 0.0;

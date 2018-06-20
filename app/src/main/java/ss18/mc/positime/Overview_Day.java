@@ -43,8 +43,6 @@ public class Overview_Day extends Fragment{
     public Overview_Day(  ){
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,19 +55,13 @@ public class Overview_Day extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-// Inflate the layout for this fragment
+        // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.activity_overview__day, container, false);
-
         initDaysList();
-
-
         return view;
-
     }
 
     private void initDaysList() {
-
-
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getContext());
         //Temporary
         //DatabaseInitializer.populateSync(db);
@@ -92,8 +84,6 @@ public class Overview_Day extends Fragment{
         Date friday= now.getTime();
         String fridayS = df.format(friday);
 
-
-
         //List<Arbeitszeit> workingTimesOfWeek = db.arbeitszeitDAO().getArbeitszeitenForArbeitsOrt(workplace, monday, friday);
        // workingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(workplace);
 
@@ -105,7 +95,6 @@ public class Overview_Day extends Fragment{
         adapter = new Overview_Details_Day_Adapter(workingTimes, getContext(), workplace);
 
         updateUI();
-
     }
 
     private void initSharedPreferences() {

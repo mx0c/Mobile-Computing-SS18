@@ -163,7 +163,6 @@ public class Workplace_Details extends AppCompatActivity implements OnNavigation
         nameBuffer = mSharedPreferences.getString(Constants.FIRSTNAME, "Firstname") + " " + mSharedPreferences.getString(Constants.LASTNAME, "Lastname");
         mail = mSharedPreferences.getString(Constants.EMAIL, "Your Email");
 
-
         try {
             navigation_name.setText(nameBuffer); //Set text on view
             navigation_mail.setText(mail);

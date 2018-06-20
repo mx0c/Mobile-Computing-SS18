@@ -1,101 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="30dp"
-    android:paddingBottom="50dp"
     tools:context=".Workplace_Details_Custom">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingBottom="15dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp"
         android:text="Choose Period"
-
-        android:textSize="30dp" />
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88dp"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="bottom|left"
+        android:orientation="horizontal"
+        android:paddingLeft="0dp">
 
         <Button
             android:id="@+id/date1_button"
-            android:layout_width="47dp"
-            android:layout_height="62dp"
-            android:background="@color/white"
+            android:layout_width="49dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="-6dp"
+            android:background="@color/colorPrimaryDark"
             android:clickable="true"
             android:drawableLeft="@drawable/ic_calendar"
-            android:elevation="0dp"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="33dp" />
+            android:drawableTint="@color/common_google_signin_btn_text_dark_default"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="0dp"
+            android:shadowColor="@color/common_google_signin_btn_text_dark_default"
+            android:stateListAnimator="@null"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHighlight="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+            android:textColorLink="@color/common_google_signin_btn_text_dark_default" />
 
 
         <EditText
             android:id="@+id/dateStart"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="dd-mm-yyyy" />
+            android:hint="dd-mm-yyyy"
+            android:shadowColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHighlight="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="73dp"
-            android:paddingTop="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="-12dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
             android:text="-"
-            android:textSize="40dp" />
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="36sp" />
 
         <Button
             android:id="@+id/date2_button"
-            android:layout_width="46dp"
-            android:layout_height="62dp"
-            android:background="@color/white"
+            android:layout_width="44dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="-6dp"
+            android:background="@color/colorPrimaryDark"
             android:drawableLeft="@drawable/ic_calendar"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
+            android:drawableTint="@color/common_google_signin_btn_text_dark_default"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="0dp"
             android:stateListAnimator="@null"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="33dp" />
 
         <EditText
             android:id="@+id/dateEnd"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="dd-mm-yyyy" />
+            android:hint="dd-mm-yyyy"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHighlight="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default" />
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-6dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="SEARCH"
+            android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
 
     </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="118dp" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-
-        <Button
-            android:id="@+id/searchButton"
+        <ListView
+            android:id="@+id/customList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:text="Search"
-            android:textColor="@color/white" />
-
+            android:layout_height="match_parent" />
     </LinearLayout>
+
 
 </LinearLayout>
