@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -49,7 +50,8 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
     ImageView add_day;
 
     Arbeitszeit selected_day;
-    //For edit-Activity:
+
+    int clickedListPosition;
 
 
     public Overview_Details_Day_Adapter(List<Arbeitszeit> list, Context context, String workplace) {
@@ -142,14 +144,27 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         TextView salary_text = (TextView) view.findViewById(R.id.salary);
 
         Double result_time_calculation_minutes = diff_calculation_hours + diff_calulation_minutes + 0.0; //in minutes
-        Double result_time_calc_hours = result_time_calculation_minutes / 60;
+        double result_time_calc_hours = result_time_calculation_minutes / 60; //hh,mm
+
+        int hours = (int) result_time_calc_hours;
+        double  minutes= result_time_calc_hours - hours;
+        minutes= minutes * 60;
+
 
         Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(worklplace);
         salary_text.setText( String.format("%.2f €",moneyPerHour *result_time_calc_hours ));
 
 
+        int min= (int) minutes;
         TextView timeSum= view.findViewById(R.id.time_sum);
-        timeSum.setText( String.format(" %.2f hours",result_time_calc_hours ));
+        if(min < 10){
+            timeSum.setText( hours + ":0" + min +" hours");
+
+        }
+        else{
+            timeSum.setText( hours + ":" + min +" hours");
+        }
+
 
 
         FloatingActionButton floating_delete= view.findViewById(R.id.floating_delete);
@@ -158,15 +173,15 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
 
         RelativeLayout day_list = view.findViewById(R.id.day_list);
 
-
         day_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                /*Resources res= Resources.getSystem();
+                Resources res= Resources.getSystem();
                 Drawable background= res.getDrawable(R.drawable.border_layout);
-                day_list.setBackgroundDrawable(background);*/
+                day_list.setBackgroundDrawable(background);
+
 
 
                 floating_delete.setVisibility(View.VISIBLE);
@@ -176,18 +191,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
                 floating_edit.setClickable(true);
 
 
-                /*delete_day.setVisibility(View.VISIBLE);
-                delete_day.setClickable(true);
 
-                edit_day.setVisibility(View.VISIBLE);
-                edit_day.setClickable(true);
-
-                add_day.setVisibility( View.VISIBLE);
-                add_day.setClickable(true);*/
-
-
-                //Arbeitszeit selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(list_breaktimes.get(position).getArbeitszeitId());
-                //Toast.makeText(context, Integer.toString(selected_day.getBreaktime()) +" min pause" , Toast.LENGTH_LONG).show();
             }
         });
 

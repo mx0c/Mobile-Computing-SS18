@@ -72,10 +72,9 @@ public class Overview_Day extends Fragment{
 
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getContext());
         //Temporary
-        DatabaseInitializer.populateSync(db);
+        //DatabaseInitializer.populateSync(db);
 
-        //String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
-        String userMail = "ge2thez@gmail.com";
+        String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
         List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
 
         DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

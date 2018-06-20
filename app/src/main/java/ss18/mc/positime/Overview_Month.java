@@ -62,9 +62,8 @@ public class Overview_Month extends Fragment {
 
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getContext());
         //Temporary
-        DatabaseInitializer.populateSync(db);
+        //DatabaseInitializer.populateSync(db);
 
-        //String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
         String userMail = "ge2thez@gmail.com";
         List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
 

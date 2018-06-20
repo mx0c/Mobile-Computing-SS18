@@ -23,6 +23,7 @@ import java.util.Locale;
 import ss18.mc.positime.dbmodel.Arbeitsort;
 import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.DatabaseInitializer;
 import ss18.mc.positime.utils.Overview_Details_Week_Adapter;
 
@@ -65,10 +66,10 @@ public class Overview_Week extends Fragment {
 
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getContext());
         //Temporary
-        DatabaseInitializer.populateSync(db);
+        //DatabaseInitializer.populateSync(db);
 
-        //String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
-        String userMail = "ge2thez@gmail.com";
+        String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
+
         List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
 
         DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
