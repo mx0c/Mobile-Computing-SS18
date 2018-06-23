@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,7 +20,7 @@ public class LocationService extends Service{
     private LocationListener mListener;
     private LocationManager mLocationManager;
     private final static int MIN_TIME_BW_UPDATES = 10000; //10 seconds
-    private final static int MIN_DISTANCE_CHANGE_FOR_UPDATES = 5;
+    private final static int MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
 
     @Nullable
     @Override
@@ -56,7 +57,10 @@ public class LocationService extends Service{
         };
 
         mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,MIN_TIME_BW_UPDATES,MIN_DISTANCE_CHANGE_FOR_UPDATES,mListener);
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_MEDIUM);
+        String provider = mLocationManager.getBestProvider(criteria, true);
+        mLocationManager.requestLocationUpdates(provider,MIN_TIME_BW_UPDATES,MIN_DISTANCE_CHANGE_FOR_UPDATES,mListener);
     }
 
     @Override
