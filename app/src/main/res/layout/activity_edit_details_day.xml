@@ -69,6 +69,7 @@
             android:layout_below="@+id/icon_calendar"
             android:layout_toEndOf="@+id/icon_calendar"
             android:text="time"
+            android:textSize="15sp"
             android:textStyle="bold"/>
 
         <ImageView
@@ -104,6 +105,7 @@
 
 
         <EditText
+
             android:id="@+id/pause_time"
             android:layout_width="194dp"
             android:layout_height="40dp"

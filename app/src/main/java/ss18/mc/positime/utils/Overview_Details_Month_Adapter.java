@@ -111,10 +111,20 @@ public class Overview_Details_Month_Adapter extends BaseAdapter implements ListA
 
                 if (monthNr.intValue() == actualMonthNumber) {
                     pauseTime_sum += time.getBreaktime() * time.getAmountBreaks();
-                    pause_sum.setText(String.valueOf(pauseTime_sum) + " minutes");
+                    pause_sum.setText(" "+String.valueOf(pauseTime_sum) + " minutes");
 
                     workingTime_sum += getWorkingTimeInHours(time.getStarttime(), time.getEndtime(), time.getBreaktime()*time.getAmountBreaks());
-                    worktime_sum.setText(String.format(" %.2f hours", workingTime_sum));
+                    int hours= (int) workingTime_sum;
+                    double minutes= workingTime_sum - hours;
+                    minutes *= 60;
+                    int min = (int) minutes;
+                    if ( min < 10){
+                        worktime_sum.setText(" "+hours + ":0" + min+ " hours");
+
+                    }
+                    else{
+                        worktime_sum.setText(" "+hours + ":" + min+ " hours");
+                    }
 
                     Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(time.getArbeitsort_name());
                     salary_sum.setText(String.format(" %.2f €", moneyPerHour * workingTime_sum));
