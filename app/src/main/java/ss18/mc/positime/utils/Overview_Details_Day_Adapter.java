@@ -148,10 +148,8 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         TextView timeSum= view.findViewById(R.id.time_sum);
         timeSum.setText( String.format(" %.2f hours",result_time_calc_hours ));
 
-
         FloatingActionButton floating_delete= view.findViewById(R.id.floating_delete);
         FloatingActionButton floating_edit = view.findViewById(R.id.floating_edit);
-
 
         RelativeLayout day_list = view.findViewById(R.id.day_list);
 
@@ -250,8 +248,6 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
                 i.putExtra("id", selected_day.getArbeitszeitId());
                 context.startActivity(i);
             }
-
-
         });
 
 

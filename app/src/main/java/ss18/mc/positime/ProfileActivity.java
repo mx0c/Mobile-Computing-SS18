@@ -23,13 +23,13 @@ import ss18.mc.positime.utils.Constants;
 
 public class ProfileActivity extends AppCompatActivity implements OnNavigationItemSelectedListener{
     private static String TAG = "Profile";
-    SharedPreferences mSharedPreferences;
-    DrawerLayout drawer;
-    NavigationView navigationView;
-    View headerView;
-    TextView nav_name;
-    TextView nav_mail;
-    Toolbar toolbar;
+    private SharedPreferences mSharedPreferences;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private View headerView;
+    private TextView nav_name;
+    private TextView nav_mail;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,6 @@ public class ProfileActivity extends AppCompatActivity implements OnNavigationIt
         initNavigation();
     }
 
-    /*
-        initialization of views
-     */
     //Put view initializations in here
     private void initView() {
         TextView lastname = findViewById(R.id.lastname_label);
@@ -98,7 +95,6 @@ public class ProfileActivity extends AppCompatActivity implements OnNavigationIt
     private void initSharedPreferences() {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
-
 
     //When logout is clicked, remove token and go back to login
     public void onLogoutClick(MenuItem view) {

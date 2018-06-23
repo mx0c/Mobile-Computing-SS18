@@ -14,11 +14,15 @@ import android.widget.Toast;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.DatabaseInitializer;
+import ss18.mc.positime.utils.Overview_Details_Custom_Adapter;
 import ss18.mc.positime.utils.Overview_Details_Day_Adapter;
 
 public class Overview_Custom extends Fragment implements View.OnClickListener {
@@ -45,6 +49,8 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_workplace__details__custom, container, false);
+        BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
+        DatabaseInitializer.populateSync(db);
 
         mSelectedWorkplace = getActivity().getIntent().getExtras().getString("workplace");
         mListView = v.findViewById(R.id.customList);
@@ -84,15 +90,24 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
                 break;
             case R.id.searchButton:
                 try {
-                    mStartDate = new SimpleDateFormat("dd-mm-yyyy").parse(dateStart.getText().toString());
-                    mEndDate = new SimpleDateFormat("dd-mm-yyyy").parse(dateEnd.getText().toString());
+                    DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                    String start = dateStart.getText().toString();
+                    String end = dateEnd.getText().toString();
+                    mStartDate = sdf.parse(start);
+                    mEndDate = sdf.parse(end);
                 } catch (ParseException e){
                     e.printStackTrace();
                 }
                 BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 mWorkingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(mSelectedWorkplace, df.format(mStartDate), df.format(mEndDate));
-                mListView.setAdapter(new Overview_Details_Day_Adapter(mWorkingTimes,getActivity(), mSelectedWorkplace));
+                Collections.sort(mWorkingTimes, new Comparator<Arbeitszeit>() {
+                    @Override
+                    public int compare(Arbeitszeit o1, Arbeitszeit o2) {
+                        return o1.getStarttime().compareTo(o2.getStarttime());
+                    }
+                });
+                mListView.setAdapter(new Overview_Details_Custom_Adapter(mWorkingTimes,getActivity(), mSelectedWorkplace));
                 break;
         }
     }
