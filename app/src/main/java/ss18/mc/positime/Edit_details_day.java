@@ -15,28 +15,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import ss18.mc.positime.dbmodel.Arbeitsort;
-import ss18.mc.positime.dbmodel.addressT;
+import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.Constants;
-import ss18.mc.positime.utils.DatabaseInitializer;
-import ss18.mc.positime.utils.MyCustomAdapter;
-import ss18.mc.positime.utils.Overview_Workplaces_Adapter;
 
+public class Edit_details_day extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-public class Overview extends AppCompatActivity implements OnNavigationItemSelectedListener {
-
-    Button button;
-    BenutzerDatabase db;
 
     NavigationView navigationView;
     DrawerLayout drawer;
@@ -47,21 +34,55 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
     SharedPreferences mSharedPreferences;
     private static String TAG = "abc";
 
+    private BenutzerDatabase db;
+    Integer edit_arbeitszeit_id;
+    Button editButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_overview);
+        setContentView(R.layout.activity_edit_details_day);
+
 
         initSharedPreferences();
         initNavigation();
-        initWorkplaceList();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        EditText date= findViewById(R.id.date);
+        EditText start_text= findViewById(R.id.start_text);
+        EditText stop_text= findViewById(R.id.stop_time);
+        EditText pause_text = findViewById(R.id.pause_time);
+
+        Intent i = getIntent();
+
+        edit_arbeitszeit_id=  i.getIntExtra("id", 0);
+
+        date.setText(i.getStringExtra("date"));
+        start_text.setText(i.getStringExtra("startTime"));
+        stop_text.setText(i.getStringExtra("endTime"));
+        pause_text.setText(i.getStringExtra("pause") );
+
+
+        db = BenutzerDatabase.getBenutzerDatabase(this);
+        editButton = findViewById(R.id.save_button);
+        editButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Arbeitszeit arbeitszeit = db.arbeitszeitDAO().getArbeitszeitFromID(edit_arbeitszeit_id);
+                String newTime = pause_text.getText().toString();
+                int newTimeInt = Integer.parseInt(newTime);
+                arbeitszeit.setBreaktime(newTimeInt );
+                db.beginTransaction();
+                finish();
+            }
+        });
+
+
+
     }
 
-
-    //When logout is clicked, remove token and go back to login
     public void onLogoutClick(MenuItem view) {
         switch(view.getItemId()){
             case R.id.logout_icon:
@@ -79,12 +100,12 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
                 break;
         }
     }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.navigation_activity, menu);
         return true;
     }
+
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -135,10 +156,11 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.dashboard_activity);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Overview Workplaces");
+        getSupportActionBar().setTitle("Edit Day");
 
         nameBuffer = mSharedPreferences.getString(Constants.FIRSTNAME, "Firstname") + " " + mSharedPreferences.getString(Constants.LASTNAME, "Lastname");
         mail = mSharedPreferences.getString(Constants.EMAIL, "Your Email");
+
 
         try {
             navigation_name.setText(nameBuffer); //Set text on view
@@ -164,29 +186,5 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
 
     private void initSharedPreferences() {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-    }
-
-    private void initWorkplaceList() {
-        BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
-        //Temporary
-        DatabaseInitializer.populateSync(db);
-
-        //ToDo: Use this in real use :
-        //String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
-
-        // for own testing hard coded eMail:
-        String userMail = "ge2thez@gmail.com";
-
-        List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
-        ArrayList<String> workplace_names = new ArrayList<String>();
-
-        Log.d(TAG, "Workplaces found for user with email " + userMail + ": " + workplaces.size());
-
-        //instantiate custom adapter
-        Overview_Workplaces_Adapter adapter = new Overview_Workplaces_Adapter(workplaces, this);
-
-        //handle listview and assign adapter
-        ListView lView = (ListView) findViewById(R.id.workplace_list_view);
-        lView.setAdapter(adapter);
     }
 }

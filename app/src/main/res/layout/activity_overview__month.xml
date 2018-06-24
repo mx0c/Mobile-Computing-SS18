@@ -4,20 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Workplace"
-    tools:showIn="@layout/activity_workplace">
+    tools:context=".Overview_Month">
+
+    <TextView
+        android:id="@+id/actual_year"
+        android:layout_width="373dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingTop="5dp"
+        android:text="actual Year"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="6dp" />
 
     <ListView
         android:id="@+id/workplace_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        tools:layout_editor_absoluteY="66dp"
-        android:layout_weight="1"
-        android:scrollbarSize="3dp"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="vertical"
-        android:scrollingCache="true"
-        android:smoothScrollbar="true"></ListView>
+        tools:layout_editor_absoluteY="66dp"></ListView>
+
 </android.support.constraint.ConstraintLayout>

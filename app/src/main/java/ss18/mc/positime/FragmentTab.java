@@ -215,7 +215,7 @@ public class FragmentTab extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void changeStartDateText(String date){
+       public void changeStartDateText(String date){
         dateStart= getView().findViewById(R.id.dateStart);
         dateStart.setText(date);
     }

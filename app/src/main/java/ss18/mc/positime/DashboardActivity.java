@@ -66,14 +66,14 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         broadcastReceiver = new BroadcastReceiver(){
             public void onReceive(Context context, Intent intent){
 
-                Bundle test = intent.getExtras();
+                /*Bundle test = intent.getExtras();
                 String abc = (String) test.get("current_workplace_name");
                 String current_time_hours = test.get("current_workplace_time_hours").toString();
                 String current_time_mins = test.get("current_workplace_time_").toString();
                 String current_time_pause = test.get("current_workplace_pause_minutes").toString();
                 workplace_dash.setText(abc);
                 working_time_dash.setText(current_time_hours+"h"+current_time_mins+"min");
-                pause_dash.setText("Pause: "+current_time_pause+" min");
+                pause_dash.setText("Pause: "+current_time_pause+" min");*/
             }
         };
         registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));

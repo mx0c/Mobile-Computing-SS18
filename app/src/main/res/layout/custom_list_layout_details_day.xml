@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/day_list"
+    android:clickable="true"
+    >
+
+    <ImageView
+        android:id="@+id/icon_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:paddingLeft="15dp"
+        android:src="@drawable/ic_calendar"
+        android:tint="@color/colorPrimaryDark"
+        android:paddingTop="10dp"/>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="194dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/icon_calendar"
+        android:layout_toEndOf="@+id/icon_calendar"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/icon_time"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:paddingLeft="15dp"
+        android:src="@drawable/ic_timelapse"
+        android:tint="@color/colorPrimaryDark"
+        android:paddingTop="10dp"
+        android:layout_marginStart="150dp"/>
+
+    <TextView
+        android:id="@+id/time_sum"
+        android:layout_width="194dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/icon_calendar"
+        android:layout_toEndOf="@+id/icon_calendar"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
+        android:textStyle="bold"
+        android:layout_marginStart="150dp"/>
+
+    <ImageView
+        android:id="@+id/icon_pause_time"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@+id/icon_calendar"
+        android:paddingLeft="15dp"
+        android:src="@drawable/ic_pause"
+        android:tint="@color/colorPrimaryDark" />
+
+
+    <TextView
+        android:id="@+id/pause_time"
+        android:layout_width="194dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/date"
+        android:layout_toRightOf="@+id/icon_pause_time"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <ImageView
+        android:id="@+id/icon_start"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/icon_pause_time"
+        android:paddingLeft="15dp"
+        android:tint="@color/colorPrimaryDark"
+        app:srcCompat="@drawable/ic_start_work" />
+
+    <TextView
+        android:id="@+id/start_time"
+        android:layout_width="194dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/pause_time"
+        android:layout_toEndOf="@+id/icon_start"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/icon_salary"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/icon_calendar"
+        android:paddingLeft="15dp"
+        android:tint="@color/colorPrimaryDark"
+        app:srcCompat="@drawable/ic_attach_money"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="150dp"
+        />
+
+    <TextView
+        android:id="@+id/salary"
+        android:layout_width="194dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/date"
+        android:layout_toEndOf="@+id/icon_start"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginStart="150dp"/>
+
+    <ImageView
+        android:id="@+id/icon_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/icon_pause_time"
+        android:paddingLeft="15dp"
+        android:tint="@color/colorPrimaryDark"
+        app:srcCompat="@drawable/ic_directions_walk"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="150dp"
+        />
+
+    <TextView
+        android:id="@+id/stop_time"
+        android:layout_width="133dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/pause_time"
+        android:layout_marginStart="150dp"
+        android:layout_toEndOf="@+id/icon_start"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_delete"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/icon_pause_time"
+        android:layout_toEndOf="@+id/stop_time"
+        android:scaleType="center"
+        android:src="@drawable/ic_delete_white"
+        android:visibility="invisible" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_edit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/floating_delete"
+        android:layout_alignStart="@+id/floating_delete"
+        android:src="@drawable/ic_edit_white"
+        android:visibility="invisible"
+        android:scaleType="center"/>
+
+
+
+</RelativeLayout>

@@ -31,7 +31,7 @@ public class Arbeitszeit {
     public String arbeitsort_name;
 
     @ColumnInfo(name = "workday")
-    @TypeConverters(TimestampConverter.class)
+    @TypeConverters({TimestampConverter.class})
     private Date workday;
 
     @ColumnInfo(name = "starttime")
@@ -44,6 +44,8 @@ public class Arbeitszeit {
 
     @ColumnInfo(name = "breaktime")
     private int breaktime;
+
+
 
     public int getArbeitszeitId() {
         return arbeitszeitId;

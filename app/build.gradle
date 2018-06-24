@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "ss18.mc.positime"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -48,12 +48,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     implementation 'io.reactivex:rxjava:1.2.0'
     implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'com.google.android.gms:play-services-places:10.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     def room_version = "1.1.0" //für room database notwending
-
 
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"

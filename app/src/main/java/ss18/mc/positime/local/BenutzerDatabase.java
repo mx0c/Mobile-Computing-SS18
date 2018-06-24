@@ -11,7 +11,7 @@ import ss18.mc.positime.dbmodel.Bereich;
 import ss18.mc.positime.dbmodel.PausenSettings;
 import ss18.mc.positime.model.Benutzer;
 
-@Database(entities = {Benutzer.class, Arbeitszeit.class, Arbeitsort.class, Bereich.class, PausenSettings.class}, version = 9, exportSchema = false)
+@Database(entities = {Benutzer.class, Arbeitszeit.class, Arbeitsort.class, Bereich.class, PausenSettings.class}, version = 10, exportSchema = false)
 public abstract class BenutzerDatabase extends RoomDatabase {
     private static BenutzerDatabase INSTANCE;
 

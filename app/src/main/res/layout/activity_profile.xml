@@ -20,8 +20,105 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:visibility="gone"
         app:headerLayout="@layout/nav_header_navigation_activity"
         app:menu="@menu/activity_navigation_activity_drawer">
 
     </android.support.design.widget.NavigationView>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/firstname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="Firstname"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toTopOf="@+id/firstname_label"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="384dp" />
+
+        <TextView
+            android:id="@+id/firstname_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="50dp"
+            android:text="-"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@+id/lastname"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="384dp" />
+
+        <TextView
+            android:id="@+id/lastname"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="50dp"
+            android:text="Lastname"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toTopOf="@+id/lastname_label"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="384dp" />
+
+        <TextView
+            android:id="@+id/lastname_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="50dp"
+            android:text="-"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@+id/email"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="384dp" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="50dp"
+            android:text="E-Mail"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toTopOf="@+id/email_label"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="384dp" />
+
+        <TextView
+            android:id="@+id/email_label"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="250dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="50dp"
+            android:text="-"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="384dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.v4.widget.DrawerLayout>

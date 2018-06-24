@@ -67,24 +67,6 @@
             app:layout_constraintTop_toBottomOf="@+id/icon" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/passwordLogin"
-            android:layout_width="290dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingBottom="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailLogin"
-            app:passwordToggleEnabled="true">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/passwordInput"
-                android:inputType="textPassword" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
             android:id="@+id/emailLogin"
             android:layout_width="290dp"
             android:layout_height="wrap_content"
@@ -100,6 +82,24 @@
                 android:hint="@string/emailInput"
                 android:inputType="textEmailAddress" />
 
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/passwordLogin"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailLogin"
+            app:passwordToggleEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/passwordInput"
+                android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
     </android.support.constraint.ConstraintLayout>
