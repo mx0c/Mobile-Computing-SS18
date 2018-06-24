@@ -29,4 +29,10 @@ public interface ArbeitszeitDAO {
     @Query("SELECT * FROM arbeitszeit WHERE arbeitsort_name = :ArbeitsortName")
     List<Arbeitszeit> getArbeitszeitenForArbeitsort(String ArbeitsortName);
 
+    //@Query("SELECT * FROM arbeitszeit WHERE arbeitsort_name = :ArbeitsortName AND workday = :workDate")
+    //List<Arbeitszeit> getArbeitszeitenForArbeitsortForDate(String ArbeitsortName, Date workDate);
+
+    @Query("SELECT * FROM arbeitszeit WHERE arbeitsort_name = :workplace AND starttime BETWEEN :startDate AND :endDate")
+    List<Arbeitszeit> getArbeitszeitenForArbeitsortBetween(String workplace, String startDate, String endDate);
+
 }

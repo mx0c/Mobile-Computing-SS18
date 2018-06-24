@@ -1,5 +1,7 @@
 package ss18.mc.positime;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 import android.view.WindowManager;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import android.content.Context;
+
+import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -22,21 +26,28 @@ import java.util.TimeZone;
 import android.widget.PopupWindow;
 import android.widget.Button;
 import java.util.List;
+
+import ss18.mc.positime.dbmodel.Arbeitsort;
 import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.DatabaseInitializer;
+import ss18.mc.positime.utils.TimestampConverter;
+
 import android.widget.Toast;
 public class FourthFragment extends Fragment {
+    Date dateClick;
     TextView month_text;
     CompactCalendarView calendar;
     SimpleDateFormat dtf;
     String[] month_list;
     View view;
+    Date current_Date;
     private Context mContext;
-
+    BroadcastReceiver broadcastReceiver;
     SharedPreferences mSharedPreferences;
     static Long clickedDate_Epochtime;
+    String workplace;
     public FourthFragment() {
 // Required empty public constructor
     }
@@ -72,18 +83,22 @@ public class FourthFragment extends Fragment {
         Integer year= c.get(Calendar.YEAR);
         DateFormatSymbols dfs= new DateFormatSymbols(Locale.ENGLISH);
         month_list= dfs.getShortMonths();
-
-
         String month= month_list[numberOfMonth];
         month_text.setText(month+ " "+ year);
-
+        TimestampConverter time = new TimestampConverter();
+        current_Date = time.fromTimestamp("2018-06-04 01:35:00");
 
 
         calendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
                 //clickedDate_Epochtime= dateClicked.getTime();
+
                 String date= dateClicked.toString();
+
+
+
+
                 String[] date_split= date.split(" ");
                 Toast.makeText(getActivity(), date,
                  Toast.LENGTH_LONG).show();
@@ -96,6 +111,7 @@ public class FourthFragment extends Fragment {
                 String result= day_number+"-"+month_number.toString()+"-"+year_number;
                 //Toast.makeText(getActivity(), result,
                        // Toast.LENGTH_LONG).show();
+
                 showData(result);
                 View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_window_calender, null);
                 final PopupWindow popupWindow = new PopupWindow(popupView, 700, 900);
@@ -116,7 +132,6 @@ public class FourthFragment extends Fragment {
                 DatabaseInitializer.populateSync(db);
 
                 String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
-                //List<Arbeitszeit> test_date = db.arbeitszeitDAO().getWorkdate();
                 popupWindow.showAtLocation(view, Gravity.CENTER,0,0);
                 TextView t = (TextView) popupView.findViewById(R.id.test);
                 //t.setText((CharSequence) test_date);
@@ -126,7 +141,18 @@ public class FourthFragment extends Fragment {
                 //getActivity().finish();
 
             }
+            public void getBackgroundInfo(){
+                broadcastReceiver = new BroadcastReceiver(){
+                    public void onReceive(Context context, Intent intent){
 
+                        Bundle test = intent.getExtras();
+                        workplace = (String) test.get("current_workplace_name");
+
+
+                    }
+                };
+                getActivity().registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));
+            }
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
                 month_text.setText(dtf.format(firstDayOfNewMonth));
@@ -136,12 +162,20 @@ public class FourthFragment extends Fragment {
                 BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
                 //Temporary
                 DatabaseInitializer.populateSync(db);
-
+                getBackgroundInfo();
                 String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
-                //Aktueller Arbeitsort aus Shared Preferences
-                String arbeitsort;
-                //Arbeitszeit ausgeben fuer Email
+                workplace = "Hochschule Reutlingen";
+                Calendar now = Calendar.getInstance();
+                Date friday = now.getTime();
+                DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String fridayS = df.format(friday);
 
+                //List<Arbeitszeit> arbeitszeitforDay= db.arbeitszeitDAO().getArbeitszeitenForArbeitsortForDate(workplace,current_Date);
+
+                List<Arbeitszeit> test1 = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(workplace,fridayS,fridayS);
+
+                TextView test = (TextView) view.findViewById(R.id.test);
+                test.setText(test1.get(0).getStarttime().toString());
             }
         });
 

@@ -23,6 +23,7 @@ import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import java.util.ArrayList;
 import ss18.mc.positime.dbmodel.Arbeitsort;
+import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.model.Benutzer;
 import ss18.mc.positime.local.BenutzerDatabase;
@@ -74,11 +75,12 @@ public class ThirdFragment extends Fragment {
 
         //Getting Data from the Database
         List<Arbeitsort> allOrts = db.arbeitsortDAO().getAll();
-        // Adding child data
-        //dynamisch erzeugen aus DB
-        listDataHeader.add(allOrts.get(0).getPlaceName().toString());
+        List<Arbeitszeit> allTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsort(allOrts.get(0).getPlaceName());
+        listDataHeader.add(allOrts.get(1).getPlaceName().toString());
         List<String> test = new ArrayList<String>();
         test.add(allOrts.get(0).getCurrency());
+        test.add(allTimes.get(0).getWorkday().toString());
+        test.add(allTimes.get(0).getEndtime().toString());
         listDataChild.put(listDataHeader.get(0), test);
     }
 }

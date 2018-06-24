@@ -26,6 +26,7 @@ import ss18.mc.positime.utils.DatabaseInitializer;
 public class SecondFragment extends Fragment {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
+    String current_workplace;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     public SecondFragment() {
@@ -64,15 +65,28 @@ public class SecondFragment extends Fragment {
         /*Databaseconnection*/
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
         DatabaseInitializer.populateSync(db);
-
+        String userMail = "ge2thez@gmail.com";
+        current_workplace = "Hochschule Reutlingen";
         //Getting Data from the Database
-        List<Arbeitsort> allOrts = db.arbeitsortDAO().getAll();
-
+        List<Arbeitsort> allOrts = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
+        int counter = allOrts.size();
         // Adding child data
         //dynamisch erzeugen aus DB
-        listDataHeader.add(allOrts.get(0).getPlaceName().toString());
-        List<String> test = new ArrayList<String>();
-        test.add(allOrts.get(0).getCurrency()+"       "+"hi");
-        listDataChild.put(listDataHeader.get(0), test);
+        for(int i =0; i< counter; i++){
+            listDataHeader.add(allOrts.get(i).getPlaceName().toString());
+            if(allOrts.get(i).getPlaceName().toString().equals(current_workplace)){
+                //nehme Current Workplace Daten von Marius
+
+            }
+            else{
+                List<String> test = new ArrayList<String>();
+                test.add("no information for today.");
+
+                listDataChild.put(listDataHeader.get(0), test);
+        }
+        }
+
+
+
     }
 }

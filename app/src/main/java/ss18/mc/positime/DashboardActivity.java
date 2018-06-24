@@ -106,10 +106,10 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
 
         TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
         //workplace_dash.setText("Hochschule Reutlingen");
-        TextView working_time_dash = (TextView) findViewById(R.id.worktime_dashboard);
+        /*TextView working_time_dash = (TextView) findViewById(R.id.worktime_dashboard);
         working_time_dash.setText("8 h 2 min 3 s");
         TextView pause_dash = (TextView) findViewById(R.id.pause_dashboard);
-        pause_dash.setText("Pause: 5 h");
+        pause_dash.setText("Pause: 5 h");*/
 
 
 
