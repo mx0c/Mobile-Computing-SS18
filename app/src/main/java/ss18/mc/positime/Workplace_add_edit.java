@@ -33,6 +33,8 @@ import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.Validation;
 
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
+
 public class Workplace_add_edit extends AppCompatActivity {
     private static String TAG = "Workplace_add_edit";
     private final static int PLACE_PICKER_REQUEST = 999;
@@ -231,9 +233,8 @@ public class Workplace_add_edit extends AppCompatActivity {
 
         } catch (SQLiteConstraintException e) {
             Toast.makeText(this, "Workplace with this name already exists, select another name!", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, e.getMessage());
         }
-
-
     }
 
     /*
@@ -289,7 +290,6 @@ public class Workplace_add_edit extends AppCompatActivity {
                 String toastMsg = String.format("Place: %s", place.getName());
                 Log.d(TAG, place.getLatLng().toString());
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-
 
 
                 Log.v(TAG, String.valueOf(place.getLatLng().latitude));

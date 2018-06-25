@@ -3,6 +3,7 @@ package ss18.mc.positime;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,52 +116,58 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent intent) {
         super.onActivityResult(reqCode, resultCode, intent);
-        String date= intent.getStringExtra("DATE");
-        if(reqCode == 100 && resultCode == 100 ){
-            //Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
-            dateStart.setText(date);
-        }
-        if(reqCode == 200 && resultCode == 100){
-            //Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
-            dateEnd.setText(date);
-        }
-        if (dateStart != null && dateEnd != null) {
+        String date;
 
-            String [] start_dtae= dateStart.getText().toString().split("-");
-            Integer start_day= Integer.parseInt(start_dtae[0]);
-            Integer start_month= Integer.parseInt(start_dtae[1]);
-            Integer start_year= Integer.parseInt(start_dtae[2]);
+        //TODO FIX Null obj reference
+        if(intent.getStringExtra("DATE") != null) {
+            date= intent.getStringExtra("DATE");
 
-
-            String [] end_date= dateEnd.getText().toString().split("-");
-
-            Integer end_day= Integer.parseInt(end_date[0]);
-            Integer end_month= Integer.parseInt(end_date[1]);
-            Integer end_year= Integer.parseInt(end_date[2]);
-
-            if(start_year > end_year){
-                Toast.makeText(getActivity(), "End date is before start date!", Toast.LENGTH_SHORT).show();
-                searchButton.setEnabled(false);
+            if(reqCode == 100 && resultCode == 100 ){
+                //Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
+                dateStart.setText(date);
             }
-            else if(start_year.equals(end_year) ){
-                if(start_month > end_month){
+            if(reqCode == 200 && resultCode == 100){
+                //Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
+                dateEnd.setText(date);
+            }
 
+            if (dateStart.getText().toString().matches("")&& !dateEnd.getText().toString().matches("")) {
+                String [] start_date= dateStart.getText().toString().split("-");
+                Integer start_day= Integer.parseInt(start_date[0]);
+                Integer start_month= Integer.parseInt(start_date[1]);
+                Integer start_year= Integer.parseInt(start_date[2]);
+
+
+                String [] end_date= dateEnd.getText().toString().split("-");
+
+                Integer end_day= Integer.parseInt(end_date[0]);
+                Integer end_month= Integer.parseInt(end_date[1]);
+                Integer end_year= Integer.parseInt(end_date[2]);
+
+                if(start_year > end_year){
+                    Toast.makeText(getActivity(), "End date is before start date!", Toast.LENGTH_SHORT).show();
                     searchButton.setEnabled(false);
-                    Toast.makeText(getActivity(), "End month is before start month!", Toast.LENGTH_SHORT).show();
                 }
-                else if(start_month == end_month){
-                    if(start_day > end_day){
+                else if(start_year.equals(end_year) ){
+                    if(start_month > end_month){
 
                         searchButton.setEnabled(false);
-                        Toast.makeText(getActivity(), "End day is before start day!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "End month is before start month!", Toast.LENGTH_SHORT).show();
                     }
-                    else if(start_day== end_day){
-                        searchButton.setEnabled(false);
-                        Toast.makeText(getActivity(), "Select different days!", Toast.LENGTH_SHORT).show();
+                    else if(start_month == end_month){
+                        if(start_day > end_day){
 
-                    }
-                    else{
-                        searchButton.setEnabled(true);
+                            searchButton.setEnabled(false);
+                            Toast.makeText(getActivity(), "End day is before start day!", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(start_day== end_day){
+                            searchButton.setEnabled(false);
+                            Toast.makeText(getActivity(), "Select different days!", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else{
+                            searchButton.setEnabled(true);
+                        }
                     }
                 }
             }
