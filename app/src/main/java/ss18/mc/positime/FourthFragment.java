@@ -26,6 +26,7 @@ import java.util.TimeZone;
 import android.widget.PopupWindow;
 import android.widget.Button;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import ss18.mc.positime.dbmodel.Arbeitsort;
 import ss18.mc.positime.dbmodel.Arbeitszeit;
@@ -48,6 +49,10 @@ public class FourthFragment extends Fragment {
     SharedPreferences mSharedPreferences;
     static Long clickedDate_Epochtime;
     String workplace;
+    TextView currDate;
+    TextView startTime;
+    TextView endTime;
+    TextView sumTime;
     public FourthFragment() {
 // Required empty public constructor
     }
@@ -76,7 +81,7 @@ public class FourthFragment extends Fragment {
     @Override
     public  void onResume(){
         super.onResume();
-
+        dateClick = Calendar.getInstance().getTime();
         Date date= Calendar.getInstance().getTime();
         Calendar c= Calendar.getInstance(TimeZone.getDefault());
         Integer numberOfMonth= c.get(Calendar.MONTH);
@@ -93,49 +98,34 @@ public class FourthFragment extends Fragment {
             @Override
             public void onDayClick(Date dateClicked) {
                 //clickedDate_Epochtime= dateClicked.getTime();
-
                 String date= dateClicked.toString();
-
-
-
-
                 String[] date_split= date.split(" ");
-                Toast.makeText(getActivity(), date,
-                 Toast.LENGTH_LONG).show();
                 Intent i= new Intent(getActivity(), FragmentTab.class);
                 String day_number= date_split[2];
                 Integer month_number= Arrays.asList(month_list).indexOf(date_split[1])+1;
                 String year_number= date_split[5];
-
                 //Date format: dd-mm-yyyy
                 String result= day_number+"-"+month_number.toString()+"-"+year_number;
-                //Toast.makeText(getActivity(), result,
-                       // Toast.LENGTH_LONG).show();
 
-                showData(result);
+
+
                 View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_window_calender, null);
                 final PopupWindow popupWindow = new PopupWindow(popupView, 700, 900);
-
                 // define your view here that found in popup_layout
                 // for example let consider you have a button
-
+                currDate = (TextView) popupView.findViewById(R.id.currDate);
+                startTime = (TextView) popupView.findViewById(R.id.startTime);
+                endTime = (TextView) popupView.findViewById(R.id.endTime);
+                sumTime = (TextView) popupView.findViewById(R.id.sumTime);
                 Button btn = (Button) popupView.findViewById(R.id.button_test);
+                showData(result);
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         popupWindow.dismiss();
                     }
                 });
-//Ueberpruefen ob Datum in Datenbank
-                BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-                //Temporary
-                DatabaseInitializer.populateSync(db);
-
-                String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
                 popupWindow.showAtLocation(view, Gravity.CENTER,0,0);
-                TextView t = (TextView) popupView.findViewById(R.id.test);
-                //t.setText((CharSequence) test_date);
-
                 //i.putExtra("DATE", result);
                 //getActivity().setResult(100, i);
                 //getActivity().finish();
@@ -164,18 +154,31 @@ public class FourthFragment extends Fragment {
                 DatabaseInitializer.populateSync(db);
                 getBackgroundInfo();
                 String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
-                workplace = "Hochschule Reutlingen";
-                Calendar now = Calendar.getInstance();
-                Date friday = now.getTime();
+                //TEST DATA FOR TESTS USE ONLY
+                workplace = "Daheim";
                 DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String fridayS = df.format(friday);
+                String fridayS = df.format(dateClick);
+                List<Arbeitszeit> test1 = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortOneDay(workplace,fridayS);
+                //Check if data is available
+                if(test1.size() != 0){
+                    currDate.setText(fridayS);
+                    startTime.setText("Start time:  "+test1.get(0).getStarttime().toString());
+                    endTime.setText("End time:  "+test1.get(0).getEndtime().toString());
+                    long diff = test1.get(0).getEndtime().getTime()-test1.get(0).getStarttime().getTime();
+                    long[] hoursMins = new long[2];
+                    long t = TimeUnit.MILLISECONDS.toMinutes(diff);
+                    //hours
+                    long erg1 = t/60;
+                    //minutes
+                    long ergMins = t - erg1*60;
+                    hoursMins[0] = erg1;
+                    hoursMins[1] = ergMins;
+                    sumTime.setText("Worked time:   "+hoursMins[0]+" h  "+hoursMins[1]+" min");
+                }
+                else{
+                    currDate.setText("Keine Daten vorhanden.");
+                }
 
-                //List<Arbeitszeit> arbeitszeitforDay= db.arbeitszeitDAO().getArbeitszeitenForArbeitsortForDate(workplace,current_Date);
-
-                List<Arbeitszeit> test1 = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(workplace,fridayS,fridayS);
-
-                TextView test = (TextView) view.findViewById(R.id.test);
-                test.setText(test1.get(0).getStarttime().toString());
             }
         });
 

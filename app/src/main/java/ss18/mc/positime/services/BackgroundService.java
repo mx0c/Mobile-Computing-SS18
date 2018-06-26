@@ -117,6 +117,7 @@ public class BackgroundService extends Service {
                 calendar.setTime(time);
 
                 Intent i = new Intent("dashboard_informations");
+
                 i.putExtra("current_workplace_name", a.getPlaceName());
                 i.putExtra("current_workplace_time_hours", calendar.get(Calendar.HOUR));
                 i.putExtra("current_workplace_time_minutes", calendar.get(Calendar.MINUTE));
@@ -128,9 +129,11 @@ public class BackgroundService extends Service {
                 return;
             }
         }
+
         //only gets executed when not inside workplace or pause is active
         this.mCurrentArbeitszeit = null;
         Intent i = new Intent("dashboard_informations");
+
         i.putExtra("current_workplace_name", "0");
         sendBroadcast(i);
     }

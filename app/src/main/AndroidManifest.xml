@@ -20,7 +20,11 @@
         <activity
             android:name=".DashboardActivity"
             android:label="test"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="dashboard_informations" ></action>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"

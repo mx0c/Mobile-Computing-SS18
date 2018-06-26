@@ -62,4 +62,7 @@
     <string name="id_test" />
 
     <string name="day_options">Options</string>
+    <string name="starttime" />
+    <string name="endtime" />
+    <string name="time_sum" />
 </resources>

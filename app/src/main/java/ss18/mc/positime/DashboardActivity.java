@@ -33,6 +33,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 public class DashboardActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
     private static String TAG = "DashboardActivity";
     SharedPreferences mSharedPreferences;
@@ -62,21 +63,34 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
         TextView working_time_dash = (TextView) findViewById(R.id.worktime_dashboard);
         TextView pause_dash = (TextView) findViewById(R.id.pause_dashboard);
-
+        final Context[] testt = new Context[1];
         broadcastReceiver = new BroadcastReceiver(){
             public void onReceive(Context context, Intent intent){
+                testt[0] = context;
+                Bundle test = intent.getExtras();
 
-                /*Bundle test = intent.getExtras();
-                String abc = (String) test.get("current_workplace_name");
-                String current_time_hours = test.get("current_workplace_time_hours").toString();
-                String current_time_mins = test.get("current_workplace_time_").toString();
-                String current_time_pause = test.get("current_workplace_pause_minutes").toString();
-                workplace_dash.setText(abc);
-                working_time_dash.setText(current_time_hours+"h"+current_time_mins+"min");
-                pause_dash.setText("Pause: "+current_time_pause+" min");*/
+                if(test != null){
+                    //String abc = (String) test.get("current_workplace_name");
+                    String current_time_hours = test.get("current_workplace_time_hours").toString();
+                    String current_time_mins = test.get("current_workplace_time_").toString();
+                    String current_time_pause = test.get("current_workplace_pause_minutes").toString();
+                    //workplace_dash.setText(abc);
+                    working_time_dash.setText(current_time_hours+"h"+current_time_mins+"min");
+                    pause_dash.setText("Pause: "+current_time_pause+" min");
+                }
+
+
             }
         };
-        registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));
+        try{
+            this.registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));
+        }
+        catch(NullPointerException e){
+            working_time_dash.setText(e.toString());
+        }
+        catch(Exception e){
+            Log.i(TAG,e.getMessage());
+        }
 
     }
 
@@ -104,12 +118,6 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         fourthTab.setText("Calender"); // set the Text for the fourth Tab
         tabLayout.addTab(fourthTab); // add  the tab at in the TabLayout
 
-        TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
-        //workplace_dash.setText("Hochschule Reutlingen");
-        /*TextView working_time_dash = (TextView) findViewById(R.id.worktime_dashboard);
-        working_time_dash.setText("8 h 2 min 3 s");
-        TextView pause_dash = (TextView) findViewById(R.id.pause_dashboard);
-        pause_dash.setText("Pause: 5 h");*/
 
 
 
