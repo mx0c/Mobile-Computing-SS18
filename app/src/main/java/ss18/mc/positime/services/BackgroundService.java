@@ -21,6 +21,8 @@ import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.Constants;
 
+import ss18.mc.positime.utils.Timer;
+
 
 public class BackgroundService extends Service {
     private BroadcastReceiver mLocationBroadcastReceiver;
@@ -29,6 +31,7 @@ public class BackgroundService extends Service {
     private SharedPreferences mPref;
     private boolean mInPause;
     private Arbeitszeit mCurrentArbeitszeit;
+    private Timer mPauseTimer;
 
     @Override
     public void onCreate() {
@@ -48,7 +51,9 @@ public class BackgroundService extends Service {
 
                 switch (command) {
                     case "RESUME":
-                        mInPause = true;
+                        mInPause = false;
+                        mPauseTimer.stopTimer();
+                        mPauseTimer.setTime(0);
                         break;
                     case "PAUSE":
                         //increase pauseAmount in DB
@@ -57,7 +62,9 @@ public class BackgroundService extends Service {
                         }
                         //update db
                         mDb.arbeitszeitDAO().updateArbeitszeit(mCurrentArbeitszeit);
-                        mInPause = false;
+                        mInPause = true;
+                        mPauseTimer = new Timer(1000);
+                        mPauseTimer.startTimer();
                         break;
                 }
             }
@@ -75,7 +82,7 @@ public class BackgroundService extends Service {
 
     private void onLocationUpdate(double lat, double lon) {
         if(this.mInPause && this.mCurrentArbeitszeit != null){
-            this.mCurrentArbeitszeit.setBreaktime(this.mCurrentArbeitszeit.getBreaktime()+10);
+            this.mCurrentArbeitszeit.setBreaktime(this.mCurrentArbeitszeit.getBreaktime() + mPauseTimer.getTime());
             //update db
             mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
             return;

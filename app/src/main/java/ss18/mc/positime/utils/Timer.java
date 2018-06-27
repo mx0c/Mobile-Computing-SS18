@@ -14,13 +14,17 @@ public class Timer {
         }
     };
 
+    public Timer(int interval) {
+        this.mInterval = interval;
+        this.mTime = 0;
+    }
+
     public void setTime(int time){
         this.mTime = time;
     }
 
-    public Timer(int interval) {
-        this.mInterval = interval;
-        this.mTime = 0;
+    public int getTime(){
+        return this.mTime;
     }
 
     public void startTimer(){
