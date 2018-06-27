@@ -1,5 +1,6 @@
 package ss18.mc.positime.utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -48,7 +50,8 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
     ImageView add_day;
 
     Arbeitszeit selected_day;
-    //For edit-Activity:
+
+    int clickedListPosition;
 
     public Overview_Details_Day_Adapter(List<Arbeitszeit> list, Context context, String workplace) {
         this.list_breaktimes = list;
@@ -84,7 +87,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         /*delete_day = (ImageView) view.findViewById(R.id.delete_day);
         edit_day = (ImageView) view.findViewById(R.id.edit_day);
         add_day = (ImageView) view.findViewById(R.id.add_day);*/
-
+        notifyDataSetChanged();
         Calendar now = Calendar.getInstance();
         Integer actual_weekNr = now.get(Calendar.WEEK_OF_YEAR);
 
@@ -106,19 +109,23 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         TextView start_time= (TextView) view.findViewById(R.id.start_time);
         Date start_Time = list_breaktimes.get(position).getStarttime();
 
+
+        // Splitten der Uhrzeit für Am, Pm
         String startTime = df.format(start_Time);
         String [] splitted_startTime= startTime.split(" ");
-        start_time.setText(splitted_startTime[1]);
+        String start_timeAmPm = getTimeInAmOrPm(splitted_startTime[1]);
+        //start_time.setText(splitted_startTime[1]);
+        start_time.setText(start_timeAmPm);
 
         TextView stop_time= (TextView) view.findViewById(R.id.stop_time);
         Date stop_Time = list_breaktimes.get(position).getEndtime();
 
         String stopTime = df.format(stop_Time);
         String [] splitted_stopTime= stopTime.split(" ");
-        stop_time.setText(splitted_stopTime[1]);
+        String stop_timeAmPm = getTimeInAmOrPm(splitted_stopTime[1]);
+       // stop_time.setText(splitted_stopTime[1]);
+        stop_time.setText(stop_timeAmPm);
 
-
-        //ToDo eMail needed?
 
         String [] startTime_splitted_calculation = splitted_startTime[1].split(":");
         Integer startH = Integer.parseInt(startTime_splitted_calculation[0]);
@@ -139,17 +146,32 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         TextView salary_text = (TextView) view.findViewById(R.id.salary);
 
         Double result_time_calculation_minutes = diff_calculation_hours + diff_calulation_minutes + 0.0; //in minutes
-        Double result_time_calc_hours = result_time_calculation_minutes / 60;
+        double result_time_calc_hours = result_time_calculation_minutes / 60; //hh,mm
+
+        int hours = (int) result_time_calc_hours;
+        double  minutes= result_time_calc_hours - hours;
+        minutes= minutes * 60;
+
 
         Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(worklplace);
         salary_text.setText( String.format("%.2f €",moneyPerHour *result_time_calc_hours ));
 
 
+        int min= (int) minutes;
         TextView timeSum= view.findViewById(R.id.time_sum);
-        timeSum.setText( String.format(" %.2f hours",result_time_calc_hours ));
+        if(min < 10){
+            timeSum.setText( hours + ":0" + min +" hours");
+
+        }
+        else{
+            timeSum.setText( hours + ":" + min +" hours");
+        }
+
+
 
         FloatingActionButton floating_delete= view.findViewById(R.id.floating_delete);
         FloatingActionButton floating_edit = view.findViewById(R.id.floating_edit);
+
 
         RelativeLayout day_list = view.findViewById(R.id.day_list);
 
@@ -157,31 +179,21 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
             @Override
             public void onClick(View v) {
 
+                if(floating_delete.getVisibility() == View.VISIBLE){
+                    floating_delete.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    floating_delete.setVisibility(View.VISIBLE);
+                    floating_delete.setClickable(true);
+                }
 
-                /*Resources res= Resources.getSystem();
-                Drawable background= res.getDrawable(R.drawable.border_layout);
-                day_list.setBackgroundDrawable(background);*/
-
-
-                floating_delete.setVisibility(View.VISIBLE);
-                floating_delete.setClickable(true);
-
-                floating_edit.setVisibility(View.VISIBLE);
-                floating_edit.setClickable(true);
-
-
-                /*delete_day.setVisibility(View.VISIBLE);
-                delete_day.setClickable(true);
-
-                edit_day.setVisibility(View.VISIBLE);
-                edit_day.setClickable(true);
-
-                add_day.setVisibility( View.VISIBLE);
-                add_day.setClickable(true);*/
-
-
-                //Arbeitszeit selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(list_breaktimes.get(position).getArbeitszeitId());
-                //Toast.makeText(context, Integer.toString(selected_day.getBreaktime()) +" min pause" , Toast.LENGTH_LONG).show();
+                if(floating_edit.getVisibility() == View.VISIBLE){
+                    floating_edit.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    floating_edit.setVisibility(View.VISIBLE);
+                    floating_edit.setClickable(true);
+                }
             }
         });
 
@@ -201,7 +213,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
                                 //Delete Arbeitszeit
                                 db.arbeitszeitDAO().delete(selected_day); //Remove from database
 
-                               list_breaktimes.remove(position); //Remove from list
+                                list_breaktimes.remove(position); //Remove from list
                                 notifyDataSetChanged();
                                 Toast.makeText(v.getContext(), "Day deleted", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
@@ -235,8 +247,8 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
                 Date start_time= selected_day.getStarttime();
 
                 String [] starttime_splitted= df.format(start_Time).split(" ");
-                String startTime= starttime_splitted[1];
-                i.putExtra("startTime", startTime);
+                //String startTime_hhMMss= starttime_splitted[1];
+                i.putExtra("startTime", starttime_splitted[1]);
 
                 Date end_time = selected_day.getEndtime();
                 String [] endtime_splitted= df.format(end_time).split(" ");
@@ -246,13 +258,54 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
                 i.putExtra("pause", Integer.toString(breaktime));
 
                 i.putExtra("id", selected_day.getArbeitszeitId());
-                context.startActivity(i);
+                ((Activity)context).startActivityForResult(i, 1);
+                //context.startActivity(i);
+
             }
+
         });
 
 
-
         return view;
+    }
+
+    protected void onActivityResult( int reqCode, int resCode, Intent data){
+            if(reqCode == 1){
+                if(resCode == 2){
+                    notifyDataSetChanged();
+                }
+            }
+    }
+
+    public String getTimeInAmOrPm(String hh_mm_ss){
+        String time = "";
+        String [] splitted= hh_mm_ss.split(":");
+        int h = Integer.parseInt(splitted[0]);
+
+        if(h < 12 ){
+            time= hh_mm_ss+" am";
+        }
+        else if(h > 12){
+            h = h -12 ;
+            if(h> 9){
+                time= "0"+h+ ":" + splitted[1] +":" + splitted[2] +" pm";
+            }
+            else{
+                time= h+":" + splitted[1]+":" + splitted[2]+ " pm";
+            }
+        }
+        else{
+            int min= Integer.parseInt(splitted[1]);
+            int sec = Integer.parseInt(splitted[2]);
+            if( min > 0 || sec > 0){
+                time= hh_mm_ss+ " pm";
+            }
+            else{
+                time= hh_mm_ss+ " noon";
+            }
+        }
+
+        return time;
     }
 
 }

@@ -49,9 +49,15 @@ AIzaSyC8wIgesjm6Y7AcDv2_bDoKt6Km_L-neYk
         <activity
             android:name=".RegisterActivity"
             android:label="@string/register_activity" />
+
         <activity
             android:name=".Overview"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Workplace_Details"

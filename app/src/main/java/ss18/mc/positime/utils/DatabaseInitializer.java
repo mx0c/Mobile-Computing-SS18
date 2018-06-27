@@ -41,20 +41,20 @@ public class DatabaseInitializer {
 
 
         //Create a user NOTE: The user is acutally the user returned by the backend server
-        Benutzer user = new Benutzer();
+        /*Benutzer user = new Benutzer();
         user.setFirstName("Max");
         user.setLastName("Mustermann");
         user.setPassWord("1234"); //Password is usually hashed
-        user.setEmail("ge2thez@gmail.com");
+        user.setEmail("ge2thez@gmail.com");*/
 
-        /*Benutzer user_lena = new Benutzer();
-        user.setFirstName("Lena");
-        user.setLastName("Essig");
-        user.setPassWord("xxxx"); //Password is usually hashed
-        user.setEmail("test@posi.de");*/
+        Benutzer user_lena = new Benutzer();
+        user_lena.setFirstName("Lena");
+        user_lena.setLastName("Essig");
+        user_lena.setPassWord("xxxx"); //Password is usually hashed
+        user_lena.setEmail("test@posi.de");
 
 
-        db.benutzerDAO().insertAll(user);
+        db.benutzerDAO().insertAll(user_lena);
 
         //Create Address for Workplace
         addressT address = new addressT();
@@ -66,7 +66,7 @@ public class DatabaseInitializer {
         Arbeitsort arbeitsort = new Arbeitsort();
         arbeitsort.setAddresst(address);
         arbeitsort.setPlaceName("Daheim");
-        arbeitsort.setBenutzer_mail("ge2thez@gmail.com"); //Beziehung zu User
+        arbeitsort.setBenutzer_mail("test@posi.de"); //Beziehung zu User
         arbeitsort.setChefFistName("Helene");
         arbeitsort.setChefLastName("Helene!");
         arbeitsort.setLatA(48.531415);
@@ -79,7 +79,7 @@ public class DatabaseInitializer {
         Arbeitsort arbeitsort2 = new Arbeitsort();
         arbeitsort2.setAddresst(address);
         arbeitsort2.setPlaceName("Hochschule Reutlingen");
-        arbeitsort2.setBenutzer_mail("ge2thez@gmail.com");
+        arbeitsort2.setBenutzer_mail("test@posi.de");
         arbeitsort2.setChefFistName("Nati");
         arbeitsort2.setChefLastName("Martinez");
         arbeitsort2.setLatA(48.531415);
@@ -98,7 +98,7 @@ public class DatabaseInitializer {
         Arbeitsort arbeitsort3 = new Arbeitsort();
         arbeitsort3.setAddresst(address_convexis);
         arbeitsort3.setPlaceName("Convexis");
-        arbeitsort3.setBenutzer_mail("ge2thez@gmail.com");
+        arbeitsort3.setBenutzer_mail("test@posi.de");
         arbeitsort3.setChefFistName("Max");
         arbeitsort3.setChefLastName("Mustermann");
         arbeitsort3.setLatA(48.49593);

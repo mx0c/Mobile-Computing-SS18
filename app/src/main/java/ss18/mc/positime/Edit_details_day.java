@@ -36,7 +36,8 @@ public class Edit_details_day extends AppCompatActivity implements NavigationVie
 
     private BenutzerDatabase db;
     Integer edit_arbeitszeit_id;
-    Button editButton;
+    Button saveButton;
+    Button cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,22 +67,36 @@ public class Edit_details_day extends AppCompatActivity implements NavigationVie
 
 
         db = BenutzerDatabase.getBenutzerDatabase(this);
-        editButton = findViewById(R.id.save_button);
-        editButton.setOnClickListener(new View.OnClickListener(){
+        saveButton = findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Arbeitszeit arbeitszeit = db.arbeitszeitDAO().getArbeitszeitFromID(edit_arbeitszeit_id);
                 String newTime = pause_text.getText().toString();
                 int newTimeInt = Integer.parseInt(newTime);
                 arbeitszeit.setBreaktime(newTimeInt );
+                db.arbeitszeitDAO().updateArbeitszeit(arbeitszeit);
                 db.beginTransaction();
+                Intent i = new Intent();
+                setResult(2);
                 finish();
             }
         });
 
+        cancelButton= findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
 
+        });
+    }
+    @Override
+    protected void onActivityResult(int reqCode, int resCode, Intent t){
 
     }
+
 
     public void onLogoutClick(MenuItem view) {
         switch(view.getItemId()){
