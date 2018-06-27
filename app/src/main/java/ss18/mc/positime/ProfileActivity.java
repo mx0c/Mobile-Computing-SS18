@@ -23,13 +23,13 @@ import ss18.mc.positime.utils.Constants;
 
 public class ProfileActivity extends AppCompatActivity implements OnNavigationItemSelectedListener{
     private static String TAG = "Profile";
-    SharedPreferences mSharedPreferences;
-    DrawerLayout drawer;
-    NavigationView navigationView;
-    View headerView;
-    TextView nav_name;
-    TextView nav_mail;
-    Toolbar toolbar;
+    private SharedPreferences mSharedPreferences;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private View headerView;
+    private TextView nav_name;
+    private TextView nav_mail;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,6 @@ public class ProfileActivity extends AppCompatActivity implements OnNavigationIt
         initNavigation();
     }
 
-    /*
-        initialization of views
-     */
     //Put view initializations in here
     private void initView() {
         TextView lastname = findViewById(R.id.lastname_label);
@@ -99,7 +96,6 @@ public class ProfileActivity extends AppCompatActivity implements OnNavigationIt
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
-
     //When logout is clicked, remove token and go back to login
     public void onLogoutClick(MenuItem view) {
         switch(view.getItemId()){
@@ -122,10 +118,30 @@ public class ProfileActivity extends AppCompatActivity implements OnNavigationIt
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.navigation_activity, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

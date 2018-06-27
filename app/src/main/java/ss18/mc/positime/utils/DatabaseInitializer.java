@@ -308,8 +308,6 @@ public class DatabaseInitializer {
         @Override
         protected Void doInBackground(final Void... params) {
             populateWithTestData(mDb);
-
-
             return null;
         }
 

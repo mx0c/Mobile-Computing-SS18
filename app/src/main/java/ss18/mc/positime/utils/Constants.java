@@ -11,3 +11,4 @@ public class Constants {
     public static final String FIRSTNAME = "firstname";
     public static final String LASTNAME = "lastname";
 }
+
