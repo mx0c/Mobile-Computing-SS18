@@ -64,6 +64,7 @@ public class BackgroundService extends Service {
                         mDb.arbeitszeitDAO().updateArbeitszeit(mCurrentArbeitszeit);
                         mInPause = true;
                         mPauseTimer = new Timer(1000);
+                        mPauseTimer.setTime(mCurrentArbeitszeit.getBreaktime());
                         mPauseTimer.startTimer();
                         break;
                 }
@@ -82,7 +83,7 @@ public class BackgroundService extends Service {
 
     private void onLocationUpdate(double lat, double lon) {
         if(this.mInPause && this.mCurrentArbeitszeit != null){
-            this.mCurrentArbeitszeit.setBreaktime(this.mCurrentArbeitszeit.getBreaktime() + mPauseTimer.getTime());
+            this.mCurrentArbeitszeit.setBreaktime(mPauseTimer.getTime());
             //update db
             mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
             return;
