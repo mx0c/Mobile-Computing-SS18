@@ -59,21 +59,24 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         initBackgroundServiceInfo();
     }
     public void initBackgroundServiceInfo(){
-        TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
-        TextView working_time_dash = (TextView) findViewById(R.id.worktime_dashboard);
-        TextView pause_dash = (TextView) findViewById(R.id.pause_dashboard);
-
         broadcastReceiver = new BroadcastReceiver(){
+            @Override
             public void onReceive(Context context, Intent intent){
+                TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
+                TextView working_time_dash = (TextView) findViewById(R.id.worktime_dashboard);
+                TextView pause_dash = (TextView) findViewById(R.id.pause_dashboard);
+                Bundle test = intent.getExtras();
+                String current_name = (String) test.get("current_workplace_name");
+                if(current_name.equals("0")){
+                    workplace_dash.setText("not in workplace");
+                }else{
+                    String[] current_time = test.getString("current_workplace_time").split("\\.");
+                    String current_time_pause = test.get("current_workplace_pause_minutes").toString();
+                    working_time_dash.setText(current_time[0] +" hours "+current_time[1] + " minutes");
 
-                /*Bundle test = intent.getExtras();
-                String abc = (String) test.get("current_workplace_name");
-                String current_time_hours = test.get("current_workplace_time_hours").toString();
-                String current_time_mins = test.get("current_workplace_time_").toString();
-                String current_time_pause = test.get("current_workplace_pause_minutes").toString();
-                workplace_dash.setText(abc);
-                working_time_dash.setText(current_time_hours+"h"+current_time_mins+"min");
-                pause_dash.setText("Pause: "+current_time_pause+" min");*/
+                    pause_dash.setText("Pause: "+current_time_pause+" min");
+                    workplace_dash.setText(current_name);
+                }
             }
         };
         registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));

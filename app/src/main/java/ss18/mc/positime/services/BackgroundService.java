@@ -32,13 +32,12 @@ public class BackgroundService extends Service {
 
     @Override
     public void onCreate() {
-        //start LocationService
-        Intent i = new Intent(getApplicationContext(), LocationService.class);
-        startService(i);
-        this.mPref = PreferenceManager.getDefaultSharedPreferences(this);
-        this.mDb = BenutzerDatabase.getBenutzerDatabase(this);
+        Log.d("BackgroundService", "onCreate: STARTED SERVICE");
 
         //init
+        this.mPref = PreferenceManager.getDefaultSharedPreferences(this);
+        this.mDb = BenutzerDatabase.getBenutzerDatabase(this);
+        this.mInPause = false;
         this.mCurrentArbeitszeit = null;
 
         //register BroadcastReceivers
@@ -84,12 +83,14 @@ public class BackgroundService extends Service {
         Location myLocation = new Location("");
         myLocation.setLongitude(lon);
         myLocation.setLatitude(lat);
+        Log.d("LOC", "onLocationUpdate: "+ myLocation.toString());
         //check if current location is in a saved Workplace
         for (Arbeitsort a : mDb.arbeitsortDAO().getArbeitsorteForUser(mPref.getString(Constants.EMAIL,null))) {
             Location workplaceLocation = new Location("");
             workplaceLocation.setLatitude(a.getLatA());
             workplaceLocation.setLongitude(a.getLongA());
             if (workplaceLocation.distanceTo(myLocation) < a.getRadiusA()) {
+                Log.d("Location", "myLoc: "+a.getPlaceName());
                 //Location is in Workplace
                 //get todays arbeitszeit
                 this.mCurrentArbeitszeit = this.findTodaysArbeitszeit(mDb.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName()), a);
@@ -98,30 +99,28 @@ public class BackgroundService extends Service {
                         this.mCurrentArbeitszeit.setStarttime(new Date());
                     }
                     this.mCurrentArbeitszeit.setEndtime(new Date());
-                    //insert updated or new currAZ into db
-                    mDb.arbeitszeitDAO().insertAll(this.mCurrentArbeitszeit);
-                } else{
+                    //insert updated currAZ
+                    mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
+                } else {
                     //create new Arbeitszeit
+                    this.mCurrentArbeitszeit = new Arbeitszeit();
                     this.mCurrentArbeitszeit.setAmountBreaks(0);
                     this.mCurrentArbeitszeit.setWorkday(new Date());
                     this.mCurrentArbeitszeit.setArbeitsort_name(a.getPlaceName());
                     this.mCurrentArbeitszeit.setBreaktime(0);
                     this.mCurrentArbeitszeit.setArbeitszeitId(0);
+                    this.mCurrentArbeitszeit.setStarttime(new Date());
+                    this.mCurrentArbeitszeit.setEndtime(new Date());
 
                     //update db
-                    mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
+                    mDb.arbeitszeitDAO().insertAll(this.mCurrentArbeitszeit);
                 }
-
-                Date time = this.calculateTimePassed(this.mCurrentArbeitszeit.getStarttime(), this.mCurrentArbeitszeit.getEndtime());
-                Calendar calendar = GregorianCalendar.getInstance();
-                calendar.setTime(time);
 
                 Intent i = new Intent("dashboard_informations");
                 i.putExtra("current_workplace_name", a.getPlaceName());
-                i.putExtra("current_workplace_time_hours", calendar.get(Calendar.HOUR));
-                i.putExtra("current_workplace_time_minutes", calendar.get(Calendar.MINUTE));
-                i.putExtra("current_workplace_money_earned", this.calculateMoneyEarned(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), a.getMoneyPerhour()));
-                i.putExtra("current_workplace_pause_seconds",this.mCurrentArbeitszeit.getBreaktime());
+                i.putExtra("current_workplace_time", calculateWorkTimeString(this.mCurrentArbeitszeit.getStarttime(),this.mCurrentArbeitszeit.getEndtime()));
+                i.putExtra("current_workplace_money_earned", calculateSalary(calculateWorkTime(this.mCurrentArbeitszeit.getStarttime(),this.mCurrentArbeitszeit.getEndtime()),a.getPlaceName()));
+                i.putExtra("current_workplace_pause_minutes",this.mCurrentArbeitszeit.getBreaktime());
                 i.putExtra("current_workplace_pause_count",this.mCurrentArbeitszeit.getAmountBreaks());
 
                 sendBroadcast(i);
@@ -140,7 +139,7 @@ public class BackgroundService extends Service {
         Calendar currentDate = Calendar.getInstance();
         for (Arbeitszeit atime : mDb.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName())) {
             c.setTime(atime.getWorkday());
-            if (currentDate.get(Calendar.DATE) == c.get(Calendar.DATE)) {
+            if (currentDate.get(Calendar.MONTH) == c.get(Calendar.MONTH) && currentDate.get(Calendar.YEAR) == c.get(Calendar.YEAR) && currentDate.get(Calendar.DAY_OF_MONTH) == c.get(Calendar.DAY_OF_MONTH)) {
                 //found Arbeitszeit for this date
                 return atime;
             }
@@ -148,9 +147,28 @@ public class BackgroundService extends Service {
         return null;
     }
 
-    Date calculateTimePassed(Date start, Date end) {
-        long diffInMillies = start.getTime() - end.getTime();
-        return new Date(diffInMillies);
+    public String calculateSalary(double time, String placename){
+        double moneyperhour = mDb.arbeitsortDAO().getMoneyPerHour(placename);
+        String res =  new Double(time * moneyperhour).toString();
+        String cents = res.split("\\.")[1]+"0";
+        try {
+            cents = cents.substring(0, 2);
+        }catch(Exception e){}
+        return res.split("\\.")[0] +"."+cents;
+    }
+
+    public Double calculateWorkTime(Date start, Date end) {
+        Long diff = end.getTime() - start.getTime();
+        Long diffMinutes = diff / (60 * 1000) % 60;
+        Long diffHours = diff / (60 * 60 * 1000) % 24;
+        return Double.valueOf(diffHours.toString() +  "." + diffMinutes.toString());
+    }
+
+    public String calculateWorkTimeString(Date start, Date end) {
+        Long diff = end.getTime() - start.getTime();
+        Long diffMinutes = diff / (60 * 1000) % 60;
+        Long diffHours = diff / (60 * 60 * 1000) % 24;
+        return diffHours.toString() +  "." + diffMinutes.toString();
     }
 
     Double calculateMoneyEarned(int hours, int minutes, double earningsPerHour) {

@@ -282,32 +282,14 @@ public class LoginActivity extends AppCompatActivity {
     private void get_runtime_permissions() {
         if (Build.VERSION.SDK_INT < 23) {
             //no need for runtimePermissions
-            check_gps();
-        }else {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        } else {
+            //check runtime permissions
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
             }
         }
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 1: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    check_gps();
-                } else {
-                    // permission denied
-                    // maybe ask again?
-                    //get_runtime_permissions();
-                }
-                return;
-            }
-        }
-    }
-
 
     /*
      ####################################################################
@@ -315,10 +297,8 @@ public class LoginActivity extends AppCompatActivity {
      ####################################################################
     */
     private void startServices(){
-        Intent i = new Intent(this,LocationService.class);
-        startService(i);
-        i = new Intent(this,BackgroundService.class);
-        startService(i);
+        startService(new Intent(this,LocationService.class));
+        startService(new Intent(this,BackgroundService.class));
     }
 
     @Override
