@@ -56,6 +56,7 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
         initNavigation();
         initWorkplaceList();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -88,15 +89,21 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        Intent workplaceIntent = new Intent(this, Workplace.class);
+        Intent overviewIntent = new Intent(this, Overview.class);
+        //TODO Statistics intent
+        //TODO Export intent
+        //TODO import intent
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_dashboard) {
-            // Handle the camera action
+            startActivity(dashboardIntent);
         } else if (id == R.id.nav_overview) {
-
+            startActivity(overviewIntent);
         } else if (id == R.id.nav_workplaces) {
-
+            startActivity(workplaceIntent);
         } else if (id == R.id.nav_statistics) {
 
         } else if (id == R.id.nav_export) {
@@ -105,7 +112,6 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
