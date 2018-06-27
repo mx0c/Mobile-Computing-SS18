@@ -201,7 +201,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                alertDialog.setTitle(R.string.workplace_delete_title);
+                alertDialog.setTitle("Delete Day");
                 alertDialog.setMessage("Do you really want to delete the data of this day? If you select yes the data will be deleted");
 
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",

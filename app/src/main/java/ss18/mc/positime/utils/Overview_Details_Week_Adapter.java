@@ -86,7 +86,8 @@ public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAd
         UsedWeekNumber = getWeekNumber(selected_date);
 
         if(savedWeekNumbers.contains(Integer.valueOf(UsedWeekNumber))){
-                return null;
+            View v_null= new View(context);
+                return v_null;
         }
         else {
 
