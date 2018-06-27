@@ -118,7 +118,6 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
         super.onActivityResult(reqCode, resultCode, intent);
         String date;
 
-        //TODO FIX Null obj reference
         if(intent.getStringExtra("DATE") != null) {
             date= intent.getStringExtra("DATE");
 
@@ -131,7 +130,7 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
                 dateEnd.setText(date);
             }
 
-            if (dateStart.getText().toString().matches("")&& !dateEnd.getText().toString().matches("")) {
+            if (!dateStart.getText().toString().matches("")&& !dateEnd.getText().toString().matches("")) {
                 String [] start_date= dateStart.getText().toString().split("-");
                 Integer start_day= Integer.parseInt(start_date[0]);
                 Integer start_month= Integer.parseInt(start_date[1]);
