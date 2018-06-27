@@ -3,13 +3,13 @@ package ss18.mc.positime;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -24,7 +24,6 @@ import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.DatabaseInitializer;
 import ss18.mc.positime.utils.Overview_Details_Custom_Adapter;
-import ss18.mc.positime.utils.Overview_Details_Day_Adapter;
 
 public class Overview_Custom extends Fragment implements View.OnClickListener {
 
@@ -49,7 +48,7 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.activity_workplace__details__custom, container, false);
+        v = inflater.inflate(R.layout.activity_overview__details__custom, container, false);
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
         DatabaseInitializer.populateSync(db);
 
@@ -108,6 +107,7 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
                         return o1.getStarttime().compareTo(o2.getStarttime());
                     }
                 });
+                calculateTotalStats();
                 mListView.setAdapter(new Overview_Details_Custom_Adapter(mWorkingTimes,getActivity(), mSelectedWorkplace));
                 break;
         }
@@ -172,5 +172,41 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
                 }
             }
         }
+    }
+    void calculateTotalStats(){
+        int totalWorktimeMinutes = 0;
+        int totalPauseTimeMinutes = 0;
+
+        for(Arbeitszeit a : mWorkingTimes){
+            totalWorktimeMinutes += calculateWorkTimeMinutes(a.getStarttime(),a.getEndtime());
+            totalPauseTimeMinutes += a.getBreaktime() * a.getAmountBreaks();
+        }
+
+        ((TextView)v.findViewById(R.id.totalTime)).setText(ConvertMinutesToTime(totalWorktimeMinutes).toString() + " hours");
+        ((TextView)v.findViewById(R.id.totalPause)).setText(ConvertMinutesToTime(totalPauseTimeMinutes).toString() + " hours");
+        ((TextView)v.findViewById(R.id.totalSalary)).setText(calculateSalary(ConvertMinutesToTime(totalWorktimeMinutes)) + " €");
+    }
+
+    public Double ConvertMinutesToTime(int minutes){
+        Integer hours = minutes / 60;
+        Integer mins = minutes % 60;
+        String timeStr = hours.toString() + "." + mins.toString();
+        return Double.valueOf(timeStr);
+    }
+
+    public String calculateSalary(double time){
+        double moneyperhour = BenutzerDatabase.getBenutzerDatabase(getActivity()).arbeitsortDAO().getMoneyPerHour(mSelectedWorkplace);
+        String res =  new Double(time * moneyperhour).toString();
+        String cents = res.split("\\.")[1]+"0";
+        try {
+            cents = cents.substring(0, 2);
+        }catch(Exception e){}
+        return res.split("\\.")[0] +"."+cents;
+    }
+
+    public int calculateWorkTimeMinutes(Date start, Date end) {
+        long diff = end.getTime() - start.getTime();
+        long diffMinutes = diff / (60 * 1000);
+        return (int)diffMinutes;
     }
 }

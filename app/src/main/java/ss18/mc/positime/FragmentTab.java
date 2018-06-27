@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +61,7 @@ public class FragmentTab extends Fragment implements View.OnClickListener {
             v = inflater.inflate(R.layout.workplace_details_day, container, false);
         }
         if(this.getTag().toString() =="custom") {
-            v = inflater.inflate(R.layout.activity_workplace__details__custom, container, false);
+            v = inflater.inflate(R.layout.activity_overview__details__custom, container, false);
         }
 
         //Day View:
