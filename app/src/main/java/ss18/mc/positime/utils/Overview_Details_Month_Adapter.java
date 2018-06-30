@@ -97,7 +97,8 @@ public class Overview_Details_Month_Adapter extends BaseAdapter implements ListA
         month_text = view.findViewById(R.id.month_text);
 
         if (savedMonthNumbers.contains(actualMonthNumber)) {
-            return null;
+            View v_null= new View(context);
+            return v_null;
         } else {
             savedMonthNumbers.add(actualMonthNumber);
             month_text.setText(months[actualMonthNumber]);
