@@ -4,19 +4,28 @@ import android.os.Handler;
 
 public class Timer {
     private int mTime;
-    private int mInterval;
-    private Handler mHandler = new Handler();
-    private Runnable mRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mTime+=1;
-            mHandler.postDelayed(this,mInterval);
-        }
-    };
+    public int mInterval;
+    public Handler mHandler;
+    private Runnable mRunnable;
 
     public Timer(int interval) {
-        this.mInterval = interval;
-        this.mTime = 0;
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                mTime+=1;
+                mHandler.postDelayed(this,mInterval);
+            }
+        };
+        mHandler = new Handler();
+        mInterval = interval;
+        mTime = 0;
+    }
+
+    public Timer(int interval, Runnable func){
+        mRunnable = func;
+        mInterval = interval;
+        mHandler = new Handler();
+        mTime = 0;
     }
 
     public void setTime(int time){
