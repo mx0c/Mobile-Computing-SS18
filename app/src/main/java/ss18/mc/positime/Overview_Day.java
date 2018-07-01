@@ -64,7 +64,9 @@ public class Overview_Day extends Fragment{
     private void initDaysList() {
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getContext());
         //Temporary
-        DatabaseInitializer.populateSync(db);
+        if(Constants.USE_TESTDATA) {
+            DatabaseInitializer.populateSync(db);
+        }
 
         String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
         List<Arbeitsort> workplaces = db.arbeitsortDAO().getArbeitsorteForUser(userMail);

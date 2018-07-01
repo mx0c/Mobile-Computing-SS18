@@ -22,6 +22,7 @@ import java.util.List;
 
 import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.DatabaseInitializer;
 import ss18.mc.positime.utils.Overview_Details_Custom_Adapter;
 
@@ -49,8 +50,10 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_overview__details__custom, container, false);
-        BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-        DatabaseInitializer.populateSync(db);
+        if(Constants.USE_TESTDATA) {
+            BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
+            DatabaseInitializer.populateSync(db);
+        }
 
         mSelectedWorkplace = getActivity().getIntent().getExtras().getString("workplace");
         mListView = v.findViewById(R.id.customList);

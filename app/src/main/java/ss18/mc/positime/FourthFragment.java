@@ -152,7 +152,9 @@ public class FourthFragment extends Fragment {
                 //Ueberpruefen ob Datum in Datenbank
                 BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
                 //Temporary
-                DatabaseInitializer.populateSync(db);
+                if(Constants.USE_TESTDATA) {
+                    DatabaseInitializer.populateSync(db);
+                }
                 getBackgroundInfo();
                 String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
                 //TEST DATA FOR TESTS USE ONLY

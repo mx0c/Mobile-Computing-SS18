@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import ss18.mc.positime.dbmodel.Arbeitsort;
 import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.DatabaseInitializer;
 
 public class SecondFragment extends Fragment {
@@ -68,7 +69,9 @@ public class SecondFragment extends Fragment {
 
         /*Databaseconnection*/
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-        DatabaseInitializer.populateSync(db);
+        if(Constants.USE_TESTDATA) {
+            DatabaseInitializer.populateSync(db);
+        }
         //TEMPORAY FOR TESTS ONLY
         String userMail = "ge2thez@gmail.com";
         current_workplace = "Hochschule Reutlingen";

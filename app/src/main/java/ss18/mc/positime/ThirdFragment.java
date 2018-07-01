@@ -28,6 +28,7 @@ import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.model.Benutzer;
 import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.DatabaseInitializer;
 public class ThirdFragment extends Fragment {
     ExpandableListAdapter listAdapter;
@@ -72,7 +73,9 @@ public class ThirdFragment extends Fragment {
 
         /*Databaseconnection*/
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-        DatabaseInitializer.populateSync(db);
+        if(Constants.USE_TESTDATA) {
+            DatabaseInitializer.populateSync(db);
+        }
 
         //Getting Data from the Database --> currently only all places. Should be changed in current user. But for demonstration its
         //nicer to see more data
