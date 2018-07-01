@@ -22,6 +22,7 @@ import java.util.List;
 
 import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.DatabaseInitializer;
 import ss18.mc.positime.utils.Overview_Details_Custom_Adapter;
 

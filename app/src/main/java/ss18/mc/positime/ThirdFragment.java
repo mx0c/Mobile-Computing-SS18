@@ -28,6 +28,7 @@ import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.model.Benutzer;
 import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.DatabaseInitializer;
 public class ThirdFragment extends Fragment {
     ExpandableListAdapter listAdapter;
@@ -35,7 +36,7 @@ public class ThirdFragment extends Fragment {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     public ThirdFragment() {
-// Required empty public constructor
+    // Required empty public constructor
     }
 
     @Override

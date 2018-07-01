@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import ss18.mc.positime.dbmodel.Arbeitsort;
 import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
+import ss18.mc.positime.utils.Constants;
 import ss18.mc.positime.utils.DatabaseInitializer;
 
 public class SecondFragment extends Fragment {

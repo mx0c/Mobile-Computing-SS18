@@ -11,5 +11,6 @@ public class Constants {
     public static final String PASSWORD = "hashed_password";
     public static final String FIRSTNAME = "firstname";
     public static final String LASTNAME = "lastname";
+    public static final boolean USE_TESTDATA = false;
 }
 
