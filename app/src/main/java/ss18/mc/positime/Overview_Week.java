@@ -111,13 +111,6 @@ public class Overview_Week extends Fragment {
         String monthEnd = df.format( now.getTime());
         Integer monthNumerEnd = now.get(Calendar.MONTH);
 
-
-
-        //getArbeitszeitenOfMonth
-            //Startdate, Enddate
-        //List<Arbeitszeit> workingTimesOfWeek = db.arbeitszeitDAO().getArbeitszeitenForArbeitsOrt(workplace, monday, friday);
-
-
         List<Arbeitszeit> workingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(workplace, monthStart, monthEnd);
 
         Log.d(TAG, "Workplaces found for user with email " + userMail + ": " + workplaces.size());

@@ -114,12 +114,6 @@ public class Overview_Details_Month_Adapter extends BaseAdapter implements ListA
                     pauseTime_sum += time.getBreaktime() * time.getAmountBreaks();
                     pause_sum.setText(" "+String.valueOf(pauseTime_sum) + " minutes");
 
-                    /*workingTime_sum += getWorkingTimeInHours(time.getStarttime(), time.getEndtime(), time.getBreaktime()*time.getAmountBreaks());
-                    int hours= (int) workingTime_sum;
-                    double minutes= workingTime_sum - hours;
-                    minutes *= 60;
-                    int min = (int) minutes;*/
-
                     Integer workTimeInSeconds = time.getWorktime();
                     Double workTimeInMinutes = workTimeInSeconds / 60.0;
 
@@ -156,28 +150,5 @@ public class Overview_Details_Month_Adapter extends BaseAdapter implements ListA
         return monthNr;
     }
 
-    public Double getWorkingTimeInHours(Date start, Date end, int breakTime){
-        String startTime = df.format(start);
-        String [] splitted_startTime= startTime.split(" ");
-        String [] startTime_splitted_calculation = splitted_startTime[1].split(":");
-        Integer startH = Integer.parseInt(startTime_splitted_calculation[0]);
-        Integer startMin = Integer.parseInt(startTime_splitted_calculation[1]);
-
-        String stopTime = df.format(end);
-        String [] splitted_stopTime= stopTime.split(" ");
-        String [] endTime_splitted_calculation = splitted_stopTime[1].split(":");
-        Integer endH = Integer.parseInt(endTime_splitted_calculation[0]) ;
-        Integer endMin = Integer.parseInt(endTime_splitted_calculation[1]);
-
-        Double diff_calculation_hours = (endH - startH) * 60.0;
-        Double diff_calulation_minutes = endMin -startMin - 0.0;
-
-        diff_calulation_minutes -= breakTime;
-
-        Double result_time_calculation_minutes = diff_calculation_hours + diff_calulation_minutes + 0.0; //in minutes
-        Double result_time_calc_hours = result_time_calculation_minutes / 60;
-
-        return result_time_calc_hours;
-    }
 
 }
