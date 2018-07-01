@@ -21,6 +21,7 @@ import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.Constants;
 
+import ss18.mc.positime.utils.TimeDateConverter;
 import ss18.mc.positime.utils.Timer;
 
 
@@ -99,8 +100,9 @@ public class BackgroundService extends Service {
             mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
             return;
         }
-        //check if current location is in a saved Workplace
+
         if(this.mLocation != null) {
+            //check if current location is in a saved Workplace
             for (Arbeitsort a : mDb.arbeitsortDAO().getArbeitsorteForUser(mPref.getString(Constants.EMAIL, null))) {
                 Location workplaceLocation = new Location("");
                 workplaceLocation.setLatitude(a.getLatA());
@@ -110,9 +112,11 @@ public class BackgroundService extends Service {
                     //get todays arbeitszeit
                     this.mCurrentArbeitszeit = this.findTodaysArbeitszeit(mDb.arbeitszeitDAO().getArbeitszeitenForArbeitsort(a.getPlaceName()), a);
                     if (this.mCurrentArbeitszeit != null) {
+                        //update time for Workplace
                         if (this.mCurrentArbeitszeit.getStarttime() == null) {
                             this.mCurrentArbeitszeit.setStarttime(new Date());
                         }
+                        this.mCurrentArbeitszeit.setWorktime(this.mCurrentArbeitszeit.getWorktime()+1);
                         this.mCurrentArbeitszeit.setEndtime(new Date());
                         //insert updated currAZ
                         mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
@@ -126,14 +130,14 @@ public class BackgroundService extends Service {
                         this.mCurrentArbeitszeit.setArbeitszeitId(0);
                         this.mCurrentArbeitszeit.setStarttime(new Date());
                         this.mCurrentArbeitszeit.setEndtime(new Date());
+                        this.mCurrentArbeitszeit.setWorktime(0);
 
                         //update db
                         mDb.arbeitszeitDAO().insertAll(this.mCurrentArbeitszeit);
                     }
-
                     Intent i = new Intent("dashboard_informations");
                     i.putExtra("current_workplace_name", a.getPlaceName());
-                    i.putExtra("current_workplace_time", calculateWorkTimeString(this.mCurrentArbeitszeit.getStarttime(), this.mCurrentArbeitszeit.getEndtime()));
+                    i.putExtra("current_workplace_time", TimeDateConverter.secondsToTimestring(this.mCurrentArbeitszeit.getWorktime()));
                     i.putExtra("current_workplace_money_earned", calculateSalary(calculateWorkTime(this.mCurrentArbeitszeit.getStarttime(), this.mCurrentArbeitszeit.getEndtime()), a.getPlaceName()));
                     i.putExtra("current_workplace_pause_minutes", this.mCurrentArbeitszeit.getBreaktime());
                     i.putExtra("current_workplace_pause_count", this.mCurrentArbeitszeit.getAmountBreaks());
@@ -143,7 +147,7 @@ public class BackgroundService extends Service {
                 }
             }
         }
-        //only gets executed when not inside workplace or pause is active
+        //only gets executed when not inside workplace
         this.mCurrentArbeitszeit = null;
         Intent i = new Intent("dashboard_informations");
         i.putExtra("current_workplace_name", "0");

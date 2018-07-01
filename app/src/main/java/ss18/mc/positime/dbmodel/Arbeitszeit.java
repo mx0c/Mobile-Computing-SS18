@@ -45,7 +45,8 @@ public class Arbeitszeit {
     @ColumnInfo(name = "breaktime")
     private int breaktime;
 
-
+    @ColumnInfo(name = "worktime")
+    private int worktime;
 
     public int getArbeitszeitId() {
         return arbeitszeitId;
@@ -67,9 +68,7 @@ public class Arbeitszeit {
         return arbeitsort_name;
     }
 
-    public void setArbeitsort_name(String arbeitsort_name) {
-        this.arbeitsort_name = arbeitsort_name;
-    }
+    public void setArbeitsort_name(String arbeitsort_name) { this.arbeitsort_name = arbeitsort_name; }
 
     public Date getWorkday() {
         return workday;
@@ -102,4 +101,8 @@ public class Arbeitszeit {
     public void setBreaktime(int breaktime) {
         this.breaktime = breaktime;
     }
+
+    public int getWorktime() { return worktime; }
+
+    public void setWorktime(int worktime) { this.worktime = worktime; }
 }

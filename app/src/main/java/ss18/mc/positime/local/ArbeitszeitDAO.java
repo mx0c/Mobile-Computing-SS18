@@ -18,8 +18,7 @@ public interface ArbeitszeitDAO {
     List<Arbeitszeit> getAll();
 
     @Insert
-    void
-    insertAll(Arbeitszeit... arbeitszeits);
+    void insertAll(Arbeitszeit... arbeitszeits);
 
     @Update
     int updateArbeitszeit(Arbeitszeit az);

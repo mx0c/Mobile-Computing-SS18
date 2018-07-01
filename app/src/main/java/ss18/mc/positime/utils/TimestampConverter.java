@@ -26,7 +26,6 @@ public class TimestampConverter {
 
     @TypeConverter
     public static String dateToTimestamp(Date value) {
-
         return value == null ? null : df.format(value);
     }
 }

@@ -21,7 +21,6 @@ public class DatabaseInitializer {
 
     private static final String TAG = DatabaseInitializer.class.getName();
 
-
     public static void populateAsync(@NonNull final BenutzerDatabase db) {
         PopulateDbAsync task = new PopulateDbAsync(db);
         task.execute();
