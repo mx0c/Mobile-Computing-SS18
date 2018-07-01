@@ -63,27 +63,27 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         TextView workplace_dash = (TextView) findViewById(R.id.workplace_dashboard);
         TextView working_time_dash = (TextView) findViewById(R.id.worktime_dashboard);
         TextView pause_dash = (TextView) findViewById(R.id.pause_dashboard);
-        final Context[] testt = new Context[1];
+
         broadcastReceiver = new BroadcastReceiver(){
+            @Override
             public void onReceive(Context context, Intent intent){
-                testt[0] = context;
+
                 Bundle test = intent.getExtras();
 
-                if(test != null){
-                    //String abc = (String) test.get("current_workplace_name");
-                    String current_time_hours = test.get("current_workplace_time_hours").toString();
+
+                    String abc = (String) test.get("current_workplace_name");
+                    /*String current_time_hours = test.get("current_workplace_time_hours").toString();
                     String current_time_mins = test.get("current_workplace_time_").toString();
                     String current_time_pause = test.get("current_workplace_pause_minutes").toString();
-                    //workplace_dash.setText(abc);
+                    //
                     working_time_dash.setText(current_time_hours+"h"+current_time_mins+"min");
-                    pause_dash.setText("Pause: "+current_time_pause+" min");
-                }
-
+                    pause_dash.setText("Pause: "+current_time_pause+" min");*/
+                workplace_dash.setText(abc);
 
             }
         };
         try{
-            this.registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));
+            registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));
         }
         catch(NullPointerException e){
             working_time_dash.setText(e.toString());

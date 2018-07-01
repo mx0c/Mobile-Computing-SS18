@@ -124,6 +124,7 @@ public class SecondFragment extends Fragment {
     public String[] gettingBrodcastInformation(){
         String[] current_informations = new String[5];
         broadcastReceiver = new BroadcastReceiver(){
+            @Override
             public void onReceive(Context context, Intent intent){
                 Bundle test = intent.getExtras();
                 if(test != null){

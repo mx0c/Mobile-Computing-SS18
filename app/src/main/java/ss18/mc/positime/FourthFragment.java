@@ -81,7 +81,7 @@ public class FourthFragment extends Fragment {
     @Override
     public  void onResume(){
         super.onResume();
-        dateClick = Calendar.getInstance().getTime();
+        //dateClick = Calendar.getInstance().getTime();
         Date date= Calendar.getInstance().getTime();
         Calendar c= Calendar.getInstance(TimeZone.getDefault());
         Integer numberOfMonth= c.get(Calendar.MONTH);
@@ -98,6 +98,7 @@ public class FourthFragment extends Fragment {
             @Override
             public void onDayClick(Date dateClicked) {
                 //clickedDate_Epochtime= dateClicked.getTime();
+                dateClick = dateClicked;
                 String date= dateClicked.toString();
                 String[] date_split= date.split(" ");
                 Intent i= new Intent(getActivity(), FragmentTab.class);
@@ -158,12 +159,18 @@ public class FourthFragment extends Fragment {
                 workplace = "Daheim";
                 DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String fridayS = df.format(dateClick);
-                List<Arbeitszeit> test1 = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortOneDay(workplace,fridayS);
+                String[] ergS = fridayS.split(" ");
+                String workDayMorning = ergS[0] + " 00:00:00";
+                String workDayEvening = ergS[0] + " 59:59:59";
+                List<Arbeitszeit> test1 = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(workplace,workDayMorning,workDayEvening);
                 //Check if data is available
+
                 if(test1.size() != 0){
-                    currDate.setText(fridayS);
-                    startTime.setText("Start time:  "+test1.get(0).getStarttime().toString());
-                    endTime.setText("End time:  "+test1.get(0).getEndtime().toString());
+                    currDate.setText(ergS[0]);
+                    String[] ergDayStart = test1.get(0).getStarttime().toString().split(" ");
+                    startTime.setText("Start time:  "+ergDayStart[3] + " Uhr");
+                    String[] ergDayEnd = test1.get(0).getEndtime().toString().split(" ");
+                    endTime.setText("End time:  "+ergDayEnd[3]+ " Uhr");
                     long diff = test1.get(0).getEndtime().getTime()-test1.get(0).getStarttime().getTime();
                     long[] hoursMins = new long[2];
                     long t = TimeUnit.MILLISECONDS.toMinutes(diff);
@@ -176,7 +183,7 @@ public class FourthFragment extends Fragment {
                     sumTime.setText("Worked time:   "+hoursMins[0]+" h  "+hoursMins[1]+" min");
                 }
                 else{
-                    currDate.setText("Keine Daten vorhanden.");
+                    currDate.setText("No data available.");
                 }
 
             }

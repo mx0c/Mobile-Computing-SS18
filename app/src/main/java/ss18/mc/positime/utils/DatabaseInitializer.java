@@ -45,8 +45,8 @@ public class DatabaseInitializer {
         user.setFirstName("Max");
         user.setLastName("Mustermann");
         user.setPassWord("1234"); //Password is usually hashed
-        user.setEmail("ge2thez@gmail.com");
-
+        //user.setEmail("ge2thez@gmail.com");
+        user.setEmail("julia@web.de");
         /*Benutzer user_lena = new Benutzer();
         user.setFirstName("Lena");
         user.setLastName("Essig");
@@ -66,7 +66,9 @@ public class DatabaseInitializer {
         Arbeitsort arbeitsort = new Arbeitsort();
         arbeitsort.setAddresst(address);
         arbeitsort.setPlaceName("Daheim");
-        arbeitsort.setBenutzer_mail("ge2thez@gmail.com"); //Beziehung zu User
+
+        arbeitsort.setBenutzer_mail("julia@web.de"); //Beziehung zu User
+
         arbeitsort.setChefFistName("Helene");
         arbeitsort.setChefLastName("Helene!");
         arbeitsort.setLatA(48.531415);
@@ -79,7 +81,7 @@ public class DatabaseInitializer {
         Arbeitsort arbeitsort2 = new Arbeitsort();
         arbeitsort2.setAddresst(address);
         arbeitsort2.setPlaceName("Hochschule Reutlingen");
-        arbeitsort2.setBenutzer_mail("ge2thez@gmail.com");
+        arbeitsort2.setBenutzer_mail("julia@web.de");
         arbeitsort2.setChefFistName("Nati");
         arbeitsort2.setChefLastName("Martinez");
         arbeitsort2.setLatA(48.531415);
@@ -95,10 +97,17 @@ public class DatabaseInitializer {
         address.setStreetA("Gerhard-Kindler-Straße");
         address.setStreetnrA(3);
 
+        addressT address_julia = new addressT();
+        address.setCityA("Dörnach");
+        address.setPlzA(72124);
+        address.setStreetA("Mühlbachstraße");
+        address.setStreetnrA(35);
+
+
         Arbeitsort arbeitsort3 = new Arbeitsort();
         arbeitsort3.setAddresst(address_convexis);
         arbeitsort3.setPlaceName("Convexis");
-        arbeitsort3.setBenutzer_mail("ge2thez@gmail.com");
+        arbeitsort3.setBenutzer_mail("julia@web.de");
         arbeitsort3.setChefFistName("Max");
         arbeitsort3.setChefLastName("Mustermann");
         arbeitsort3.setLatA(48.49593);
@@ -107,6 +116,20 @@ public class DatabaseInitializer {
         arbeitsort3.setCurrency("Euro");
         arbeitsort3.setRadiusA(20);
         arbeitsort3.setWeeklyHours(35);
+
+        Arbeitsort arbeitsort4 = new Arbeitsort();
+        arbeitsort4.setAddresst(address_julia);
+        arbeitsort4.setPlaceName("Julias Schreibtisch");
+        arbeitsort4.setBenutzer_mail("julia@web.de");
+        arbeitsort4.setChefFistName("Max");
+        arbeitsort4.setChefLastName("Mustermann");
+        arbeitsort4.setLatA(48.59088241974331);
+        arbeitsort4.setLongA(9.174538112787104);
+        arbeitsort4.setMoneyPerhour(140);
+        arbeitsort4.setCurrency("Euro");
+        arbeitsort4.setRadiusA(50);
+        arbeitsort4.setWeeklyHours(55);
+
 
 
         /*Arbeitsort arbeitsort4 = new Arbeitsort();
@@ -123,12 +146,22 @@ public class DatabaseInitializer {
         arbeitsort4.setWeeklyHours(40);*/
 
 
-        db.arbeitsortDAO().insertAll(arbeitsort, arbeitsort2, arbeitsort3);
+        db.arbeitsortDAO().insertAll(arbeitsort, arbeitsort2, arbeitsort3,arbeitsort4);
 
         TimestampConverter time = new TimestampConverter();
 
         Date date1_start= time.fromTimestamp("2018-06-04 01:35:00");
         Date date1_end= time.fromTimestamp("2018-06-04 17:30:00");
+
+        Arbeitszeit arbeitszeit23 = new Arbeitszeit();
+        arbeitszeit23.setArbeitszeitId(0);
+        arbeitszeit23.setAmountBreaks(3);
+        arbeitszeit23.setStarttime(date1_start);
+        arbeitszeit23.setEndtime(date1_end);
+        arbeitszeit23.setBreaktime(45); //Minutes
+        arbeitszeit23.setArbeitsort_name("Julias Schreibtisch");
+        arbeitszeit23.setWorkday(date1_start );
+
 
         //Create Arbeitszeit to an Arbeitsort
         Arbeitszeit arbeitszeit = new Arbeitszeit();
@@ -279,7 +312,7 @@ public class DatabaseInitializer {
         february2.setWorkday(start_february2);
 
 
-        db.arbeitszeitDAO().insertAll(arbeitszeit5,arbeitszeit, arbeitszeit2, arbeitszeit3, arbeitszeit4, arbeitszeit6, arbeitszeit7, arbeitszeit8, january1, january2, february, february2);
+        db.arbeitszeitDAO().insertAll(arbeitszeit23,arbeitszeit5,arbeitszeit, arbeitszeit2, arbeitszeit3, arbeitszeit4, arbeitszeit6, arbeitszeit7, arbeitszeit8, january1, january2, february, february2);
 
         //Create PausenSetting
         PausenSettings ps1 = new PausenSettings();
@@ -293,8 +326,12 @@ public class DatabaseInitializer {
         ps2.setLengthMin(15);
         ps2.setTiggerMin(540);
         ps2.setPausensettingsId(0);
-
-        db.pausenSettingsDAO().insertAll(ps1, ps2);
+        PausenSettings ps3 = new PausenSettings();
+        ps1.setArbeitsort_name("Julias Schreibtisch");
+        ps1.setLengthMin(30);
+        ps1.setTiggerMin(300);
+        ps1.setPausensettingsId(0);
+        db.pausenSettingsDAO().insertAll(ps1, ps2,ps3);
     }
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
