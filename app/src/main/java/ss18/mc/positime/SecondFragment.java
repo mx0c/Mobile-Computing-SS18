@@ -69,9 +69,7 @@ public class SecondFragment extends Fragment {
 
         /*Databaseconnection*/
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-        if(Constants.USE_TESTDATA) {
-            DatabaseInitializer.populateSync(db);
-        }
+        DatabaseInitializer.populateSync(db);
         //TEMPORAY FOR TESTS ONLY
         String userMail = "ge2thez@gmail.com";
         current_workplace = "Hochschule Reutlingen";

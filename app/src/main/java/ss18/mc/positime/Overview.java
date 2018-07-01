@@ -173,9 +173,7 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
     private void initWorkplaceList() {
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(this);
         //Temporary
-        if(Constants.USE_TESTDATA) {
-            DatabaseInitializer.populateSync(db);
-        }
+        DatabaseInitializer.populateSync(db);
 
         String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
 

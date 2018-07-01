@@ -36,7 +36,7 @@ public class ThirdFragment extends Fragment {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     public ThirdFragment() {
-// Required empty public constructor
+    // Required empty public constructor
     }
 
     @Override
@@ -73,9 +73,7 @@ public class ThirdFragment extends Fragment {
 
         /*Databaseconnection*/
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-        if(Constants.USE_TESTDATA) {
-            DatabaseInitializer.populateSync(db);
-        }
+        DatabaseInitializer.populateSync(db);
 
         //Getting Data from the Database --> currently only all places. Should be changed in current user. But for demonstration its
         //nicer to see more data

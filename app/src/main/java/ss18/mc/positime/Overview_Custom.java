@@ -50,10 +50,8 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_overview__details__custom, container, false);
-        if(Constants.USE_TESTDATA) {
-            BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-            DatabaseInitializer.populateSync(db);
-        }
+        BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
+        DatabaseInitializer.populateSync(db);
 
         mSelectedWorkplace = getActivity().getIntent().getExtras().getString("workplace");
         mListView = v.findViewById(R.id.customList);

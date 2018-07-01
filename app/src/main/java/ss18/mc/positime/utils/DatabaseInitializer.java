@@ -22,12 +22,16 @@ public class DatabaseInitializer {
     private static final String TAG = DatabaseInitializer.class.getName();
 
     public static void populateAsync(@NonNull final BenutzerDatabase db) {
-        PopulateDbAsync task = new PopulateDbAsync(db);
-        task.execute();
+        if(Constants.USE_TESTDATA) {
+            PopulateDbAsync task = new PopulateDbAsync(db);
+            task.execute();
+        }
     }
 
     public static void populateSync(@NonNull final BenutzerDatabase db) {
-        populateWithTestData(db);
+        if(Constants.USE_TESTDATA) {
+            populateWithTestData(db);
+        }
     }
 
     private static Benutzer addBenutzer(final BenutzerDatabase db, Benutzer benutzer) {
