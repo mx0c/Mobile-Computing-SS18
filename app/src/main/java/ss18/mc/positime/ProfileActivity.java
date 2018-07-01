@@ -47,10 +47,15 @@ public class ProfileActivity extends AppCompatActivity implements OnNavigationIt
         TextView lastname = findViewById(R.id.lastname_label);
         TextView firstname = findViewById(R.id.firstname_label);
         TextView email = findViewById(R.id.email_label);
+        TextView header_firstname = findViewById(R.id.profile_header_firstname);
+        TextView header_lastname = findViewById(R.id.profile_header_lastname);
 
         lastname.setText(mSharedPreferences.getString(Constants.LASTNAME,"Error"));
         firstname.setText(mSharedPreferences.getString(Constants.FIRSTNAME,"Error"));
         email.setText(mSharedPreferences.getString(Constants.EMAIL,"Error"));
+        header_firstname.setText(mSharedPreferences.getString(Constants.FIRSTNAME,"Error"));
+        header_lastname.setText(mSharedPreferences.getString(Constants.LASTNAME,"Error"));
+
     }
 
     private void initNavigation() {

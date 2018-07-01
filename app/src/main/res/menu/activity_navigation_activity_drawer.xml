@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:id="@+id/main_nav">
         <item
             android:id="@+id/nav_dashboard"
             android:icon="@drawable/clipboard"
@@ -22,8 +22,10 @@
             android:title="Statistics" />
     </group>
 
-    <item android:title="____________">
-        <menu>
+
+
+    <group android:checkableBehavior="single" android:id="@+id/imp_exp">
+
             <item
                 android:id="@+id/nav_export"
                 android:icon="@drawable/export"
@@ -32,7 +34,5 @@
                 android:id="@+id/nav_import"
                 android:icon="@drawable/import1"
                 android:title="Import" />
-        </menu>
-    </item>
-
+    </group>
 </menu>

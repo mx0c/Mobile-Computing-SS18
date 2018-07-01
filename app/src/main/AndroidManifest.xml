@@ -39,6 +39,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <service android:name=".services.LocationService" />
@@ -49,7 +50,7 @@
             android:label="@string/register_activity" />
         <activity
             android:name=".Overview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Workplace_Details"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -67,7 +68,7 @@
         <activity
             android:name=".ProfileActivity"
             android:label="Profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Workplace_add_edit"
             android:label="@string/title_activity_workplace_add_edit"
@@ -78,8 +79,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UnderWork"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

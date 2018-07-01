@@ -19,7 +19,7 @@ import android.widget.TextView;
 import ss18.mc.positime.utils.Constants;
 
 public class UnderWork extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static String TAG = "DashboardActivity";
+    private static String TAG = "UnderWorkActivity";
     SharedPreferences mSharedPreferences;
     DrawerLayout drawer;
     NavigationView navigationView;
