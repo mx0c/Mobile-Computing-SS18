@@ -110,6 +110,8 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         Date start_Time = list_breaktimes.get(position).getStarttime();
 
 
+
+
         // Splitten der Uhrzeit für Am, Pm
         String startTime = df.format(start_Time);
         String [] splitted_startTime= startTime.split(" ");
@@ -127,7 +129,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         stop_time.setText(stop_timeAmPm);
 
 
-        String [] startTime_splitted_calculation = splitted_startTime[1].split(":");
+        /*String [] startTime_splitted_calculation = splitted_startTime[1].split(":");
         Integer startH = Integer.parseInt(startTime_splitted_calculation[0]);
         Integer startMin = Integer.parseInt(startTime_splitted_calculation[1]);
 
@@ -141,30 +143,40 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         Double diff_calculation_hours = (endH - startH) * 60.0;
         Double diff_calulation_minutes = endMin -startMin - 0.0;
 
-        diff_calulation_minutes -= breakTime_calculation;
+        diff_calulation_minutes -= breakTime_calculation;*/
 
-        TextView salary_text = (TextView) view.findViewById(R.id.salary);
 
-        Double result_time_calculation_minutes = diff_calculation_hours + diff_calulation_minutes + 0.0; //in minutes
+       /* Double result_time_calculation_minutes = diff_calculation_hours + diff_calulation_minutes + 0.0; //in minutes
         double result_time_calc_hours = result_time_calculation_minutes / 60; //hh,mm
 
         int hours = (int) result_time_calc_hours;
         double  minutes= result_time_calc_hours - hours;
-        minutes= minutes * 60;
+        minutes= minutes * 60;*/
 
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++
+        TextView salary_text = (TextView) view.findViewById(R.id.salary);
+
+        Integer workTimeInSeconds = list_breaktimes.get(position).getWorktime();
+        Double workTimeInMinutes = workTimeInSeconds / 60.0;
+        Integer breakTimeInMinutes = list_breaktimes.get(position).getBreaktime();
+
+        Integer worktimeHours = (int) (workTimeInMinutes / 60.0); //hh
+        Integer workTimeMinutes = (int) (workTimeInMinutes -(worktimeHours * 60) );     //mm
 
         Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(worklplace);
-        salary_text.setText( String.format("%.2f €",moneyPerHour *result_time_calc_hours ));
+
+        Double rest=  workTimeMinutes/ 60.0;
+        salary_text.setText( String.format("%.2f €",moneyPerHour *worktimeHours+ rest* moneyPerHour ));
 
 
-        int min= (int) minutes;
+        int min= (int) workTimeMinutes;
         TextView timeSum= view.findViewById(R.id.time_sum);
         if(min < 10){
-            timeSum.setText( hours + ":0" + min +" hours");
+            timeSum.setText( worktimeHours + ":0" + min +" hours");
 
         }
         else{
-            timeSum.setText( hours + ":" + min +" hours");
+            timeSum.setText( worktimeHours + ":" + min +" hours");
         }
 
 

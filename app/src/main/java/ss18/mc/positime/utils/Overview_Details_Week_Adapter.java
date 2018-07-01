@@ -105,19 +105,27 @@ public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAd
                     pauseTime_sum += time.getBreaktime();
                     pause_sum.setText(" "+String.valueOf(pauseTime_sum) +" minutes");
 
-                    workingTime_sum += getWorkingTimeInHours(time.getStarttime(), time.getEndtime(), time.getBreaktime()*time.getAmountBreaks());
-                    int hours= (int) workingTime_sum;
-                    double minutes= workingTime_sum - hours;
-                    minutes *= 60;
-                    int min = (int) minutes;
+
+                    Integer workTimeInSeconds = time.getWorktime();
+                    Double workTimeInMinutes = workTimeInSeconds / 60.0;
+
+                    Integer worktimeHours = (int) (workTimeInMinutes / 60.0); //hh
+                    Integer workTimeMinutes = (int) (workTimeInMinutes -(worktimeHours * 60) );     //mm
+
+
+                    int min = (int) workTimeMinutes;
                     if ( min < 10){
-                        worktime_sum.setText(" "+hours + ":0" + min+ " hours");
+                        worktime_sum.setText(" "+worktimeHours + ":0" + min+ " hours");
                     }
                     else{
-                        worktime_sum.setText(" "+hours + ":" + min + " hours");
+                        worktime_sum.setText(" "+worktimeHours + ":" + min + " hours");
                     }
+
+
                     Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(time.getArbeitsort_name());
-                    salary_sum.setText(String.format(" %.2f €", moneyPerHour*workingTime_sum));
+                    Double rest=  workTimeMinutes/ 60.0;
+                    salary_sum.setText( String.format("%.2f €",moneyPerHour *worktimeHours+ rest* moneyPerHour ));
+
                 }
             }
 

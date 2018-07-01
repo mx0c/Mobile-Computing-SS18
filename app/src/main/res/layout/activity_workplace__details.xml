@@ -43,7 +43,7 @@
             android:id="@+id/simpleTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabBackground="@color/colorPrimaryDark"
+            app:tabBackground= "@color/colorPrimary"
             app:tabIndicatorColor="@color/colorAccent"
             app:tabTextColor = "@color/tabInactive"
             android:layout_marginTop="50dp"
