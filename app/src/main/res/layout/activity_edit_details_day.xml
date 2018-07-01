@@ -41,7 +41,7 @@
             android:src="@drawable/calendar"
             android:tint="@color/colorPrimary"/>
 
-        <EditText
+        <TextView
             android:id="@+id/date"
             android:layout_width="194dp"
             android:layout_height="40dp"

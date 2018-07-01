@@ -91,6 +91,8 @@ public class Overview_Week extends Fragment {
         String actualMonth= months[now.get(Calendar.MONTH)];
         month_yearS = actualMonth + year;
 
+        Integer monthNumberStart = actualMonthNumber;
+
         now.set(Calendar.WEEK_OF_MONTH,1);
         now.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY) ;
         now.set(Calendar.HOUR_OF_DAY, 0);
@@ -107,12 +109,7 @@ public class Overview_Week extends Fragment {
         now.set(Calendar.DAY_OF_WEEK ,Calendar.FRIDAY);
         now.set(Calendar.HOUR_OF_DAY, 23);
         String monthEnd = df.format( now.getTime());
-
-
-
-        //getArbeitszeitenOfMonth
-            //Startdate, Enddate
-        //List<Arbeitszeit> workingTimesOfWeek = db.arbeitszeitDAO().getArbeitszeitenForArbeitsOrt(workplace, monday, friday);
+        Integer monthNumerEnd = now.get(Calendar.MONTH);
 
         List<Arbeitszeit> workingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(workplace, monthStart, monthEnd);
 

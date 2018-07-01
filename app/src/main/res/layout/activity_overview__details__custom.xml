@@ -105,10 +105,7 @@
             android:backgroundTint="@color/colorPrimaryDark"
             android:text="SEARCH"
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
-
-
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
@@ -175,6 +172,4 @@
             android:layout_height="match_parent"
             android:layout_gravity="top" />
     </LinearLayout>
-
-
 </LinearLayout>

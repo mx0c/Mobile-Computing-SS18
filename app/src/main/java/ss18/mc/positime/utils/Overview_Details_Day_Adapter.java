@@ -84,14 +84,11 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
             view = inflater.inflate(R.layout.custom_list_layout_details_day, null);
         }
 
-        /*delete_day = (ImageView) view.findViewById(R.id.delete_day);
-        edit_day = (ImageView) view.findViewById(R.id.edit_day);
-        add_day = (ImageView) view.findViewById(R.id.add_day);*/
+
         notifyDataSetChanged();
         Calendar now = Calendar.getInstance();
         Integer actual_weekNr = now.get(Calendar.WEEK_OF_YEAR);
 
-        //getallDataOfCalendarWeek
 
         db = BenutzerDatabase.getBenutzerDatabase(context);
         DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -109,7 +106,6 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         TextView start_time= (TextView) view.findViewById(R.id.start_time);
         Date start_Time = list_breaktimes.get(position).getStarttime();
 
-
         // Splitten der Uhrzeit für Am, Pm
         String startTime = df.format(start_Time);
         String [] splitted_startTime= startTime.split(" ");
@@ -123,48 +119,28 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         String stopTime = df.format(stop_Time);
         String [] splitted_stopTime= stopTime.split(" ");
         String stop_timeAmPm = getTimeInAmOrPm(splitted_stopTime[1]);
-       // stop_time.setText(splitted_stopTime[1]);
+
         stop_time.setText(stop_timeAmPm);
-
-
-        String [] startTime_splitted_calculation = splitted_startTime[1].split(":");
-        Integer startH = Integer.parseInt(startTime_splitted_calculation[0]);
-        Integer startMin = Integer.parseInt(startTime_splitted_calculation[1]);
-
-
-        String [] endTime_splitted_calculation = splitted_stopTime[1].split(":");
-        Integer endH = Integer.parseInt(endTime_splitted_calculation[0]) ;
-        Integer endMin = Integer.parseInt(endTime_splitted_calculation[1]);
-
-        Integer breakTime_calculation = list_breaktimes.get(position).getBreaktime() * list_breaktimes.get(position).getAmountBreaks();
-
-        Double diff_calculation_hours = (endH - startH) * 60.0;
-        Double diff_calulation_minutes = endMin -startMin - 0.0;
-
-        diff_calulation_minutes -= breakTime_calculation;
 
         TextView salary_text = (TextView) view.findViewById(R.id.salary);
 
-        Double result_time_calculation_minutes = diff_calculation_hours + diff_calulation_minutes + 0.0; //in minutes
-        double result_time_calc_hours = result_time_calculation_minutes / 60; //hh,mm
+        Integer workTimeInSeconds = list_breaktimes.get(position).getWorktime();
+        Double workTimeInMinutes = workTimeInSeconds / 60.0;
+        Integer breakTimeInMinutes = list_breaktimes.get(position).getBreaktime();
 
-        int hours = (int) result_time_calc_hours;
-        double  minutes= result_time_calc_hours - hours;
-        minutes= minutes * 60;
-
-
+        Integer worktimeHours = (int) (workTimeInMinutes / 60.0); //hh
+        Integer workTimeMinutes = (int) (workTimeInMinutes -(worktimeHours * 60) );     //mm
         Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(worklplace);
-        salary_text.setText( String.format("%.2f €",moneyPerHour *result_time_calc_hours ));
-
-
-        int min= (int) minutes;
+        Double rest=  workTimeMinutes/ 60.0;
+        salary_text.setText( String.format("%.2f €",moneyPerHour *worktimeHours+ rest* moneyPerHour ));
+        int min= (int) workTimeMinutes;
         TextView timeSum= view.findViewById(R.id.time_sum);
         if(min < 10){
-            timeSum.setText( hours + ":0" + min +" hours");
+            timeSum.setText( worktimeHours + ":0" + min +" hours");
 
         }
         else{
-            timeSum.setText( hours + ":" + min +" hours");
+            timeSum.setText( worktimeHours + ":" + min +" hours");
         }
 
 

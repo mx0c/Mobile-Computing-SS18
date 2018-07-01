@@ -79,10 +79,6 @@ public class Overview_Month extends Fragment {
         Date friday= now.getTime();
         String fridayS = df.format(friday);
 
-        //arbeitszeiten für jeden Monat
-            //arbeitszeiten für jeden Woche des Monats
-
-
         df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         Calendar calendar= Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -100,9 +96,7 @@ public class Overview_Month extends Fragment {
 
         adapter = new Overview_Details_Month_Adapter(workingTimesYear, getContext(), workplace);
 
-
         updateUI();
-
     }
 
     private void initSharedPreferences() {

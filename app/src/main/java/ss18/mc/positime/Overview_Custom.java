@@ -51,7 +51,7 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_overview__details__custom, container, false);
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-        DatabaseInitializer.populateSync(db);
+       // DatabaseInitializer.populateSync(db);
 
         mSelectedWorkplace = getActivity().getIntent().getExtras().getString("workplace");
         mListView = v.findViewById(R.id.customList);
@@ -171,34 +171,35 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
         }catch (NullPointerException e){}
     }
     void calculateTotalStats(){
-        int totalWorktimeMinutes = 0;
+        int totalWorktimeSeconds = 0;
         int totalPauseTimeMinutes = 0;
 
-        for(Arbeitszeit a : mWorkingTimes){
-            totalWorktimeMinutes += calculateWorkTimeMinutes(a.getStarttime(),a.getEndtime());
+        for(Arbeitszeit a : mWorkingTimes) {
+            totalWorktimeSeconds+= a.getWorktime();
             totalPauseTimeMinutes += a.getBreaktime() * a.getAmountBreaks();
         }
+        double totalWorktimeMinutes = totalWorktimeSeconds / 60.0;
 
-        ((TextView)v.findViewById(R.id.totalTime)).setText(ConvertMinutesToTime(totalWorktimeMinutes).toString() + " hours");
+        ((TextView)v.findViewById(R.id.totalTime)).setText(ConvertMinutesToTime(totalWorktimeMinutes) + " hours");
         ((TextView)v.findViewById(R.id.totalPause)).setText(ConvertMinutesToTime(totalPauseTimeMinutes).toString() + " hours");
-        ((TextView)v.findViewById(R.id.totalSalary)).setText(calculateSalary(ConvertMinutesToTime(totalWorktimeMinutes)) + " €");
+        ((TextView)v.findViewById(R.id.totalSalary)).setText(calculateSalary(totalWorktimeMinutes) + " €");
     }
 
-    public Double ConvertMinutesToTime(int minutes){
-        Integer hours = minutes / 60;
-        Integer mins = minutes % 60;
-        String timeStr = hours.toString() + "." + mins.toString();
-        return Double.valueOf(timeStr);
+    public String ConvertMinutesToTime(double minutes){
+        Integer hours = (int) minutes / 60;
+        Integer mins = (int) ( minutes - (hours * 60));
+        String timeStr = hours.toString() + ":" + mins.toString();
+        return timeStr;
     }
 
-    public String calculateSalary(double time){
+    public String calculateSalary(double worktimeMinutes){
         double moneyperhour = BenutzerDatabase.getBenutzerDatabase(getActivity()).arbeitsortDAO().getMoneyPerHour(mSelectedWorkplace);
-        String res =  new Double(time * moneyperhour).toString();
-        String cents = res.split("\\.")[1]+"0";
-        try {
-            cents = cents.substring(0, 2);
-        }catch(Exception e){}
-        return res.split("\\.")[0] +"."+cents;
+        Integer worktimeHours = (int) (worktimeMinutes / 60.0); //hh
+        Integer workTimeMinutes = (int) (worktimeMinutes -(worktimeHours * 60) );     //mm
+        Double rest=  workTimeMinutes/ 60.0;
+
+        String res =  String.format("%.2f ",worktimeHours * moneyperhour +rest * moneyperhour );
+       return res;
     }
 
     public int calculateWorkTimeMinutes(Date start, Date end) {
