@@ -30,7 +30,7 @@
                 android:layout_marginLeft="60dp"
                 app:layout_column="0"
                 app:layout_row="0"
-                app:srcCompat="@drawable/baseline_account_balance_black_18dp" />
+                app:srcCompat="@drawable/ic_account_balance_black_24dp" />
 
             <TextView
                 android:id="@+id/current_position"
