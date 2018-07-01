@@ -16,12 +16,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import okhttp3.internal.Util;
 import ss18.mc.positime.dbmodel.Arbeitsort;
 import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
 import ss18.mc.positime.utils.Constants;
 
-import ss18.mc.positime.utils.TimeDateConverter;
+import ss18.mc.positime.utils.UtilFunctions;
 import ss18.mc.positime.utils.Timer;
 
 
@@ -137,8 +138,8 @@ public class BackgroundService extends Service {
                     }
                     Intent i = new Intent("dashboard_informations");
                     i.putExtra("current_workplace_name", a.getPlaceName());
-                    i.putExtra("current_workplace_time", TimeDateConverter.secondsToTimestring(this.mCurrentArbeitszeit.getWorktime()));
-                    i.putExtra("current_workplace_money_earned", calculateSalary(calculateWorkTime(this.mCurrentArbeitszeit.getStarttime(), this.mCurrentArbeitszeit.getEndtime()), a.getPlaceName()));
+                    i.putExtra("current_workplace_time", UtilFunctions.secondsToTimestring(this.mCurrentArbeitszeit.getWorktime()));
+                    i.putExtra("current_workplace_money_earned", UtilFunctions.calculateSalary(this.mCurrentArbeitszeit.getWorktime(),mDb.arbeitsortDAO().getMoneyPerHour(a.getPlaceName())));
                     i.putExtra("current_workplace_pause_minutes", this.mCurrentArbeitszeit.getBreaktime());
                     i.putExtra("current_workplace_pause_count", this.mCurrentArbeitszeit.getAmountBreaks());
 
@@ -173,36 +174,11 @@ public class BackgroundService extends Service {
         return null;
     }
 
-    public String calculateSalary(double time, String placename){
-        double moneyperhour = mDb.arbeitsortDAO().getMoneyPerHour(placename);
-        String res =  new Double(time * moneyperhour).toString();
-        String cents = res.split("\\.")[1]+"0";
-        try {
-            cents = cents.substring(0, 2);
-        }catch(Exception e){}
-        return res.split("\\.")[0] +"."+cents;
-    }
-
-    public Double calculateWorkTime(Date start, Date end) {
-        Long diff = end.getTime() - start.getTime();
-        Long diffMinutes = diff / (60 * 1000) % 60;
-        Long diffHours = diff / (60 * 60 * 1000) % 24;
-        return Double.valueOf(diffHours.toString() +  "." + diffMinutes.toString());
-    }
-
-    public String calculateWorkTimeString(Date start, Date end) {
-        Long diff = end.getTime() - start.getTime();
-        Long diffMinutes = diff / (60 * 1000) % 60;
-        Long diffHours = diff / (60 * 60 * 1000) % 24;
-        return diffHours.toString() +  "." + diffMinutes.toString();
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //stop LocationService
-        Intent i = new Intent(getApplicationContext(), LocationService.class);
-        stopService(i);
+        stopService(new Intent(getApplicationContext(), LocationService.class));
+        stopService(new Intent(getApplicationContext(), BackgroundService.class));
     }
 
     @Override
