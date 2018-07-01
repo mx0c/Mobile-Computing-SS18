@@ -92,9 +92,7 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
         Intent dashboardIntent = new Intent(this, DashboardActivity.class);
         Intent workplaceIntent = new Intent(this, Workplace.class);
         Intent overviewIntent = new Intent(this, Overview.class);
-        //TODO Statistics intent
-        //TODO Export intent
-        //TODO import intent
+        Intent developmentIntent = new Intent(this, UnderWork.class);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -105,11 +103,11 @@ public class Overview extends AppCompatActivity implements OnNavigationItemSelec
         } else if (id == R.id.nav_workplaces) {
             startActivity(workplaceIntent);
         } else if (id == R.id.nav_statistics) {
-
+            startActivity(developmentIntent);
         } else if (id == R.id.nav_export) {
-
+            startActivity(developmentIntent);
         } else if (id == R.id.nav_import) {
-
+            startActivity(developmentIntent);
         }
 
         drawer.closeDrawer(GravityCompat.START);

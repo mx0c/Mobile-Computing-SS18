@@ -11,6 +11,7 @@
     <string name="workplace_edit_activity">Edit Workplace</string>
     <string name="workplace_add_activity">Create Workplace</string>
     <string name="dashboard_activity">Dashboard</string>
+    <string name="underwork_activity">Under development</string>
 
     <!-- Inputs  -->
     <string name="emailInput">Email Address</string>
@@ -33,6 +34,7 @@
 
     <!-- TextView's -->
     <string name="registerText">No account yet? Create one!</string>
+    <string name="not_finished">This activity is still under development. Come back another time.</string>
 
     <!-- Buttons -->
     <string name="loginBtn">Login</string>
