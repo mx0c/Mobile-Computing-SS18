@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class SecondFragment extends Fragment {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     BroadcastReceiver broadcastReceiver;
+    private SharedPreferences mSharedPreferences;
     public SecondFragment() {
 // Required empty public constructor
     }
@@ -71,8 +73,9 @@ public class SecondFragment extends Fragment {
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
         DatabaseInitializer.populateSync(db);
         //TEMPORAY FOR TESTS ONLY
-        String userMail = "ge2thez@gmail.com";
-        current_workplace = "Hochschule Reutlingen";
+        //String userMail = mSharedPreferences.getString(Constants.EMAIL, "Your Email");
+        String userMail = "julia@web.de";
+        current_workplace = gettingWorkplace();
         //Getting Data from the Database
         List<Arbeitsort> allOrts = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
         int counter = allOrts.size();
@@ -82,12 +85,31 @@ public class SecondFragment extends Fragment {
             listDataHeader.add(allOrts.get(i).getPlaceName().toString());
             List<String> test = new ArrayList<String>();
             if(allOrts.get(i).getPlaceName().toString().equals(current_workplace)){
+
                 //nehme Current Workplace Daten von Marius
-                String[] current_inf = gettingBrodcastInformation();
-                test.add("Duration:     "+current_inf[0]+"h "+current_inf[1]+"min");
-                test.add("Breaks:   "+current_inf[2]);
-                test.add("Money Earned:     "+current_inf[3]);
-                test.add("Breaks Count:     "+current_inf[4]);
+                String[] current_inf = new String[5];
+                List<String> test1 = new ArrayList<String>();
+                broadcastReceiver = new BroadcastReceiver(){
+                    @Override
+                    public void onReceive(Context context, Intent intent){
+                        Bundle test = intent.getExtras();
+                        //String current_workplace_name = (String) test.get("current_workplace_name");
+                        String[] current_time = test.getString("current_workplace_time").split("\\.");
+                        current_inf[0] = current_time[0];
+                        current_inf[1] = current_time[1];
+                        current_inf[3] = test.get("current_workplace_money_earned").toString();
+                        current_inf[4] = test.get("current_workplace_pause_count").toString();
+
+                        test1.add("Duration:     "+current_inf[0]+"h "+current_inf[1]+"min");
+                        test1.add("Breaks:   "+current_inf[2]);
+                        test1.add("Money Earned:     "+current_inf[3]);
+                        test1.add("Breaks Count:     "+current_inf[4]);
+
+                    }
+                };
+                getActivity().registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));
+
+                listDataChild.put(listDataHeader.get(i), test1);
             }
             else{
                 //Check if data available for current date.
@@ -95,7 +117,7 @@ public class SecondFragment extends Fragment {
                 Date curr = new Date();
                 String now = df.format(curr);
                 List<Arbeitszeit> currDay = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortOneDay(current_workplace,now);
-                if(currDay.size() != 0){
+                try{
                     //Shows only the worked time if any time was worked. We dont save Breaks in our database
                     long diff = currDay.get(0).getEndtime().getTime()-currDay.get(0).getStarttime().getTime();
                     long[] hoursMins = new long[2];
@@ -111,29 +133,37 @@ public class SecondFragment extends Fragment {
                     double[] moneyEarned = {(hoursMins[0]*money),(hoursMins[1]*money)};
                     double moneyEarned_sum = moneyEarned[0]+moneyEarned[1];
                     test.add("Money Earned:     "+moneyEarned_sum);
+
                 }
-                test.add("no information for today.");
+                catch(Exception e){
+                    test.add("no information for today.");
+
+                }
+                    listDataChild.put(listDataHeader.get(i), test);
 
 
         }
-        listDataChild.put(listDataHeader.get(i), test);
+
         }
 
 
 
     }
-    public String[] gettingBrodcastInformation(){
-        String[] current_informations = new String[5];
+
+
+    public String gettingWorkplace(){
+        final String[] current_information = {new String()};
         broadcastReceiver = new BroadcastReceiver(){
             @Override
             public void onReceive(Context context, Intent intent){
                 Bundle test = intent.getExtras();
-                if(test != null){
-                    current_informations[0] = test.get("current_workplace_time_hours").toString();
-                    current_informations[1] = test.get("current_workplace_time_").toString();
-                    current_informations[2] = test.get("current_workplace_pause_minutes").toString();
-                    current_informations[3] = test.get("current_workplace_money_earned").toString();
-                    current_informations[4] = test.get("current_workplace_pause_count").toString();
+                String current_workplace_name = (String) test.get("current_workplace_name");
+
+
+                if(current_workplace_name.equals("0")){
+                    current_information[0] = "0";
+                }else{
+                    current_information[0] = current_workplace_name;
                 }
 
 
@@ -141,6 +171,6 @@ public class SecondFragment extends Fragment {
         };
         getActivity().registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));
 
-        return current_informations;
+        return current_information[0];
     }
 }

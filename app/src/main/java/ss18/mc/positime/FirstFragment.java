@@ -28,7 +28,7 @@ public class FirstFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle   savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_first, container, false);
-
+        initBackgroundServiceInfo();
 
         return view;
 
@@ -49,19 +49,24 @@ public class FirstFragment extends Fragment {
             public void onReceive(Context context, Intent intent){
 
                 Bundle test = intent.getExtras();
-                if(test != null){
                     String current_workplace_name = (String) test.get("current_workplace_name");
-                    String current_time_hours = test.get("current_workplace_time_hours").toString();
-                    String current_time_mins = test.get("current_workplace_time_").toString();
+
+
+                if(current_workplace_name.equals("0")){
+                    current_workplacename.setText("not in workplace");
+                }else{
+                    String[] current_time = test.getString("current_workplace_time").split("\\.");
                     String current_time_pause = test.get("current_workplace_pause_minutes").toString();
+                    current_workplacename.setText(current_time[0] +" hours "+current_time[1] + " minutes");
                     String current_money = test.get("current_workplace_money_earned").toString();
                     String current_breaks_count = test.get("current_workplace_pause_count").toString();
                     current_workplacename.setText(current_workplace_name);
                     current_pos.setText(current_workplace_name);
-                    current_work_time.setText(current_time_hours+"h"+current_time_mins+"min");
+                    current_work_time.setText(current_time[0]+"h"+current_time[1]+"min");
                     current_pause.setText(current_time_pause+" min");
                     current_money_earned.setText(current_money+" Euro");
                     current_breaks.setText(current_breaks_count);
+
                 }
 
 

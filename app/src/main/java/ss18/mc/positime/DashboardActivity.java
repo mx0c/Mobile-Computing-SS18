@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.design.widget.TabLayout;
@@ -58,6 +59,31 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         initSharedPreferences();
         initNavigation();
         initBackgroundServiceInfo();
+        ImageView imgClick = (ImageView)findViewById(R.id.click_pause);
+        imgClick.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent("background_commands");
+                i.putExtra("current_workplace_name","PAUSE");
+                sendBroadcast(i);
+                Toast.makeText(DashboardActivity.this, "Paused", Toast.LENGTH_LONG).show();
+
+            }
+        });
+        ImageView imgClickPlay = (ImageView)findViewById(R.id.play_work);
+        imgClickPlay.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent("background_commands");
+                i.putExtra("current_workplace_name","RESUME");
+                sendBroadcast(i);
+                Toast.makeText(DashboardActivity.this, "Play", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
     }
     public void initBackgroundServiceInfo(){
         broadcastReceiver = new BroadcastReceiver(){

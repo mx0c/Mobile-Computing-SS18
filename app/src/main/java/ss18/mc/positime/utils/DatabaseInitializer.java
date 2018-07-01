@@ -53,8 +53,8 @@ public class DatabaseInitializer {
         Benutzer user_lena = new Benutzer();
         user_lena.setFirstName("Lena");
         user_lena.setLastName("Essig");
-        user_lena.setPassWord("xxxx"); //Password is usually hashed
-        user_lena.setEmail("test@posi.de");
+        user_lena.setPassWord("1234"); //Password is usually hashed
+        user_lena.setEmail("julia@web.de");
 
 
         db.benutzerDAO().insertAll(user_lena);
@@ -69,7 +69,7 @@ public class DatabaseInitializer {
         Arbeitsort arbeitsort = new Arbeitsort();
         arbeitsort.setAddresst(address);
         arbeitsort.setPlaceName("Daheim");
-        arbeitsort.setBenutzer_mail("test@posi.de"); //Beziehung zu User
+        arbeitsort.setBenutzer_mail("julia@web.de"); //Beziehung zu User
         arbeitsort.setChefFistName("Helene");
         arbeitsort.setChefLastName("Helene!");
         arbeitsort.setLatA(48.531415);
@@ -82,7 +82,7 @@ public class DatabaseInitializer {
         Arbeitsort arbeitsort2 = new Arbeitsort();
         arbeitsort2.setAddresst(address);
         arbeitsort2.setPlaceName("Hochschule Reutlingen");
-        arbeitsort2.setBenutzer_mail("test@posi.de");
+        arbeitsort2.setBenutzer_mail("julia@web.de");
         arbeitsort2.setChefFistName("Nati");
         arbeitsort2.setChefLastName("Martinez");
         arbeitsort2.setLatA(48.531415);
@@ -118,7 +118,7 @@ public class DatabaseInitializer {
         arbeitsort3.setRadiusA(20);
         arbeitsort3.setWeeklyHours(35);
 
-        Arbeitsort arbeitsort4 = new Arbeitsort();
+        /*Arbeitsort arbeitsort4 = new Arbeitsort();
         arbeitsort4.setAddresst(address_julia);
         arbeitsort4.setPlaceName("Julias Schreibtisch");
         arbeitsort4.setBenutzer_mail("julia@web.de");
@@ -129,7 +129,7 @@ public class DatabaseInitializer {
         arbeitsort4.setMoneyPerhour(140);
         arbeitsort4.setCurrency("Euro");
         arbeitsort4.setRadiusA(50);
-        arbeitsort4.setWeeklyHours(55);
+        arbeitsort4.setWeeklyHours(55);*/
 
 
 
@@ -147,7 +147,7 @@ public class DatabaseInitializer {
         arbeitsort4.setWeeklyHours(40);*/
 
 
-        db.arbeitsortDAO().insertAll(arbeitsort, arbeitsort2, arbeitsort3,arbeitsort4);
+        db.arbeitsortDAO().insertAll(arbeitsort, arbeitsort2, arbeitsort3);
 
         TimestampConverter time = new TimestampConverter();
 
@@ -323,7 +323,7 @@ public class DatabaseInitializer {
         ps1.setTiggerMin(300);
         ps1.setPausensettingsId(0);
 
-        ps2.setArbeitsort_name("Daheim");
+        ps2.setArbeitsort_name("Convexis");
         ps2.setLengthMin(15);
         ps2.setTiggerMin(540);
         ps2.setPausensettingsId(0);
