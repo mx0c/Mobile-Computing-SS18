@@ -36,6 +36,7 @@ public class BackgroundService extends Service {
     private Timer mPauseTimer;
     private Timer mMainTimer;
     private Location mLocation;
+    private String mTempWorkplacename;
     @Override
     public void onCreate() {
         Log.d("BackgroundService", "onCreate: STARTED SERVICE");
@@ -95,10 +96,17 @@ public class BackgroundService extends Service {
     }
 
     private void update(){
-        if(this.mInPause && this.mCurrentArbeitszeit != null && this.mLocation != null){
+        if(this.mInPause && this.mCurrentArbeitszeit != null){
             this.mCurrentArbeitszeit.setBreaktime(mPauseTimer.getTime());
             //update db
             mDb.arbeitszeitDAO().updateArbeitszeit(this.mCurrentArbeitszeit);
+            Intent i = new Intent("dashboard_informations");
+            i.putExtra("current_workplace_name", mTempWorkplacename);
+            i.putExtra("current_workplace_time", UtilFunctions.secondsToTimestring(this.mCurrentArbeitszeit.getWorktime()));
+            i.putExtra("current_workplace_money_earned", UtilFunctions.calculateSalary(this.mCurrentArbeitszeit.getWorktime(),mDb.arbeitsortDAO().getMoneyPerHour(mTempWorkplacename)));
+            i.putExtra("current_workplace_pause_minutes", this.mCurrentArbeitszeit.getBreaktime()/60);
+            i.putExtra("current_workplace_pause_count", this.mCurrentArbeitszeit.getAmountBreaks());
+            sendBroadcast(i);
             return;
         }
 
@@ -136,11 +144,12 @@ public class BackgroundService extends Service {
                         //update db
                         mDb.arbeitszeitDAO().insertAll(this.mCurrentArbeitszeit);
                     }
+                    mTempWorkplacename = a.getPlaceName();
                     Intent i = new Intent("dashboard_informations");
                     i.putExtra("current_workplace_name", a.getPlaceName());
                     i.putExtra("current_workplace_time", UtilFunctions.secondsToTimestring(this.mCurrentArbeitszeit.getWorktime()));
                     i.putExtra("current_workplace_money_earned", UtilFunctions.calculateSalary(this.mCurrentArbeitszeit.getWorktime(),mDb.arbeitsortDAO().getMoneyPerHour(a.getPlaceName())));
-                    i.putExtra("current_workplace_pause_minutes", this.mCurrentArbeitszeit.getBreaktime());
+                    i.putExtra("current_workplace_pause_minutes", this.mCurrentArbeitszeit.getBreaktime()/60);
                     i.putExtra("current_workplace_pause_count", this.mCurrentArbeitszeit.getAmountBreaks());
 
                     sendBroadcast(i);

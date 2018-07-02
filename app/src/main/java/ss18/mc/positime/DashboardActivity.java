@@ -74,7 +74,7 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
             @Override
             public void onClick(View v) {
                 Intent i = new Intent("background_commands");
-                i.putExtra("current_workplace_name","PAUSE");
+                i.putExtra("command","PAUSE");
                 sendBroadcast(i);
                 Toast.makeText(DashboardActivity.this, "Paused", Toast.LENGTH_LONG).show();
 
@@ -85,9 +85,9 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
 
             @Override
             public void onClick(View v) {
-                /*Intent i = new Intent("background_commands");
-                i.putExtra("current_workplace_name","RESUME");
-                sendBroadcast(i);*/
+                Intent i = new Intent("background_commands");
+                i.putExtra("command","RESUME");
+                sendBroadcast(i);
                 Toast.makeText(DashboardActivity.this, "Play", Toast.LENGTH_LONG).show();
 
             }
