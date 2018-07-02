@@ -95,14 +95,15 @@
             android:adjustViewBounds="true"/>
 
         <ImageView
-            android:layout_width="105dp"
+            android:layout_width="75dp"
             android:layout_height="45dp"
             android:layout_marginTop="133dp"
             android:adjustViewBounds="true"
             android:background="@color/colorPrimary"
-            android:paddingLeft="60dp"
+            android:paddingLeft="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/pencil_circle" />
+            android:src="@drawable/ic_pencil_circle"
+            android:tint="@color/white" />
 
         <TextView
             android:id="@+id/textView3"

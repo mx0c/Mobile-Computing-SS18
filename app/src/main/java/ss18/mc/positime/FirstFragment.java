@@ -8,7 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import ss18.mc.positime.utils.Constants;
 
 public class FirstFragment extends Fragment {
@@ -29,11 +32,11 @@ public class FirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle   savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_first, container, false);
         initBackgroundServiceInfo();
-
         return view;
 
 
     }
+
 
     public void initBackgroundServiceInfo(){
         TextView current_workplacename = (TextView) view.findViewById(R.id.current_workplace_fragment);

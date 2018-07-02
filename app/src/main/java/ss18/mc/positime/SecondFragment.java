@@ -75,7 +75,24 @@ public class SecondFragment extends Fragment {
         //TEMPORAY FOR TESTS ONLY
         //String userMail = mSharedPreferences.getString(Constants.EMAIL, "Your Email");
         String userMail = "julia@web.de";
-        current_workplace = gettingWorkplace();
+        //current_workplace = (String)gettingWorkplace();
+        broadcastReceiver = new BroadcastReceiver(){
+            @Override
+            public void onReceive(Context context, Intent intent){
+                Bundle test = intent.getExtras();
+                String current_workplace_name = (String) test.get("current_workplace_name");
+
+
+                if(current_workplace_name.equals("0")){
+                    current_workplace = "0";
+                }else{
+                    current_workplace = current_workplace_name;
+                }
+
+
+            }
+        };
+        getActivity().registerReceiver(broadcastReceiver,new IntentFilter("dashboard_informations"));
         //Getting Data from the Database
         List<Arbeitsort> allOrts = db.arbeitsortDAO().getArbeitsorteForUser(userMail);
         int counter = allOrts.size();
@@ -84,7 +101,7 @@ public class SecondFragment extends Fragment {
         for(int i =0; i< counter; i++){
             listDataHeader.add(allOrts.get(i).getPlaceName().toString());
             List<String> test = new ArrayList<String>();
-            if(allOrts.get(i).getPlaceName().toString().equals(current_workplace)){
+            if(allOrts.get(i).getPlaceName().toString().equals("toe")){
 
                 //nehme Current Workplace Daten von Marius
                 String[] current_inf = new String[5];
@@ -101,6 +118,9 @@ public class SecondFragment extends Fragment {
                         current_inf[4] = test.get("current_workplace_pause_count").toString();
 
                         test1.add("Duration:     "+current_inf[0]+"h "+current_inf[1]+"min");
+                        if(current_inf[2] == null ){
+                            test1.add("Breaks:   no breaks");
+                        }
                         test1.add("Breaks:   "+current_inf[2]);
                         test1.add("Money Earned:     "+current_inf[3]);
                         test1.add("Breaks Count:     "+current_inf[4]);

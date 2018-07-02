@@ -9,7 +9,10 @@
         android:textSize="22dp" />
     <item
         android:id="@+id/logout_icon"
-        android:icon="@drawable/logout"
+        android:layout_width = "2dp"
+        android:layout_height = "10dp"
+        android:icon="@drawable/ic_logout"
+        android:tint="@color/white"
         android:title="Logout"
         android:onClick="onLogoutClick"
         app:showAsAction="ifRoom|withText"></item>

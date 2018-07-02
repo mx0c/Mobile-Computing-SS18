@@ -53,12 +53,21 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        fragment = new FirstFragment();
+        // = new FirstFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.simpleFrameLayout, new FirstFragment());
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
         //Initialization
         initView();
         initSharedPreferences();
         initNavigation();
         initBackgroundServiceInfo();
+        play_pause_listener();
+
+    }
+    public void play_pause_listener(){
         ImageView imgClick = (ImageView)findViewById(R.id.click_pause);
         imgClick.setOnClickListener(new View.OnClickListener() {
 
@@ -76,9 +85,9 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
 
             @Override
             public void onClick(View v) {
-                Intent i = new Intent("background_commands");
+                /*Intent i = new Intent("background_commands");
                 i.putExtra("current_workplace_name","RESUME");
-                sendBroadcast(i);
+                sendBroadcast(i);*/
                 Toast.makeText(DashboardActivity.this, "Play", Toast.LENGTH_LONG).show();
 
             }
