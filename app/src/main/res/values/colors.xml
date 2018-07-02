@@ -6,4 +6,5 @@
     <color name="white">#ffffff</color>
     <color name="colorAccent2">#FF80AB</color>
     <color name="tabInactive">#D8D8D8</color>
+    <color name= "black">#000000</color>
 </resources>

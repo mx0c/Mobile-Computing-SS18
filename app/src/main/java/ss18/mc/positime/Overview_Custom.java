@@ -51,7 +51,7 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_overview__details__custom, container, false);
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-        DatabaseInitializer.populateSync(db);
+        //DatabaseInitializer.populateSync(db);
 
         mSelectedWorkplace = getActivity().getIntent().getExtras().getString("workplace");
         mListView = v.findViewById(R.id.customList);
@@ -118,90 +118,89 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
     public void onActivityResult(int reqCode, int resultCode, Intent intent) {
         super.onActivityResult(reqCode, resultCode, intent);
         String date;
+        try {
+            if (intent.getStringExtra("DATE") != null) {
+                date = intent.getStringExtra("DATE");
 
-        if(intent.getStringExtra("DATE") != null) {
-            date= intent.getStringExtra("DATE");
-
-            if(reqCode == 100 && resultCode == 100 ){
-                //Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
-                dateStart.setText(date);
-            }
-            if(reqCode == 200 && resultCode == 100){
-                //Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
-                dateEnd.setText(date);
-            }
-
-            if (!dateStart.getText().toString().matches("")&& !dateEnd.getText().toString().matches("")) {
-                String [] start_date= dateStart.getText().toString().split("-");
-                Integer start_day= Integer.parseInt(start_date[0]);
-                Integer start_month= Integer.parseInt(start_date[1]);
-                Integer start_year= Integer.parseInt(start_date[2]);
-
-
-                String [] end_date= dateEnd.getText().toString().split("-");
-
-                Integer end_day= Integer.parseInt(end_date[0]);
-                Integer end_month= Integer.parseInt(end_date[1]);
-                Integer end_year= Integer.parseInt(end_date[2]);
-
-                if(start_year > end_year){
-                    Toast.makeText(getActivity(), "End date is before start date!", Toast.LENGTH_SHORT).show();
-                    searchButton.setEnabled(false);
+                if (reqCode == 100 && resultCode == 100) {
+                    //Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
+                    dateStart.setText(date);
                 }
-                else if(start_year.equals(end_year) ){
-                    if(start_month > end_month){
+                if (reqCode == 200 && resultCode == 100) {
+                    //Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
+                    dateEnd.setText(date);
+                }
 
+                if (!dateStart.getText().toString().matches("") && !dateEnd.getText().toString().matches("")) {
+                    String[] start_date = dateStart.getText().toString().split("-");
+                    Integer start_day = Integer.parseInt(start_date[0]);
+                    Integer start_month = Integer.parseInt(start_date[1]);
+                    Integer start_year = Integer.parseInt(start_date[2]);
+
+
+                    String[] end_date = dateEnd.getText().toString().split("-");
+
+                    Integer end_day = Integer.parseInt(end_date[0]);
+                    Integer end_month = Integer.parseInt(end_date[1]);
+                    Integer end_year = Integer.parseInt(end_date[2]);
+
+                    if (start_year > end_year) {
+                        Toast.makeText(getActivity(), "End date is before start date!", Toast.LENGTH_SHORT).show();
                         searchButton.setEnabled(false);
-                        Toast.makeText(getActivity(), "End month is before start month!", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(start_month == end_month){
-                        if(start_day > end_day){
+                    } else if (start_year.equals(end_year)) {
+                        if (start_month > end_month) {
 
                             searchButton.setEnabled(false);
-                            Toast.makeText(getActivity(), "End day is before start day!", Toast.LENGTH_SHORT).show();
-                        }
-                        else if(start_day== end_day){
-                            searchButton.setEnabled(false);
-                            Toast.makeText(getActivity(), "Select different days!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "End month is before start month!", Toast.LENGTH_SHORT).show();
+                        } else if (start_month == end_month) {
+                            if (start_day > end_day) {
 
-                        }
-                        else{
-                            searchButton.setEnabled(true);
+                                searchButton.setEnabled(false);
+                                Toast.makeText(getActivity(), "End day is before start day!", Toast.LENGTH_SHORT).show();
+                            } else if (start_day == end_day) {
+                                searchButton.setEnabled(false);
+                                Toast.makeText(getActivity(), "Select different days!", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                searchButton.setEnabled(true);
+                            }
                         }
                     }
                 }
             }
-        }
+        }catch (NullPointerException e){}
     }
     void calculateTotalStats(){
-        int totalWorktimeMinutes = 0;
+        int totalWorktimeSeconds = 0;
         int totalPauseTimeMinutes = 0;
 
-        for(Arbeitszeit a : mWorkingTimes){
-            totalWorktimeMinutes += calculateWorkTimeMinutes(a.getStarttime(),a.getEndtime());
+        for(Arbeitszeit a : mWorkingTimes) {
+            totalWorktimeSeconds+= a.getWorktime();
             totalPauseTimeMinutes += a.getBreaktime() * a.getAmountBreaks();
         }
+        double totalWorktimeMinutes = totalWorktimeSeconds / 60.0;
 
-        ((TextView)v.findViewById(R.id.totalTime)).setText(ConvertMinutesToTime(totalWorktimeMinutes).toString() + " hours");
+        ((TextView)v.findViewById(R.id.totalTime)).setText(ConvertMinutesToTime(totalWorktimeMinutes) + " hours");
         ((TextView)v.findViewById(R.id.totalPause)).setText(ConvertMinutesToTime(totalPauseTimeMinutes).toString() + " hours");
-        ((TextView)v.findViewById(R.id.totalSalary)).setText(calculateSalary(ConvertMinutesToTime(totalWorktimeMinutes)) + " €");
+        ((TextView)v.findViewById(R.id.totalSalary)).setText(calculateSalary(totalWorktimeMinutes) + " €");
     }
 
-    public Double ConvertMinutesToTime(int minutes){
-        Integer hours = minutes / 60;
-        Integer mins = minutes % 60;
-        String timeStr = hours.toString() + "." + mins.toString();
-        return Double.valueOf(timeStr);
+    public String ConvertMinutesToTime(double minutes){
+        Integer hours = (int) minutes / 60;
+        Integer mins = (int) ( minutes - (hours * 60));
+        String timeStr = hours.toString() + ":" + mins.toString();
+
+        return timeStr;
     }
 
-    public String calculateSalary(double time){
+    public String calculateSalary(double worktimeMinutes){
         double moneyperhour = BenutzerDatabase.getBenutzerDatabase(getActivity()).arbeitsortDAO().getMoneyPerHour(mSelectedWorkplace);
-        String res =  new Double(time * moneyperhour).toString();
-        String cents = res.split("\\.")[1]+"0";
-        try {
-            cents = cents.substring(0, 2);
-        }catch(Exception e){}
-        return res.split("\\.")[0] +"."+cents;
+        Integer worktimeHours = (int) (worktimeMinutes / 60.0); //hh
+        Integer workTimeMinutes = (int) (worktimeMinutes -(worktimeHours * 60) );     //mm
+        Double rest=  workTimeMinutes/ 60.0;
+
+        String res =  String.format("%.2f ",worktimeHours * moneyperhour +rest * moneyperhour );
+       return res;
     }
 
     public int calculateWorkTimeMinutes(Date start, Date end) {

@@ -26,6 +26,9 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
     private List<Arbeitszeit> daysList;
     private Context context;
     private String workplace;
+    BenutzerDatabase db;
+    TextView salary;
+    TextView timeSum;
 
     public Overview_Details_Custom_Adapter(List<Arbeitszeit> list, Context context, String workplace){
         this.daysList = list;
@@ -55,25 +58,46 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
             view = inflater.inflate(R.layout.custom_list_layout_details_day, null);
         }
 
-        BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(context);
+        db = BenutzerDatabase.getBenutzerDatabase(context);
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat timeDF = new SimpleDateFormat("HH:mm:ss");
 
         TextView date = view.findViewById(R.id.date);
-        TextView timeSum = view.findViewById(R.id.time_sum);
+        timeSum = view.findViewById(R.id.time_sum);
         TextView pauseTime = view.findViewById(R.id.pause_time);
         TextView startTime = view.findViewById(R.id.start_time);
         TextView stopTime = view.findViewById(R.id.stop_time);
-        TextView salary = view.findViewById(R.id.salary);
+        salary = view.findViewById(R.id.salary);
 
         date.setText(df.format(daysList.get(position).getStarttime()));
-        timeSum.setText(calculateWorkTimeString(daysList.get(position).getStarttime(),daysList.get(position).getEndtime()));
+
+        setTimeSumAndSalaryText(daysList.get(position).getWorktime());
+
         pauseTime.setText(String.valueOf(daysList.get(position).getBreaktime() * daysList.get(position).getAmountBreaks())+ " minutes");
         startTime.setText(getTimeInAmOrPm(timeDF.format(daysList.get(position).getStarttime())));
         stopTime.setText(getTimeInAmOrPm(timeDF.format(daysList.get(position).getEndtime())));
-        salary.setText(calculateSalary(Double.valueOf(calculateWorkTime(daysList.get(position).getStarttime(),daysList.get(position).getEndtime())))+" €");
 
         return view;
+    }
+
+    public void setTimeSumAndSalaryText(int workTimeInSeconds){
+        Double workTimeInMinutes = workTimeInSeconds / 60.0;
+
+        Integer worktimeHours = (int) (workTimeInMinutes / 60.0); //hh
+        Integer workTimeMinutes = (int) (workTimeInMinutes -(worktimeHours * 60) );     //mm
+        Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(workplace);
+        Double rest=  workTimeMinutes/ 60.0;
+        salary.setText( String.format("%.2f €",moneyPerHour *worktimeHours+ rest* moneyPerHour ));
+        int min= (int) workTimeMinutes;
+        if(min < 10){
+            timeSum.setText( worktimeHours + ":0" + min +" hours");
+
+        }
+        else{
+            timeSum.setText( worktimeHours + ":" + min +" hours");
+        }
+
+
     }
 
     public String calculateSalary(double time){
@@ -116,7 +140,7 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
         }
         else if(h > 12){
             h = h -12 ;
-            if(h> 9){
+            if(h< 10){
                 time= "0"+h+ ":" + splitted[1] +":" + splitted[2] +" pm";
             }
             else{
