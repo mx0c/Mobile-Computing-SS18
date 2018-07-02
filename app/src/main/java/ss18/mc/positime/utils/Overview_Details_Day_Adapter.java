@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -224,17 +223,21 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
 
                 String [] starttime_splitted= df.format(start_Time).split(" ");
                 //String startTime_hhMMss= starttime_splitted[1];
-                i.putExtra("startTime", starttime_splitted[1]);
+                //i.putExtra("startTime", starttime_splitted[1]);
+                i.putExtra("startTime", getTimeInAmOrPm(starttime_splitted[1]));
 
                 Date end_time = selected_day.getEndtime();
                 String [] endtime_splitted= df.format(end_time).split(" ");
-                i.putExtra("endTime", endtime_splitted[1]);
+                i.putExtra("endTime", getTimeInAmOrPm(endtime_splitted[1]));
+                //i.putExtra("endTime", endtime_splitted[1]);
 
                 i.putExtra("date", starttime_splitted[0]);
                 i.putExtra("pause", Integer.toString(breaktime));
 
                 i.putExtra("id", selected_day.getArbeitszeitId());
                 ((Activity)context).startActivityForResult(i, 1);
+                notifyDataSetChanged();
+
                 //context.startActivity(i);
 
             }
@@ -263,7 +266,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         }
         else if(h > 12){
             h = h -12 ;
-            if(h> 9){
+            if(h < 10){
                 time= "0"+h+ ":" + splitted[1] +":" + splitted[2] +" pm";
             }
             else{

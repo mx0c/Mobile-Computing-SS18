@@ -51,7 +51,7 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_overview__details__custom, container, false);
         BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-       // DatabaseInitializer.populateSync(db);
+        //DatabaseInitializer.populateSync(db);
 
         mSelectedWorkplace = getActivity().getIntent().getExtras().getString("workplace");
         mListView = v.findViewById(R.id.customList);
@@ -189,6 +189,7 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
         Integer hours = (int) minutes / 60;
         Integer mins = (int) ( minutes - (hours * 60));
         String timeStr = hours.toString() + ":" + mins.toString();
+
         return timeStr;
     }
 

@@ -31,15 +31,14 @@
         android:layout_height="wrap_content">
 
 
-
         <ImageView
-            android:layout_marginTop="100dp"
             android:id="@+id/icon_calendar"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_marginTop="100dp"
             android:paddingLeft="15dp"
             android:src="@drawable/calendar"
-            android:tint="@color/colorPrimary"/>
+            android:tint="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/date"
@@ -47,9 +46,11 @@
             android:layout_height="40dp"
             android:layout_alignTop="@+id/icon_calendar"
             android:layout_toEndOf="@+id/icon_calendar"
+            android:padding="10dp"
             android:text="dd.mm.yyyy"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
 
         <ImageView

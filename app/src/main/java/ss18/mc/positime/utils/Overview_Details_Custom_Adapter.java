@@ -140,7 +140,7 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
         }
         else if(h > 12){
             h = h -12 ;
-            if(h> 9){
+            if(h< 10){
                 time= "0"+h+ ":" + splitted[1] +":" + splitted[2] +" pm";
             }
             else{
