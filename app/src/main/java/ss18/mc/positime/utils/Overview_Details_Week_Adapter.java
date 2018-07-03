@@ -102,7 +102,7 @@ public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAd
                 Integer weekNr = getWeekNumber(time.getStarttime());
 
                 if (weekNr.intValue() == UsedWeekNumber) {
-                    pauseTime_sum += time.getBreaktime();
+                    pauseTime_sum += (time.getBreaktime() / 60) ;
                     pause_sum.setText(" "+String.valueOf(pauseTime_sum) +" minutes");
 
 

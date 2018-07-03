@@ -85,7 +85,7 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
 
         setTimeSumAndSalaryText(daysList.get(position).getWorktime());
 
-        pauseTime.setText(String.valueOf(daysList.get(position).getBreaktime() * daysList.get(position).getAmountBreaks())+ " minutes");
+        pauseTime.setText(String.valueOf( (daysList.get(position).getBreaktime()/ 60 )  )+ " minutes");
         startTime.setText(getTimeInAmOrPm(timeDF.format(daysList.get(position).getStarttime())));
         stopTime.setText(getTimeInAmOrPm(timeDF.format(daysList.get(position).getEndtime())));
 
@@ -163,7 +163,7 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
                 Intent i = new Intent(context, Edit_details_day.class);
 
                 selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(daysList.get(position).getArbeitszeitId());
-                Integer breaktime= selected_day.getBreaktime() * selected_day.getAmountBreaks();
+                Integer breaktime= (selected_day.getBreaktime() / 60)  ;
                 Date start_time= selected_day.getStarttime();
 
                 String [] starttime_splitted= df_2.format(start_Time).split(" ");
