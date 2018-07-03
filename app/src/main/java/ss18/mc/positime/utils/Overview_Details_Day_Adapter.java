@@ -131,7 +131,13 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(worklplace);
         Double rest=  workTimeMinutes/ 60.0;
         salary_text.setText( String.format("%.2f €",moneyPerHour *worktimeHours+ rest* moneyPerHour ));
+
         int min= (int) workTimeMinutes;
+        if(min > 60){
+            int h = (int) (min / 60) ;
+            worktimeHours += h;
+            min = min - (h* 60);
+        }
         TextView timeSum= view.findViewById(R.id.time_sum);
         if(min < 10){
             timeSum.setText( worktimeHours + ":0" + min +" hours");

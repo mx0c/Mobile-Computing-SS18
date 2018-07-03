@@ -203,6 +203,11 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
         Double rest=  workTimeMinutes/ 60.0;
         salary.setText( String.format("%.2f €",moneyPerHour *worktimeHours+ rest* moneyPerHour ));
         int min= (int) workTimeMinutes;
+        if(min > 60){
+            int h = (int) (min / 60) ;
+            worktimeHours += h;
+            min = min - (h* 60);
+        }
         if(min < 10){
             timeSum.setText( worktimeHours + ":0" + min +" hours");
 
