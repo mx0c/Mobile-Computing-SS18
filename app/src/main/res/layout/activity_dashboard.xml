@@ -61,57 +61,91 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <View
+            android:layout_width="22dp"
+            android:layout_height="45dp"
 
+            android:layout_marginTop="133dp"
+            android:background="@color/colorPrimary"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true" />
         <ImageView
             android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:src="@drawable/ic_add_circle_white_24dp"
             android:layout_marginTop="133dp"
             android:background="@color/colorPrimary"
             android:scaleType="fitXY"
             android:adjustViewBounds="true" />
 
+        <View
+            android:layout_width="22dp"
+            android:layout_height="45dp"
+
+            android:layout_marginTop="133dp"
+            android:background="@color/colorPrimary"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true" />
         <ImageView
             android:id = "@+id/play_work"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
         android:src="@drawable/ic_arror_right_drop_circle"
 
         android:layout_marginTop="133dp"
         android:background="@color/colorPrimary"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"/>
+        <View
+            android:layout_width="22dp"
+            android:layout_height="45dp"
+
+            android:layout_marginTop="133dp"
+            android:background="@color/colorPrimary"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true" />
         <ImageView
             android:id = "@+id/click_pause"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:src="@drawable/ic_pause_circle_filled_white_24dp"
             android:layout_marginTop="133dp"
             android:background="@color/colorPrimary"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"/>
+        <View
+            android:layout_width="22dp"
+            android:layout_height="45dp"
 
+            android:layout_marginTop="133dp"
+            android:background="@color/colorPrimary"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true" />
         <ImageView
             android:layout_width="75dp"
             android:layout_height="45dp"
             android:layout_marginTop="133dp"
             android:adjustViewBounds="true"
             android:background="@color/colorPrimary"
-            android:paddingLeft="30dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_pencil_circle"
             android:tint="@color/white" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="23dp"
             android:layout_height="45dp"
-            android:layout_weight="1"
+
+            android:layout_marginTop="133dp"
             android:background="@color/colorPrimary"
-            android:layout_marginTop="133dp"/>
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true" />
 
     </LinearLayout>
     <LinearLayout

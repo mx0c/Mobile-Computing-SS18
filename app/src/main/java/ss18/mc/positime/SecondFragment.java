@@ -101,7 +101,7 @@ public class SecondFragment extends Fragment {
         for(int i =0; i< counter; i++){
             listDataHeader.add(allOrts.get(i).getPlaceName().toString());
             List<String> test = new ArrayList<String>();
-            if(allOrts.get(i).getPlaceName().toString().equals("toe")){
+            if(allOrts.get(i).getPlaceName().toString().equals(current_workplace)){
 
                 //nehme Current Workplace Daten von Marius
                 String[] current_inf = new String[5];
