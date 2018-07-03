@@ -29,7 +29,8 @@
         <activity
             android:name=".DashboardActivity"
             android:label="test"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
@@ -45,39 +46,51 @@
 
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/register_activity" />
+            android:label="@string/register_activity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Overview"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Workplace_Details"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".FragmentTab" />
-        <activity android:name=".Workplace_Details_Custom" />
-        <activity android:name=".Select_date_calendar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".FragmentTab"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Workplace_Details_Custom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Select_date_calendar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".navigation_activity"
             android:label="@string/title_activity_navigation_activity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Workplace"
             android:label="@string/title_activity_workplace"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ProfileActivity"
             android:label="Profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Workplace_add_edit"
             android:label="@string/title_activity_workplace_add_edit"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Edit_details_day"
             android:label="Edit Day"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".UnderWork"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
