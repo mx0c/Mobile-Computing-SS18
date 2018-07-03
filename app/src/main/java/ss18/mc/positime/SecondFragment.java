@@ -86,7 +86,7 @@ public class SecondFragment extends Fragment {
                 if(current_workplace_name.equals("0")){
                     current_workplace = "0";
                 }else{
-                    current_workplace = current_workplace_name;
+                    current_workplace = new String(current_workplace_name);
                 }
 
 
@@ -101,7 +101,8 @@ public class SecondFragment extends Fragment {
         for(int i =0; i< counter; i++){
             listDataHeader.add(allOrts.get(i).getPlaceName().toString());
             List<String> test = new ArrayList<String>();
-            if(allOrts.get(i).getPlaceName().toString().equals(current_workplace)){
+            String test123 = new String(allOrts.get(i).getPlaceName());
+            if(allOrts.get(i).getPlaceName().toString().equals("MyWorkplace")){
 
                 //nehme Current Workplace Daten von Marius
                 String[] current_inf = new String[5];
@@ -120,8 +121,10 @@ public class SecondFragment extends Fragment {
                         test1.add("Duration:     "+current_inf[0]+"h "+current_inf[1]+"min");
                         if(current_inf[2] == null ){
                             test1.add("Breaks:   no breaks");
+                        } else{
+                            test1.add("Breaks:   "+current_inf[2]);
                         }
-                        test1.add("Breaks:   "+current_inf[2]);
+
                         test1.add("Money Earned:     "+current_inf[3]);
                         test1.add("Breaks Count:     "+current_inf[4]);
 
@@ -139,9 +142,9 @@ public class SecondFragment extends Fragment {
                 List<Arbeitszeit> currDay = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortOneDay(current_workplace,now);
                 try{
                     //Shows only the worked time if any time was worked. We dont save Breaks in our database
-                    long diff = currDay.get(0).getEndtime().getTime()-currDay.get(0).getStarttime().getTime();
+                    long diff = currDay.get(0).getWorktime();
                     long[] hoursMins = new long[2];
-                    long t = TimeUnit.MILLISECONDS.toMinutes(diff);
+                    long t = TimeUnit.SECONDS.toMinutes(diff);
                     //hours
                     long erg1 = t/60;
                     //minutes

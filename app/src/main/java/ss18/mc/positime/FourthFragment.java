@@ -171,9 +171,9 @@ public class FourthFragment extends Fragment {
                     startTime.setText("Start time:  "+ergDayStart[3] + " Uhr");
                     String[] ergDayEnd = test1.get(0).getEndtime().toString().split(" ");
                     endTime.setText("End time:  "+ergDayEnd[3]+ " Uhr");
-                    long diff = test1.get(0).getEndtime().getTime()-test1.get(0).getStarttime().getTime();
+                    long diff = test1.get(0).getWorktime();
                     long[] hoursMins = new long[2];
-                    long t = TimeUnit.MILLISECONDS.toMinutes(diff);
+                    long t = TimeUnit.SECONDS.toMinutes(diff);
                     //hours
                     long erg1 = t/60;
                     //minutes
