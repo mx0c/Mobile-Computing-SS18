@@ -287,10 +287,7 @@ public class Workplace_add_edit extends AppCompatActivity {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
                 Log.d(TAG, place.getLatLng().toString());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-
 
                 Log.v(TAG, String.valueOf(place.getLatLng().latitude));
 

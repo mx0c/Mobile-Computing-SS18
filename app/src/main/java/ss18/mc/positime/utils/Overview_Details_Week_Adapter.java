@@ -40,6 +40,9 @@ public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAd
     TextView worktime_sum;
     TextView salary_sum;
 
+    int worktimeHours_sum;
+    int worktimeMinutes_sum;
+
     public Overview_Details_Week_Adapter(List<Arbeitszeit> list, Context context, String workplace){
         this.workingTimes_week = list;
         this.context = context;
@@ -110,27 +113,35 @@ public class Overview_Details_Week_Adapter extends BaseAdapter implements ListAd
                     Double workTimeInMinutes = workTimeInSeconds / 60.0;
 
                     Integer worktimeHours = (int) (workTimeInMinutes / 60.0); //hh
-                    Integer workTimeMinutes = (int) (workTimeInMinutes -(worktimeHours * 60) );     //mm
+                    worktimeHours_sum += (int) (workTimeInMinutes / 60.0); //hh
+                    worktimeMinutes_sum += (int) (workTimeInMinutes -(worktimeHours * 60) );     //mm
 
-
-                    int min = (int) workTimeMinutes;
+                    int min = (int) worktimeMinutes_sum;
+                    if(min > 60){
+                        int h = (int) (min / 60) ;
+                        worktimeHours_sum += h;
+                        min = min - (h* 60);
+                        worktimeMinutes_sum += min;
+                    }
                     if ( min < 10){
-                        worktime_sum.setText(" "+worktimeHours + ":0" + min+ " hours");
+                        worktime_sum.setText(" "+worktimeHours_sum + ":0" + min+ " hours");
                     }
                     else{
-                        worktime_sum.setText(" "+worktimeHours + ":" + min + " hours");
+                        worktime_sum.setText(" "+worktimeHours_sum + ":" + min + " hours");
                     }
 
 
                     Double moneyPerHour = db.arbeitsortDAO().getMoneyPerHour(time.getArbeitsort_name());
-                    Double rest=  workTimeMinutes/ 60.0;
-                    salary_sum.setText( String.format("%.2f €",moneyPerHour *worktimeHours+ rest* moneyPerHour ));
+                    Double rest=  worktimeMinutes_sum/ 60.0;
+                    salary_sum.setText( String.format("%.2f €",moneyPerHour *worktimeHours_sum+ rest* moneyPerHour ));
 
                 }
             }
 
             pauseTime_sum = 0;
-            workingTime_sum= 0.0;
+            worktimeHours_sum= 0;
+            worktimeMinutes_sum= 0;
+
             return view;
             }
     }

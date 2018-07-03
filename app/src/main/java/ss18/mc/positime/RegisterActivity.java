@@ -1,5 +1,6 @@
 package ss18.mc.positime;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -103,9 +104,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void handleResponse(Response response) {
-
         progressBar.setVisibility(View.INVISIBLE);
-        showSnackBarMessage(response.getMessage());
+        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+        Intent login = new Intent(this, LoginActivity.class);
+        startActivity(login);
     }
 
     private void handleError(Throwable error) {
