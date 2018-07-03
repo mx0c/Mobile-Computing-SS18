@@ -60,15 +60,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
         <View
-            android:layout_width="22dp"
+            android:layout_width="1000dp"
             android:layout_height="45dp"
 
             android:layout_marginTop="133dp"
+            android:adjustViewBounds="true"
             android:background="@color/colorPrimary"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true" />
+            android:scaleType="fitXY" />
         <ImageView
             android:layout_width="75dp"
             android:layout_height="wrap_content"
@@ -80,14 +82,6 @@
             android:scaleType="fitXY"
             android:adjustViewBounds="true" />
 
-        <View
-            android:layout_width="22dp"
-            android:layout_height="45dp"
-
-            android:layout_marginTop="133dp"
-            android:background="@color/colorPrimary"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true" />
         <ImageView
             android:id = "@+id/play_work"
         android:layout_width="75dp"
@@ -100,14 +94,7 @@
         android:background="@color/colorPrimary"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"/>
-        <View
-            android:layout_width="22dp"
-            android:layout_height="45dp"
 
-            android:layout_marginTop="133dp"
-            android:background="@color/colorPrimary"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true" />
         <ImageView
             android:id = "@+id/click_pause"
             android:layout_width="75dp"
@@ -119,14 +106,7 @@
             android:background="@color/colorPrimary"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"/>
-        <View
-            android:layout_width="22dp"
-            android:layout_height="45dp"
 
-            android:layout_marginTop="133dp"
-            android:background="@color/colorPrimary"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true" />
         <ImageView
             android:layout_width="75dp"
             android:layout_height="45dp"
@@ -138,14 +118,15 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_pencil_circle"
             android:tint="@color/white" />
+
         <View
-            android:layout_width="23dp"
+            android:layout_width="1000dp"
             android:layout_height="45dp"
 
             android:layout_marginTop="133dp"
+            android:adjustViewBounds="true"
             android:background="@color/colorPrimary"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true" />
+            android:scaleType="fitXY" />
 
     </LinearLayout>
     <LinearLayout
@@ -166,7 +147,7 @@
             app:tabTextColor="@color/white" />
 
         <FrameLayout
-            android:id="@+id/simpleFrameLayout"
+                    android:id="@+id/simpleFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
