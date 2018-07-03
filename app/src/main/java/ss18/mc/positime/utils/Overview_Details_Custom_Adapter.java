@@ -1,12 +1,19 @@
 package ss18.mc.positime.utils;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,6 +24,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import ss18.mc.positime.Edit_details_day;
 import ss18.mc.positime.R;
 import ss18.mc.positime.dbmodel.Arbeitszeit;
 import ss18.mc.positime.local.BenutzerDatabase;
@@ -29,6 +37,8 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
     BenutzerDatabase db;
     TextView salary;
     TextView timeSum;
+    RelativeLayout dayList;
+    Arbeitszeit selected_day;
 
     public Overview_Details_Custom_Adapter(List<Arbeitszeit> list, Context context, String workplace){
         this.daysList = list;
@@ -61,6 +71,7 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
         db = BenutzerDatabase.getBenutzerDatabase(context);
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat timeDF = new SimpleDateFormat("HH:mm:ss");
+        DateFormat df_2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         TextView date = view.findViewById(R.id.date);
         timeSum = view.findViewById(R.id.time_sum);
@@ -68,6 +79,7 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
         TextView startTime = view.findViewById(R.id.start_time);
         TextView stopTime = view.findViewById(R.id.stop_time);
         salary = view.findViewById(R.id.salary);
+        dayList = view.findViewById(R.id.day_list);
 
         date.setText(df.format(daysList.get(position).getStarttime()));
 
@@ -76,6 +88,108 @@ public class Overview_Details_Custom_Adapter extends BaseAdapter implements List
         pauseTime.setText(String.valueOf(daysList.get(position).getBreaktime() * daysList.get(position).getAmountBreaks())+ " minutes");
         startTime.setText(getTimeInAmOrPm(timeDF.format(daysList.get(position).getStarttime())));
         stopTime.setText(getTimeInAmOrPm(timeDF.format(daysList.get(position).getEndtime())));
+
+        FloatingActionButton floating_delete= view.findViewById(R.id.floating_delete);
+        FloatingActionButton floating_edit = view.findViewById(R.id.floating_edit);
+        dayList.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                if(floating_delete.getVisibility() == View.VISIBLE){
+                    floating_delete.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    floating_delete.setVisibility(View.VISIBLE);
+                    floating_delete.setClickable(true);
+                }
+
+                if(floating_edit.getVisibility() == View.VISIBLE){
+                    floating_edit.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    floating_edit.setVisibility(View.VISIBLE);
+                    floating_edit.setClickable(true);
+                }
+            }
+
+
+        });
+
+        floating_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Delete Day");
+                alertDialog.setMessage("Do you really want to delete the data of this day? If you select yes the data will be deleted");
+
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(daysList.get(position).getArbeitszeitId());
+
+                                //Delete Arbeitszeit
+                                db.arbeitszeitDAO().delete(selected_day); //Remove from database
+
+                                daysList.remove(position); //Remove from list
+                                notifyDataSetChanged();
+                                Toast.makeText(v.getContext(), "Day deleted", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                notifyDataSetChanged();
+
+                floating_delete.setVisibility(View.INVISIBLE);
+                floating_edit.setVisibility(View.INVISIBLE);
+
+            }
+        });
+
+        Date start_Time = daysList.get(position).getStarttime();
+
+        floating_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                floating_delete.setVisibility(View.INVISIBLE);
+                floating_edit.setVisibility(View.INVISIBLE);
+
+                Intent i = new Intent(context, Edit_details_day.class);
+
+                selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(daysList.get(position).getArbeitszeitId());
+                Integer breaktime= selected_day.getBreaktime() * selected_day.getAmountBreaks();
+                Date start_time= selected_day.getStarttime();
+
+                String [] starttime_splitted= df_2.format(start_Time).split(" ");
+                //String startTime_hhMMss= starttime_splitted[1];
+                //i.putExtra("startTime", starttime_splitted[1]);
+                i.putExtra("startTime", getTimeInAmOrPm(starttime_splitted[1]));
+
+                Date end_time = selected_day.getEndtime();
+                String [] endtime_splitted= df_2.format(end_time).split(" ");
+                i.putExtra("endTime", getTimeInAmOrPm(endtime_splitted[1]));
+                //i.putExtra("endTime", endtime_splitted[1]);
+
+                i.putExtra("date", starttime_splitted[0]);
+                i.putExtra("pause", Integer.toString(breaktime));
+
+                i.putExtra("id", selected_day.getArbeitszeitId());
+                ((Activity)context).startActivityForResult(i, 1);
+                notifyDataSetChanged();
+
+                //context.startActivity(i);
+
+            }
+
+        });
+
+
 
         return view;
     }

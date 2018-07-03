@@ -117,7 +117,10 @@ public class Edit_details_day extends AppCompatActivity implements NavigationVie
                     long diff = startDate.getTime() - arbeitszeit.getStarttime().getTime();
                     long diffInSeconds= diff / 1000;
                     int additionWorktime = (int) (arbeitszeit.getWorktime() + diffInSeconds );
-                    arbeitszeit.setWorktime((int) (arbeitszeit.getWorktime() + diffInSeconds ));
+                    if(diffInSeconds < 0){
+                        diffInSeconds *= -1 ;
+                    }
+                    arbeitszeit.setWorktime((int) (arbeitszeit.getWorktime() + diffInSeconds));
                 }
                 arbeitszeit.setStarttime(startDate);
 
