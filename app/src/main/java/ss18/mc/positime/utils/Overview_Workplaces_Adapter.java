@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,10 +62,9 @@ public class Overview_Workplaces_Adapter extends BaseAdapter implements ListAdap
         TextView listItemText = (TextView) view.findViewById(R.id.list_item_string);
         listItemText.setText(list.get(position).getPlaceName());
 
-        ImageView showDetails = (ImageView) view.findViewById(R.id.show_details);
+        RelativeLayout showDetailsWorkplace = view.findViewById(R.id.show_details_workplace);
 
-        //Click on 'show Details'
-        showDetails.setOnClickListener(new View.OnClickListener() {
+        showDetailsWorkplace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String placeName = list.get(position).getPlaceName();

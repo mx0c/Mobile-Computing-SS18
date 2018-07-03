@@ -12,14 +12,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="330dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:text="From:"
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:text="To:"
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
     </LinearLayout>
@@ -36,7 +36,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:gravity="bottom|left"
         android:orientation="horizontal"
         android:paddingLeft="0dp">
@@ -46,7 +46,7 @@
             android:layout_width="49dp"
             android:layout_height="55dp"
             android:layout_marginBottom="-6dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:clickable="true"
             android:drawableLeft="@drawable/ic_calendar"
             android:drawableTint="@color/common_google_signin_btn_text_dark_default"
@@ -76,7 +76,7 @@
             android:layout_width="44dp"
             android:layout_height="55dp"
             android:layout_marginBottom="-6dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:drawableLeft="@drawable/ic_calendar"
             android:drawableTint="@color/common_google_signin_btn_text_dark_default"
             android:paddingBottom="10dp"
@@ -101,8 +101,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="-7dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
             android:text="SEARCH"
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
     </LinearLayout>
