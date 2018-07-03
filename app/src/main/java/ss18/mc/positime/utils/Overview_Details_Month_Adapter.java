@@ -111,7 +111,7 @@ public class Overview_Details_Month_Adapter extends BaseAdapter implements ListA
                 Integer monthNr = getMonthNumber(time.getStarttime());
 
                 if (monthNr.intValue() == actualMonthNumber) {
-                    pauseTime_sum += time.getBreaktime() * time.getAmountBreaks();
+                    pauseTime_sum += (time.getBreaktime() / 60 )  ;
                     pause_sum.setText(" "+String.valueOf(pauseTime_sum) + " minutes");
 
                     Integer workTimeInSeconds = time.getWorktime();

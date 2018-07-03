@@ -99,9 +99,9 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         date.setText(splitted_date[0]);
 
         TextView breakTime= (TextView) view.findViewById(R.id.pause_time);
-        Integer time = list_breaktimes.get(position).getBreaktime();
-        breakTime.setText(String.valueOf( list_breaktimes.get(position).getBreaktime()* list_breaktimes.get(position).getAmountBreaks())  + " minutes");
 
+        String breaktimeS= String.valueOf( (list_breaktimes.get(position).getBreaktime()/60 ))  + " minutes";
+        breakTime.setText(breaktimeS);
         TextView start_time= (TextView) view.findViewById(R.id.start_time);
         Date start_Time = list_breaktimes.get(position).getStarttime();
 
@@ -109,7 +109,6 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
         String startTime = df.format(start_Time);
         String [] splitted_startTime= startTime.split(" ");
         String start_timeAmPm = getTimeInAmOrPm(splitted_startTime[1]);
-        //start_time.setText(splitted_startTime[1]);
         start_time.setText(start_timeAmPm);
 
         TextView stop_time= (TextView) view.findViewById(R.id.stop_time);
@@ -218,7 +217,7 @@ public class Overview_Details_Day_Adapter extends BaseAdapter implements ListAda
                 Intent i = new Intent(context, Edit_details_day.class);
 
                 selected_day = db.arbeitszeitDAO().getArbeitszeitFromID(list_breaktimes.get(position).getArbeitszeitId());
-                Integer breaktime= selected_day.getBreaktime() * selected_day.getAmountBreaks();
+                Integer breaktime= (selected_day.getBreaktime()  / 60) ;
                 Date start_time= selected_day.getStarttime();
 
                 String [] starttime_splitted= df.format(start_Time).split(" ");
