@@ -66,10 +66,12 @@ public class LocationService extends Service
         Log.e(TAG, "onCreate");
         startService(new Intent(this,BackgroundService.class));
         initializeLocationManager();
+        Location lastLoc = new Location("");
         try {
             mLocationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
                     mLocationListeners[1]);
+            lastLoc = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } catch (java.lang.SecurityException ex) {
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
@@ -79,11 +81,16 @@ public class LocationService extends Service
             mLocationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
                     mLocationListeners[0]);
+            lastLoc = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         } catch (java.lang.SecurityException ex) {
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
             Log.d(TAG, "gps provider does not exist " + ex.getMessage());
         }
+        Intent i = new Intent("location_update");
+        i.putExtra("longitude", lastLoc.getLongitude());
+        i.putExtra("latitude", lastLoc.getLatitude());
+        sendBroadcast(i);
     }
 
     @Override

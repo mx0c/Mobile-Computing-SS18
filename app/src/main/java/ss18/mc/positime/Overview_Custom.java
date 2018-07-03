@@ -96,21 +96,23 @@ public class Overview_Custom extends Fragment implements View.OnClickListener {
                     String end = dateEnd.getText().toString();
                     mStartDate = sdf.parse(start);
                     mEndDate = sdf.parse(end);
+
+                    BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    mWorkingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(mSelectedWorkplace, df.format(mStartDate), df.format(mEndDate));
+                    Collections.sort(mWorkingTimes, new Comparator<Arbeitszeit>() {
+                        @Override
+                        public int compare(Arbeitszeit o1, Arbeitszeit o2) {
+                            return o1.getStarttime().compareTo(o2.getStarttime());
+                        }
+                    });
+                    calculateTotalStats();
+                    mListView.setAdapter(new Overview_Details_Custom_Adapter(mWorkingTimes,getActivity(), mSelectedWorkplace));
                 } catch (ParseException e){
                     e.printStackTrace();
-                }
-                BenutzerDatabase db = BenutzerDatabase.getBenutzerDatabase(getActivity());
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                mWorkingTimes = db.arbeitszeitDAO().getArbeitszeitenForArbeitsortBetween(mSelectedWorkplace, df.format(mStartDate), df.format(mEndDate));
-                Collections.sort(mWorkingTimes, new Comparator<Arbeitszeit>() {
-                    @Override
-                    public int compare(Arbeitszeit o1, Arbeitszeit o2) {
-                        return o1.getStarttime().compareTo(o2.getStarttime());
-                    }
-                });
-                calculateTotalStats();
-                mListView.setAdapter(new Overview_Details_Custom_Adapter(mWorkingTimes,getActivity(), mSelectedWorkplace));
+                }catch(Exception e){}
                 break;
+
         }
     }
 
