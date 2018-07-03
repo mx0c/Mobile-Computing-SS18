@@ -48,12 +48,12 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
     TabLayout tabLayout;
     Fragment fragment;
     BroadcastReceiver broadcastReceiver;
+    ImageView imgPlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        // = new FirstFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.simpleFrameLayout, new FirstFragment());
@@ -65,6 +65,9 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
         initNavigation();
         initBackgroundServiceInfo();
         play_pause_listener();
+        imgPlay = (ImageView)findViewById(R.id.play_work);
+        imgPlay.setAlpha(100);
+
 
     }
     public void play_pause_listener(){
@@ -76,6 +79,8 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
                 Intent i = new Intent("background_commands");
                 i.putExtra("command","PAUSE");
                 sendBroadcast(i);
+                imgPlay.setAlpha(255);
+                imgClick.setAlpha(100);
                 Toast.makeText(DashboardActivity.this, "Paused", Toast.LENGTH_LONG).show();
 
             }
@@ -89,7 +94,8 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
                 i.putExtra("command","RESUME");
                 sendBroadcast(i);
                 Toast.makeText(DashboardActivity.this, "Play", Toast.LENGTH_LONG).show();
-
+                imgPlay.setAlpha(100);
+                imgClick.setAlpha(255);
             }
         });
 
@@ -105,6 +111,7 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
                 String current_name = (String) test.get("current_workplace_name");
                 if(current_name.equals("0")){
                     workplace_dash.setText("not in workplace");
+                    imgPlay.setAlpha(255);
                 }else{
                     String[] current_time = test.getString("current_workplace_time").split("\\.");
                     String current_time_pause = test.get("current_workplace_pause_minutes").toString();
@@ -112,6 +119,7 @@ public class DashboardActivity extends AppCompatActivity implements OnNavigation
 
                     pause_dash.setText("Pause: "+current_time_pause+" min");
                     workplace_dash.setText(current_name);
+
                 }
             }
         };

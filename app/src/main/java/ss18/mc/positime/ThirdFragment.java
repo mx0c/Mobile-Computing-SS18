@@ -116,9 +116,9 @@ public class ThirdFragment extends Fragment {
     /*HELPING FUNCTIONS FOR GETTING WORKED TIME*/
     private long[] getWorkHoursForOneDay(List<Arbeitszeit> allTimes){
         //work with the worked time in millisecounds. Easier to handle.
-        long diff = allTimes.get(0).getEndtime().getTime()-allTimes.get(0).getStarttime().getTime();
+        long diff = allTimes.get(0).getWorktime();
         long[] hoursMins = new long[2];
-        long t = TimeUnit.MILLISECONDS.toMinutes(diff);
+        long t = TimeUnit.SECONDS.toMinutes(diff);
         //hours
         long erg1 = t/60;
         //minutes
@@ -134,9 +134,9 @@ public class ThirdFragment extends Fragment {
         //ntake 7 days which are filled with data (7 workdays)
         //order of saved data not clear. But for Demonstration okay
         for(int i = 0; i< 7; i++){
-            diffGesamt += allTimes.get(i).getEndtime().getTime()-allTimes.get(i).getStarttime().getTime();
+            diffGesamt += allTimes.get(i).getWorktime();
         }
-        long t = TimeUnit.MILLISECONDS.toMinutes(diffGesamt);
+        long t = TimeUnit.SECONDS.toMinutes(diffGesamt);
         //Hours
         long erg1 = t/60;
         //Minutes
@@ -151,9 +151,9 @@ public class ThirdFragment extends Fragment {
         long diffGesamt = 0;
         //Take all days which are filled with data
         for(int i = 0; i< allTimes.size(); i++){
-            diffGesamt += allTimes.get(i).getEndtime().getTime()-allTimes.get(i).getStarttime().getTime();
+            diffGesamt += allTimes.get(i).getWorktime();
         }
-        long t = TimeUnit.MILLISECONDS.toMinutes(diffGesamt);
+        long t = TimeUnit.SECONDS.toMinutes(diffGesamt);
         //hours
         long erg1 = t/60;
         //minutes
