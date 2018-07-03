@@ -78,12 +78,12 @@ public class Edit_details_day extends AppCompatActivity implements NavigationVie
             public void onClick(View v){
                 Arbeitszeit arbeitszeit = db.arbeitszeitDAO().getArbeitszeitFromID(edit_arbeitszeit_id);
                 String newPauseTime = pause_text.getText().toString();
-                Integer newTimeInt = Integer.parseInt(newPauseTime);
+                Integer newTimeInt = Integer.parseInt(newPauseTime)* 60;
                 if(newTimeInt != arbeitszeit.getBreaktime()){
-                    int oldBreakTimeInSeconds= arbeitszeit.getAmountBreaks()*60;
-                    int newBreakTimeInSeconds= newTimeInt * 60;
-                    int diff = oldBreakTimeInSeconds - newBreakTimeInSeconds;
+                    int oldBreakTimeInSeconds= arbeitszeit.getBreaktime();
+                    int diff = oldBreakTimeInSeconds - newTimeInt;
                     if( diff < 0){
+                        diff *= -1;
                         arbeitszeit.setWorktime(arbeitszeit.getWorktime()- diff);
                     }
                     else {
@@ -169,6 +169,7 @@ public class Edit_details_day extends AppCompatActivity implements NavigationVie
                 db.beginTransaction();
                 Intent i = new Intent();
                 setResult(2);
+
                 finish();
             }
         });
