@@ -64,6 +64,8 @@ public class BackgroundService extends Service {
                         //increase pauseAmount in DB
                         if (mCurrentArbeitszeit != null) {
                             mCurrentArbeitszeit.setAmountBreaks(mCurrentArbeitszeit.getAmountBreaks() + 1);
+                        }else{
+                            return;
                         }
                         //update db
                         mDb.arbeitszeitDAO().updateArbeitszeit(mCurrentArbeitszeit);
