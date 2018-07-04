@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="175dp"
             app:tabBackground="@color/colorPrimary"
-            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorColor="@color/colorAccent"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/white" />
 
