@@ -17,8 +17,8 @@
     <string name="emailInput">Email Address</string>
     <string name="passwordInput">Password</string>
     <string name="passwordConfirm">Password Confirmation</string>
-    <string name="fname">First Name</string>
-    <string name="lname">Last Name</string>
+    <string name="fname">Firstname</string>
+    <string name="lname">Lastname</string>
     <string name="workplace_name">Workplace Title</string>
     <string name="workplace_chef_ffname">Chef Firstname</string>
     <string name="workplace_chef_llname">Chef Lastname</string>
