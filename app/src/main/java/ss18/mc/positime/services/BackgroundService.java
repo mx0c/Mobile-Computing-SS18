@@ -56,9 +56,11 @@ public class BackgroundService extends Service {
 
                 switch (command) {
                     case "RESUME":
-                        mInPause = false;
-                        mPauseTimer.stopTimer();
-                        mPauseTimer.setTime(0);
+                        if(mPauseTimer != null) {
+                            mInPause = false;
+                            mPauseTimer.stopTimer();
+                            mPauseTimer.setTime(0);
+                        }
                         break;
                     case "PAUSE":
                         //increase pauseAmount in DB
