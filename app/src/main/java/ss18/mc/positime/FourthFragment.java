@@ -155,8 +155,7 @@ public class FourthFragment extends Fragment {
                 DatabaseInitializer.populateSync(db);
                 getBackgroundInfo();
                 String userMail = mSharedPreferences.getString(Constants.EMAIL, null);
-                //TEST DATA FOR TESTS USE ONLY
-                workplace = "Daheim";
+
                 DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String fridayS = df.format(dateClick);
                 String[] ergS = fridayS.split(" ");
