@@ -87,10 +87,12 @@ public class LocationService extends Service
         } catch (IllegalArgumentException ex) {
             Log.d(TAG, "gps provider does not exist " + ex.getMessage());
         }
-        Intent i = new Intent("location_update");
-        i.putExtra("longitude", lastLoc.getLongitude());
-        i.putExtra("latitude", lastLoc.getLatitude());
-        sendBroadcast(i);
+        if(lastLoc != null) {
+            Intent i = new Intent("location_update");
+            i.putExtra("longitude", lastLoc.getLongitude());
+            i.putExtra("latitude", lastLoc.getLatitude());
+            sendBroadcast(i);
+        }
     }
 
     @Override
